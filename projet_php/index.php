@@ -12,6 +12,8 @@ print(SITE_NAME); print('<br>');
 print(ROOT_DIR); print('<br>');
 print(URL_DIR); print('<br>');
 exit;
+
+Helena
 */
 
 //Load required classes automatically

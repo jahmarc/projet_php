@@ -13,7 +13,7 @@ class Card{
 		$this->setIdCard($idCard);
 		$this->setPicture($picture);
 		$this->setNdxColor($ndxColor);
-		$this->setdescription($description);
+		$this->setDescription($description);
 		$this->setValue($value);
 		$this->setValueAsset($valueAsset);
 		$this->setPoints($points);

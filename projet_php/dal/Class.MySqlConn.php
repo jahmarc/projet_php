@@ -3,6 +3,7 @@
  * Connection class to mySQL Server
  * @author S. Martin
  * @link http://www.hevs.ch
+ * Steph
  */
 class MySqlConn {
 	const HOST = "127.0.0.1";
@@ -60,12 +61,5 @@ class MySqlConn {
 		// Get result if so
 		$result = $stmt->fetchAll();		
 		return array('status'=>'success', 'result'=>$result);
-	}
-	/**
-	 * last_Insert_Id: Returns id of last record added 
-	 * @return id
-	 */
-	public function last_Insert_Id(){
-		return $this->_conn->lastInsertId();
 	}
 }

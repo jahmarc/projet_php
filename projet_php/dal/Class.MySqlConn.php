@@ -3,7 +3,6 @@
  * Connection class to mySQL Server
  * @author S. Martin
  * @link http://www.hevs.ch
- * Lena
  */
 class MySqlConn {
 	const HOST = "127.0.0.1";

@@ -1,17 +1,46 @@
 <?php
 class Part{
 	private $idPart;
-	private $gamer;
-	private $result;
-	private $annonce;
+	private $players = array() ;
+	private $result = 0;
+	private $annonces = 0;
+	private $stock = 0;
+	private $state = -1;
+	private $designation = '';
+	private $createdBy = 0;
+	private $createdOnAt;
+	private $modifBy = 0;
+	private $modifOnAt;
 	
-	public function __construct($idPart=null, $gamer, $result, $annonce){
+	public function __construct($idPart=null, $players, $result, $annonces){
 		$this->setIdPart($idPart);
-		$this->setGamer($gamer);
+		$this->setPlayers($players);
 		$this->setResult($result);
-		$this->setAnnonce($annonce);
+		$this->setAnnonces($annonces);
 	}
-	
+	/**
+	 * newPart : création d'une nouvelle partie
+	 * @return idPart de la partie créée (ok) sinon -1 en cas d'erreur
+	 */
+	public static function newPart($designation){
+		// user en cours
+		$idUser = $_SESSION['user']->getId();
+		
+		// insert
+		$query = "INSERT INTO part(designation, createdBy, modifBy)	VALUES(?, ?, ?);";
+		$attributes = array($designation, $idUser, $idUser);
+		$result = MySqlConn::getInstance()->execute($query, $attributes);
+		if($result['status']=='error') return -1;
+		
+		// last insert id
+		$id = MySqlConn::getInstance()->last_Insert_Id();
+		if($id < 1) return -1;
+		return $id;
+		
+	}
+	public static function joinPart($idPart){
+		
+	}
 	public function getIdPart(){
 		return $this->idPart;
 	}
@@ -20,12 +49,12 @@ class Part{
 		$this->idPart = $idPart;
 	}
 	
-	public function getGamer(){
-		return $this->gamer;
+	public function getPlayers(){
+		return $this->players;
 	}
 	
-	public function setGamer($gamer){
-		$this->gamer = $gamer;
+	public function setPlayers($players){
+		$this->players = $players;
 	}
 	
 	public function getResult(){
@@ -36,11 +65,11 @@ class Part{
 		$this->result = $result;
 	}
 	
-	public function getAnnonce(){
-		return $this->annonce;
+	public function getAnnonces(){
+		return $this->annonces;
 	}
 	
-	public function setAnnonce($annonce){
-		$this->annonce = $annonce;
+	public function setAnnonces($annonces){
+		$this->annonces = $annonces;
 	}
 }

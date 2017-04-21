@@ -69,6 +69,21 @@ $controller_instance = new $class($controller, $method);
  exit;
 */
 
+/*
+// --- Début test Giuseppe
+$colors = Color::get4Colors();
+foreach ($colors as $key => $value){
+	echo $value->toString()."<br>";
+}
+$cards = Card::get36Cards();
+foreach ($cards as $key => $value){
+	echo $value->toString()."<br>";
+}
+
+exit;
+// --- Fin test Giuseppe
+*/
+
 //Call controller method first then display the view
 $controller_instance->$method();
 $controller_instance->display();

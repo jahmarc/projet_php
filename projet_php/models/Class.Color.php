@@ -4,10 +4,10 @@ class Color{
 	private $description;
 	private $picture;
 	
-	const COEURS = 0;
-	const CARREAUX = 1;
-	const TREFFLES = 2;
-	const PIQUES = 3;
+	const COEURS = 1;
+	const CARREAUX = 2;
+	const TREFFLES = 3;
+	const PIQUES = 4;
 	
 	public function __construct($ndxColor, $description, $picture){
 		$this->setNdxColor($ndxColor);
@@ -39,10 +39,10 @@ class Color{
 	}
 	public static function get4Colors(){
 		$src = 'images/cards/colors/';
-		return array (new Color(self::COEURS, 'Coeurs', $src.'0_coeurs.png')
-				, new Color(self::CARREAUX,'Carreaux', $src.'1_carreaux.png')
-				, new Color(self::TREFFLES, 'Treffles', $src.'2_treffles.png')
-				, new Color(self::PIQUES, 'Piques', $src.'3_piques.png')
+		return array (new Color(self::COEURS, 'Coeurs', $src.'1_coeurs.png')
+				, new Color(self::CARREAUX,'Carreaux', $src.'2_carreaux.png')
+				, new Color(self::TREFFLES, 'Treffles', $src.'3_treffles.png')
+				, new Color(self::PIQUES, 'Piques', $src.'4_piques.png')
 		);
 	}
 	public function toString(){

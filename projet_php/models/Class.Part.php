@@ -22,9 +22,7 @@ class Part{
 	 * newPart : création d'une nouvelle partie
 	 * @return idPart de la partie créée (ok) sinon -1 en cas d'erreur
 	 */
-	public static function newPart($designation){
-		// user en cours
-		$idUser = $_SESSION['user']->getId();
+	public static function newPart($idUser, $designation){
 		
 		// insert
 		$query = "INSERT INTO part(designation, createdBy, modifBy)	VALUES(?, ?, ?);";
@@ -38,6 +36,10 @@ class Part{
 		return $id;
 		
 	}
+	/**
+	 * joinPart : ajouter un d'une nouvelle partie
+	 * @return idPart de la partie créée (ok) sinon -1 en cas d'erreur
+	 */
 	public static function joinPart($idPart){
 		
 	}

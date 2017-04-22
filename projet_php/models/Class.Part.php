@@ -27,6 +27,28 @@ class Part{
 				$this->setModifOnAt($modifOnAt);
 	}
 	/**
+	 * joinPartUser : ajouter un User à la partie (et un nouveau player)
+	 * @return boolean true/false
+	 */
+	public function joinUserInPart($idUser){
+		// a tester
+		// refresh players
+		$this->players = Player::getPlayersPart($this->idPart);
+		$nbPlayers = count($this->players);
+		// max 4 joueurs
+		if($nbPlayers == 4) return false;
+		foreach ($this->players as $player) {
+			// Si user déjà dans la partie ne pas l'ajouter
+			if ($player->getIdUser() == $idUser) return false;
+		}
+		
+		$nb = $nbPlayers + 1;
+		if(Player::newPlayer($this->idPart, $idUser, $nb)==false) return false;
+		
+		// refresh players
+		$this->players = Player::getPlayersPart($this->idPart);		
+	}
+	/**
 	 * newPart : création d'une nouvelle partie (et un nouveau player)
 	 * @return idPart de la partie créée (ok) sinon -1 en cas d'erreur
 	 */
@@ -48,6 +70,11 @@ class Part{
 		return $idPart;
 		
 	}
+	
+	/**
+	 * getPartByIdPart : recherche et remplissage d'une Partie (et Players liés)
+	 * @return un objet Part avec id passé en param
+	 */
 	public static function getPartByIdPart($idPart){
 		// query select
 		$query = "SELECT IDPart

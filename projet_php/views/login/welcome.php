@@ -11,6 +11,10 @@ $user = $_SESSION['user'];
 	<h2>Please display here the list of registered users</h2>	
 	<br>										
 	<a href="<?php echo URL_DIR.'login/logout';?>">Logout</a>
+	<br>										
+	<br>										
+	<br>										
+	<a href="<?php echo URL_DIR.'jass/testGC';?>">test Giuseppe</a>
 	</div>				
 	
 <br/><br/><br/><br/>

@@ -29,8 +29,18 @@ class jassController extends Controller{
 		$idPart = 0;
 		$idPart = Part::newPart($idUser,"Ma partie GC");
 		if ($idPart>0){
-			echo "Nouvelle partie créée"+$idPart."<br>";
+			echo "Nouvelle partie creee nr ".$idPart."<br>";
 		}
+		$players = Player::getPlayersPart($idPart);
+		if (isset($players)){
+			foreach ($players as $key => $value){
+				echo $value->getIdPart().', idUser='.$value->getIdUser().', nrPlayer='.$value->getNrPlayer()."<br>";
+				
+			}
+		}
+		$part = Part::getPartByIdPart($idPart);
+		
+		echo "Part::getPartByIdPart() =  ".$part->getIdPart().', designation='.$part->getDesignation().', count(Players)='.count($part->getPlayers())."<br>";
 		
 		exit;
 		

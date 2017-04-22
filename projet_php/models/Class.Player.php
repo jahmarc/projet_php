@@ -104,11 +104,11 @@ class Player{
 	}
 	
 	public function getNrPlayer(){
-		return $this->$nrPlayer;
+		return $this->nrPlayer;
 	}
 	
 	public function setNrPlayer($nrPlayer){
-		$this->$nrPlayer= $nrPlayer;
+		$this->nrPlayer= $nrPlayer;
 	}
 	
 	public function getWinner(){

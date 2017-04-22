@@ -16,6 +16,9 @@ class Chat{
 		$this->setText($text);
 	}
 	
+	/**
+	 * Getter and setter
+	 */
 	public function getIdChat(){
 		return $this->idChat;
 	}

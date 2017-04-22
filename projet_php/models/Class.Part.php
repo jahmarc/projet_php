@@ -36,13 +36,13 @@ class Part{
 		return $id;
 		
 	}
+
+	
+	
 	/**
-	 * joinPart : ajouter un d'une nouvelle partie
-	 * @return idPart de la partie créée (ok) sinon -1 en cas d'erreur
+	 * Getter and setter
 	 */
-	public static function joinPart($idPart){
-		
-	}
+	
 	public function getIdPart(){
 		return $this->idPart;
 	}

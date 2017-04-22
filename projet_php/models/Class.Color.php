@@ -15,6 +15,21 @@ class Color{
 		$this->setPicture($picture);
 	}
 	
+	public static function get4Colors(){
+		$src = 'images/cards/colors/';
+		return array (new Color(self::COEURS, 'Coeurs', $src.'1_coeurs.png')
+				, new Color(self::CARREAUX,'Carreaux', $src.'2_carreaux.png')
+				, new Color(self::TREFFLES, 'Treffles', $src.'3_treffles.png')
+				, new Color(self::PIQUES, 'Piques', $src.'4_piques.png')
+		);
+	}
+	public function toString(){
+		return $this->getNdxColor().' '.$this->getDescription().' '.$this->getPicture();
+	}
+	
+	/**
+	 * Getter and setter
+	 */
 	public function getNdxColor(){
 		return $this->ndxColor;
 	}
@@ -36,16 +51,5 @@ class Color{
 	
 	public function setPicture($picture){
 		$this->picture = $picture;
-	}
-	public static function get4Colors(){
-		$src = 'images/cards/colors/';
-		return array (new Color(self::COEURS, 'Coeurs', $src.'1_coeurs.png')
-				, new Color(self::CARREAUX,'Carreaux', $src.'2_carreaux.png')
-				, new Color(self::TREFFLES, 'Treffles', $src.'3_treffles.png')
-				, new Color(self::PIQUES, 'Piques', $src.'4_piques.png')
-		);
-	}
-	public function toString(){
-		return $this->getNdxColor().' '.$this->getDescription().' '.$this->getPicture();
 	}
 }

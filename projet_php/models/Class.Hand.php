@@ -8,6 +8,10 @@ class Hand{
 		$this->setCards($cards);
 	}
 	
+	
+	/**
+	 * Getter and setter
+	 */
 	public function getIdHand(){
 		return $this->idHand;
 	}

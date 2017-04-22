@@ -16,6 +16,10 @@ class Pli{
 		$this->setStock($stock);
 	}
 	
+	
+	/**
+	 * Getter and setter
+	 */
 	public function getIdPli(){
 		return $this->idPli;
 	}

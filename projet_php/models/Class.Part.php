@@ -27,26 +27,100 @@ class Part{
 				$this->setModifOnAt($modifOnAt);
 	}
 	/**
-	 * joinPartUser : ajouter un User à la partie (et un nouveau player)
+	 * addUserInPart : ajouter un User à la partie (et un nouveau player)
 	 * @return boolean true/false
 	 */
-	public function joinUserInPart($idUser){
+	public function addUserInPart($idUser){
 		// a tester
-		// refresh players
-		$this->players = Player::getPlayersPart($this->idPart);
-		$nbPlayers = count($this->players);
+		// calcul nombre de joueur
+		$nbPlayers = getCountPlayersAfterRefresh();
 		// max 4 joueurs
 		if($nbPlayers == 4) return false;
 		foreach ($this->players as $player) {
 			// Si user déjà dans la partie ne pas l'ajouter
 			if ($player->getIdUser() == $idUser) return false;
 		}
-		
+		// ajouter le nouve player
 		$nb = $nbPlayers + 1;
 		if(Player::newPlayer($this->idPart, $idUser, $nb)==false) return false;
+			
+		checkUpdateState($idUser);
+	}
+	private function checkUpdateState($idUser){
+		// Si partie terminée: ne rien faire
+		if($this->state == 99) return
 		
-		// refresh players
-		$this->players = Player::getPlayersPart($this->idPart);		
+		// calcul nombre de joueur
+		$nbPlayers = getCountPlayersAfterRefresh();
+		
+		// si nombre de joueur n'a pas changé ne rien faire
+		if($nbPlayers == $this->state) return ;
+
+		// modifie l'état de l'objet partie en cours
+		$this->setState($nbPlayers);
+		
+		// save objet en cours
+		$this->save($idUser);
+		
+		// si 4 joueurs on demarre la partie
+		if($nbPlayers == 4){
+			/* créer une donne: 
+			 * newDonne() doit : 
+			 * 1. créer 4 hands 
+			 * 2. créer 1 pli à vide
+			 * ---newPli doit 
+			 * ------setter le premier 
+			 * ------si première pli : (7 carreaux)
+			 * ------sinon dernier joueur de la pli precedente
+			 */
+			
+			$donne = Donne::newDonne($this->getIdPart());
+		};
+		
+	}
+	/**
+	 * save : sauve (update) de l'objet en cours
+	 * @return boolean true/false
+	 */
+	private function save($idUser){
+		// UPDATE (jamais modifier IdPart, createBy, createOnAt)
+		$query = "UPDATE part SET
+					  designation
+					, pointsResult_1 = ?
+					, pointsResult_2 = ?
+					, annonces_1 = ?
+					, annonces_2 = ?
+					, stock_1 = ?
+					, stock_2 = ?
+					, state = ?
+					, modifBy = ?
+					, modifOnAt = now() 
+					 WHERE IDPart = ?;";
+		$attributes = array(
+				  $this->getDesignation()
+				, $this->getResult()[1]
+				, $this->getResult()[2]
+				, $this->getAnnonce()[1]
+				, $this->getAnnonce()[2]
+				, $this->getStock()[1]
+				, $this->getStock()[2]
+				, $this->getState()
+				, $idUser
+				, $this->getIdPart()
+		);
+		$result = MySqlConn::getInstance()->execute($query, $attributes);
+		if($result['status']=='error') return false;
+		
+		return true;
+	}
+	public function getCountPlayersAfterRefresh(){
+		// with refresh players
+		$this->setPlayers(Player::getPlayersPart($this->idPart));
+		return count($this->players);
+	}
+	public function getCountPlayers(){
+		// without refresh players
+		return count($this->players);
 	}
 	/**
 	 * newPart : création d'une nouvelle partie (et un nouveau player)

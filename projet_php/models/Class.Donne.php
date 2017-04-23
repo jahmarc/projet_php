@@ -38,7 +38,8 @@ class Donne{
 	/**
 	 * save : sauve (update) de l'objet en cours
 	 * @return boolean true/false
-	 */public function save(){
+	 */
+	 public function save(){
 		// UPDATE (jamais modifier ni idDonne, ni IdPart)
 		$query = "UPDATE donne SET  
 					  pointsResult_1 = ?
@@ -50,10 +51,17 @@ class Donne{
 					, asset = ?
 					, chibre = ? 
 					 WHERE IDDonne = ?;";
-		$attributes = array($this->getResult()[1], $this->getResult()[2]
-				, $this->getAnnonce()[1], $this->getAnnonce()[2]
-				, $this->getStock()[1], $this->getStock()[2]
-				, $this->asset(), $this->chibre());
+		$attributes = array(
+				  $this->getResult()[1]
+				, $this->getResult()[2]
+				, $this->getAnnonce()[1]
+				, $this->getAnnonce()[2]
+				, $this->getStock()[1]
+				, $this->getStock()[2]
+				, $this->getAsset()
+				, $this->getChibre()
+				, $this->getIdDonne()
+		);
 		$result = MySqlConn::getInstance()->execute($query, $attributes);
 		if($result['status']=='error') return false;
 		

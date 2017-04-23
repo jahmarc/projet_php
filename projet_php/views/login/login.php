@@ -1,4 +1,4 @@
-<?php include_once ROOT_DIR.'views/header.inc'; 
+<?php include_once ROOT_DIR.'views/header.inc';
 
 //Collect data from controller
 $msg = $this->vars['msg'];
@@ -6,16 +6,16 @@ $msg = $this->vars['msg'];
 ?>
 <br><br>
 <form action="<?php echo URL_DIR.'login/connection';?>" method="post">
-	<table align="center">		
+	<table align="center" id="tableLogin" >		
 		<tr>
 			<td>
 				<?php echo $msg;?>
-				<h1>Login</h1>				
-				Username:<br><input type="text" name="username" size="25"/><br>
-				Password:<br><input type="password" name="password" size="25"/><br><br>			
-				<input type="submit" name="Submit" value="  OK  "/>
+				<h3>LOGIN |<a id="register" href="<?php echo URL_DIR.'login/newuser';?>">REGISTER</a>	</h3>			
+				Username<br><input type="text" name="username" size="25"/><br>
+				Password<br><input type="password" name="password" size="25"/><br><br>			
+				<input class="OK" type="submit" name="Submit" value="  OK  "/>
 				<br/><br/>							
-				<a href="<?php echo URL_DIR.'login/newuser';?>">Register</a>				
+								
 			</td>
 		</tr>
 	</table>

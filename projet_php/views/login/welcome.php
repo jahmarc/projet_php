@@ -1,21 +1,64 @@
-<?php 
-include_once ROOT_DIR.'views/header.inc'; 
+<?php
+include_once ROOT_DIR.'views/nav-header.inc';
 
 //Collect data from controller and session
 $msg = $this->vars['msg'];
 $user = $_SESSION['user'];
 ?>
+
+
 <br><br>
-	<div align="center"><?php echo $msg;?>
-	<h1>Welcome <?php echo ' '.$user->getFirstname().' '.$user->getLastname();?></h1>	
-	<h2>Please display here the list of registered users</h2>	
-	<br>										
-	<a href="<?php echo URL_DIR.'login/logout';?>">Logout</a>
-	<br>										
-	<br>										
-	<br>										
-	<a href="<?php echo URL_DIR.'jass/testGC';?>">test Giuseppe</a>
-	</div>				
+	<div align="center" style="margin-top:20px;"><?php echo $msg;?>
+	<h1>Welcome <?php echo '<a style="color:#00a1ff;"> '.$user->getFirstname().' '.$user->getLastname();?></a>	</h1>	
+	<h2>The list of registered users</h2>
+	<?php
+	
+	$servername = "localhost";
+	$username = "root";
+	$password = "";
+	$dbname = "php_mvc";
+	
+	// Create connection
+	$conn = new mysqli($servername, $username, $password, $dbname);
+	
+	// Check connection
+	if ($conn->connect_error) {
+		die("Connection failed: " . $conn->connect_error);
+	}
+	
+	$sql = "SELECT id, firstname, lastname, username FROM user";
+	$result = $conn->query($sql);
+	
+	?>
+	
+	<table id="tableLogin" style="margin-top:50px; width:40%;">
+	
+	<?php
+	while($row = $result->fetch_assoc()) 
+	{
+		echo "	<tr>
+					<td>USER : " . $row["username"]. "</td>
+			  	</tr>
+				<tr>
+					<td style='padding-left:10%;'> NAME : " . $row["firstname"]. "</td>
+					<td	> SURNAME : " . $row["lastname"]. "</td>
+				</tr>
+			
+			<tr style='margin-top:50px;'><td></td></tr>";
+	}
+	
+	
+	?>
+	</table>
+	
+	
+	</div>	
+	
+	
+	
+	
+	
+				
 	
 <br/><br/><br/><br/>
 <?php 

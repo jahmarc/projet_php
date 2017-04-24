@@ -33,7 +33,7 @@ class Hand{
 		if (count($tbl4Hands, COUNT_RECURSIVE) != 36) return false;
 		
 		// boucle
-		for ($i = 1; $i < 5; $i++) {
+		for ($i = 1; $i <= 4; $i++) {
 			$nrCards = $tbl4Hands[$i];
 			$hand = new Hand($idDonne, $i, $nrCards);
 			$hand->save();

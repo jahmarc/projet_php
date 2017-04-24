@@ -5,7 +5,7 @@ class Hand{
 	// numéro du joueur (1-4)
 	private $nrPlayer;
 	// tableau de 9 integer (1-9) : chaque int est l'index du jeu de carte <Card::get36Cards()>
-	private $nrCards = array(null,0,0,0,0,0,0,0,0,0);
+	private $nrCards = array(1 => 0,0,0,0,0,0,0,0,0); // Index commençant à 1 avec array()
 	
 	public function __construct($idHand=null, $idDonne, $nrPlayer, $nrCards){
 		$this->setIdHand($idHand);
@@ -45,7 +45,7 @@ class Hand{
 	/**
 	 * save : création d'une nouvelle hand de la donne en cours
 	 * PRIVÈ car il faut utiliser newHands() pour créer 4 à la fois
-	 * Sauve l'objet <Hand> en cours 
+	 * Sauve l'objet <Hand> en cours
 	 * @return idHand de la hand créée (ok) sinon -1 en cas d'erreur
 	 */
 	private function save(){
@@ -63,7 +63,7 @@ class Hand{
 					, nrCard_8
 					, nrCard_9
 					)
-					VALUES 
+					VALUES
 					(?,?,?,?,?,?,?,?,?,?,?);";
 		
 		

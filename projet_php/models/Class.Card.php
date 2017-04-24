@@ -21,7 +21,7 @@ class Card{
 		$this->setPointsAsset($pointsAsset);
 		$this->setShortDescription($shortDescription);
 	}
-
+	
 	public function toString(){
 		return $this->getNdxCard().' '.$this->getShortDescription().' '.$this->getDescription().' '.$this->getPicture();
 	}
@@ -36,7 +36,8 @@ class Card{
 		 */
 		
 		//function __construct($ndxCard, $picture, $ndxColor, $description, $value, $valueAsset, $points, $pointsAsset, $shortDescription)
-		return array (new Card(1, $src.'6H.png', Color::COEURS, "Six de coeurs", 6, 16, 0, 0, '6H')
+		// array (1 => ... : Index commençant à 1 avec array()
+		return array (1 => new Card(1, $src.'6H.png', Color::COEURS, "Six de coeurs", 6, 16, 0, 0, '6H')
 				, new Card(2, $src.'7H.png', Color::COEURS, 'Sept de coeurs', 7, 17, 0, 0, '7H')
 				, new Card(3, $src.'8H.png', Color::COEURS, 'Huit de coeurs', 8, 18, 0, 0, '8H')
 				, new Card(4, $src.'9H.png', Color::COEURS, 'Neuf de coeurs', 9, 25, 0, 14, '9H')

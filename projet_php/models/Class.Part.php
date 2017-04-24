@@ -2,9 +2,9 @@
 class Part{
 	private $idPart;
 	private $players = array() ;
-	private $result = array(null,0,0);
-	private $annonces = array(null,0,0);
-	private $stock = array(null,0,0);
+	private $result = array(1 => 0,0);	// Index commençant à 1 avec array()
+	private $annonces = array(1 => 0,0);	// Index commençant à 1 avec array()
+	private $stock = array(1 => 0,0);	// Index commençant à 1 avec array()
 	private $state = -1;
 	private $designation = '';
 	private $createdBy = 0;
@@ -26,6 +26,36 @@ class Part{
 				$this->setModifby($modifBy);
 				$this->setModifOnAt($modifOnAt);
 	}
+	
+	/**
+	 * getPartsPendingToStart : recherche la liste des parties existantes
+	 * - en attente de joueurs (moins de 4) pour débuter la partie
+	 * - l'utilisateur en cours ne doit pas être déjà inscrit (currentUser = 0)
+	 * @return un array() avec une structure: int IdPart, string designation, int countPlayers
+	 */
+	public static function getPartsPendingToStart($idUser){
+		// query select
+		$query = "SELECT part.IDPart
+				, part.designation
+				, COUNT(player.IdUser) As countPlayers
+				, SUM(IF(player.IdUser = ?,1,0)) As currentUser
+				, part.state
+				FROM part, player
+				WHERE part.IDPart = player.IDPart AND part.state < 4
+				GROUP BY player.IDPart, part.designation  HAVING currentUser = 0;";
+		$attributes = array($idUser);
+		$result = MySqlConn::getInstance()->execute($query, $attributes);
+		if($result['status']=='error' || empty($result['result']))
+			return false;
+			
+			//
+			$parts = array();
+			foreach ($result['result'] as $key => $res_part){
+				$parts[$key] = array($res_part['IDPart'], $res_part['designation'], $res_part['countPlayers'], Part::getStaticLabelState($res_part['state']));
+			}
+			
+			return $parts;
+	}
 	/**
 	 * addUserInPart : ajouter un User à la partie (et un nouveau player)
 	 * @return boolean true/false
@@ -43,7 +73,7 @@ class Part{
 		// ajouter le nouve player
 		$nb = $nbPlayers + 1;
 		if(Player::newPlayer($this->idPart, $idUser, $nb)==false) return false;
-			
+		
 		checkUpdateState($idUser);
 	}
 	private function checkUpdateState($idUser){
@@ -55,7 +85,7 @@ class Part{
 		
 		// si nombre de joueur n'a pas changé ne rien faire
 		if($nbPlayers == $this->state) return ;
-
+		
 		// modifie l'état de l'objet partie en cours
 		$this->setState($nbPlayers);
 		
@@ -64,12 +94,12 @@ class Part{
 		
 		// si 4 joueurs on demarre la partie
 		if($nbPlayers == 4){
-			/* créer une donne: 
-			 * newDonne() doit : 
-			 * 1. créer 4 hands 
+			/* créer une donne:
+			 * newDonne() doit :
+			 * 1. créer 4 hands
 			 * 2. créer 1 pli à vide
-			 * ---newPli doit 
-			 * ------setter le premier 
+			 * ---newPli doit
+			 * ------setter le premier
 			 * ------si première pli : (7 carreaux)
 			 * ------sinon dernier joueur de la pli precedente
 			 */
@@ -94,10 +124,10 @@ class Part{
 					, stock_2 = ?
 					, state = ?
 					, modifBy = ?
-					, modifOnAt = now() 
+					, modifOnAt = now()
 					 WHERE IDPart = ?;";
 		$attributes = array(
-				  $this->getDesignation()
+				$this->getDesignation()
 				, $this->getResult()[1]
 				, $this->getResult()[2]
 				, $this->getAnnonce()[1]
@@ -177,9 +207,9 @@ class Part{
 			$res_part = $result['result'][0];
 			$part = new Part($res_part['IDPart']
 					, $players
-					, array(null, $res_part['pointsResult_1'], $res_part['pointsResult_2'])
-					, array(null, $res_part['annonces_1'], $res_part['annonces_2'])
-					, array(null, $res_part['stock_1'], $res_part['stock_2'])
+					, array(1 => $res_part['pointsResult_1'], $res_part['pointsResult_2'])
+					, array(1 => $res_part['annonces_1'], $res_part['annonces_2'])
+					, array(1 => $res_part['stock_1'], $res_part['stock_2'])
 					, $res_part['state']
 					, $res_part['designation']
 					, $res_part['createdBy']
@@ -190,6 +220,28 @@ class Part{
 			return $part;
 	}
 	
+	/**
+	 * getLabelState <STATIC>: recherche le libellé de l'état de la partie passée ne paramètre
+	 * @return une string  libellé
+	 */
+	public static function getStaticLabelState($state){
+		switch ($state){
+			case 1; return "Waiting 3 players for starting";
+			case 2; return "Waiting 2 players for starting";
+			case 3; return "Waiting 1 player for starting";
+			case 4; return "Part in progress";
+			case 99; return "Part terminated";
+		}
+		
+		return "Unknown state : ".$state;
+	}
+	/**
+	 * getLabelState <objet en cours>: recherche le libellé de l'état de la partie objet en cours
+	 * @return une string  libellé
+	 */
+	public function getLabelState(){
+		return getStaticLabelState($this->state);
+	}
 	
 	/**
 	 * Getter and setter

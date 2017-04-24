@@ -11,7 +11,7 @@ class Player{
 		$this->setNrPlayer($nrPlayer);
 		$this->setWinner($winner);
 	}
-
+	
 	/**
 	 * getPlayerByIDPartIDUser : recherche d'un player d'une partie de l'user
 	 * @return objet player de la partie de l'user
@@ -28,10 +28,10 @@ class Player{
 		
 		return false;
 	}
-
+	
 	/**
 	 * getPlayerByIDPartIDUser : recherche d'un player d'une partie de l'user
-	 * @return objet player de la partie de l'user 
+	 * @return objet player de la partie de l'user
 	 */
 	public static function getPlayerByIDPartNrPlayer($idPart,$nrPlayer){
 		// recherche tableau de players
@@ -39,7 +39,7 @@ class Player{
 		if (!is_array($players)) return false;
 		// boucler le tableu pour chercher et retourner l'user demandé
 		foreach ($players as $key => $p){
-			if($p->getNrPlayer()==$nrPlayer) 
+			if($p->getNrPlayer()==$nrPlayer)
 				return $p;
 		}
 		
@@ -57,13 +57,13 @@ class Player{
 		$result = MySqlConn::getInstance()->execute($query, $attributes);
 		
 		if($result['status']=='error') return false;
-
+		
 		return true;
 		
 	}
 	/**
 	 * getPlayersPart : recherche les players de la partie
-	 * @return un tableau de players de la partie 
+	 * @return un tableau de players de la partie
 	 */
 	public static function getPlayersPart($idPart){
 		// tableau de players à retourner
@@ -74,16 +74,16 @@ class Player{
 		$result = MySqlConn::getInstance()->execute($query, $attributes);
 		if($result['status']=='error' || empty($result['result']))
 			return false;
-		// 
-		foreach ($result['result'] as $key => $res_player){
-			$ndx = $res_player['nrPlayer'];
-			$players[$ndx] = new Player($res_player['IDPart'], $res_player['IdUser'], $ndx, $res_player['winner']);	
-		}
-
-		return $players;
+			//
+			foreach ($result['result'] as $key => $res_player){
+				$ndx = $res_player['nrPlayer'];
+				$players[$ndx] = new Player($res_player['IDPart'], $res_player['IdUser'], $ndx, $res_player['winner']);
+			}
+			
+			return $players;
 			
 	}
-
+	
 	
 	/**
 	 * Getter and setter

@@ -49,30 +49,45 @@ class Pli{
 		$result = MySqlConn::getInstance()->execute($query, $attributes);
 		if($result['status']=='error' || empty($result['result']))
 			return false;
-			//
-			foreach ($result['result'] as $key => $res_pli){
-				$ndx = $res_pli['nrPli'];
-				$plis[$ndx] = new Pli($res_pli['IDPli']
-						, $res_pli['IDDonne']
-						, $res_pli['nrPli']
-						, array(1 => $res_pli['nrCard_1'], $res_pli['nrCard_2'], $res_pli['nrCard_3'], $res_pli['nrCard_4'])
-						, $res_pli['firstPlayer']
-						, array(1 => $res_pli['pointsResult_1'], $res_pli['pointsResult_2'])
-						, array(1 => $res_pli['annonces_1'], $res_pli['annonces_2'])
-						, array(1 => $res_pli['stock_1'], $res_pli['stock_2'])
-						);
-			}
+		//
+		foreach ($result['result'] as $key => $res_pli){
+			$ndx = $res_pli['nrPli'];
+			$plis[$ndx] = new Pli($res_pli['IDPli']
+					, $res_pli['IDDonne']
+					, $res_pli['nrPli']
+					, array(1 => $res_pli['nrCard_1'], $res_pli['nrCard_2'], $res_pli['nrCard_3'], $res_pli['nrCard_4'])
+					, $res_pli['firstPlayer']
+					, array(1 => $res_pli['pointsResult_1'], $res_pli['pointsResult_2'])
+					, array(1 => $res_pli['annonces_1'], $res_pli['annonces_2'])
+					, array(1 => $res_pli['stock_1'], $res_pli['stock_2'])
+					);
+		}
+		
+		return $plis;
+	}
+	/**
+	 * getLastNrPli : recherche  du dernier numéro de pli
+	 * @return le nrPli de la dernière pli créée (ok) sinon 0
+	 */
+	public static function getLastNrPli($idDonne){
+		// select max
+		$query = "SELECT MAX(nrPli) as lastNrPli FROM pli WHERE IDDonne = ? GROUP BY IDDonne;";
+		$attributes = array($idDonne);
+		$result = MySqlConn::getInstance()->execute($query, $attributes);
+		if($result['status']=='error' || empty($result['result']))
+			return 0;
 			
-			return $plis;
-			
+		// MAX(nrPli) as lastNrPli
+		return $result['result'][0];
+		
 	}
 	
 	/**
 	 * newPli : création d'une nouvelle pli de la donne
 	 * @return idPli de la pli créée (ok) sinon -1 en cas d'erreur
 	 */
-	public static function newPli($idDonne, $nrPli, $firstPlayer){
-		
+	public static function newPli($idDonne, $firstPlayer){
+		$nrPli = 1 + Pli::getLastNrPli($idDonne);
 		// insert
 		$query = "INSERT INTO pli(IDDonne, nrPli, firstPlayer)	VALUES(?, ?, ?);";
 		$attributes = array($idDonne, $nrPli, $firstPlayer);

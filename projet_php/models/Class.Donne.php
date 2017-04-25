@@ -17,12 +17,12 @@ class Donne{
 		$this->setAsset($asset);
 		$this->setChibre($chibre);
 	}
+
 	/**
 	 * newDonne : création d'une nouvelle donne de la partie
 	 * @return idDonne de la donne créée (ok) sinon -1 en cas d'erreur
 	 */
 	public static function newDonne($idPart){
-		
 		// insert
 		$query = "INSERT INTO donne(IDPart)	VALUES(?);";
 		$attributes = array($idPart);
@@ -30,10 +30,16 @@ class Donne{
 		if($result['status']=='error') return -1;
 		
 		// last insert id
-		$id = MySqlConn::getInstance()->last_Insert_Id();
-		if($id < 1) return -1;
-		return $id;
+		$idDonne = MySqlConn::getInstance()->last_Insert_Id();
+		if($idDonne < 1) return -1;
 		
+		if(Hand::newHands($idDonne)){
+			;
+		}
+		$firstPlayer = Hand::
+		$pli = Pli::newPli($idDonne, $firstPlayer);
+		
+		return $idDonne;
 	}
 	/**
 	 * save : sauve (update) de l'objet en cours

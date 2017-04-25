@@ -31,7 +31,7 @@ class Part{
 	 * getPartsPendingToStart : recherche la liste des parties existantes
 	 * - en attente de joueurs (moins de 4) pour débuter la partie
 	 * - l'utilisateur en cours ne doit pas être déjà inscrit (currentUser = 0)
-	 * @return un array() avec une structure: int IdPart, string designation, int countPlayers
+	 * @return un array() avec une structure: int IdPart, string designation, int countPlayers, string libelléState
 	 */
 	public static function getPartsPendingToStart($idUser){
 		// query select
@@ -56,6 +56,44 @@ class Part{
 			
 			return $parts;
 	}
+		
+	/**
+	 * getPartsOfUser : recherche la liste des parties de l'user
+	 * - en attente de joueurs (moins de 4) pour débuter la partie
+	 * - l'utilisateur en cours ne doit pas être déjà inscrit (currentUser = 0)
+	 * @return un array() avec une structure: int IdPart, string designation, int state, string libelléState, string modifBy, string modifOnAt, Boolean winner
+	 */
+	public static function getPartsOfUser($idUser){
+		// query select
+		$query = "SELECT part.IDPart
+				, part.designation
+				, part.state
+				, part.modifBy
+				, part.modifOnAt
+				, player.winner 
+				FROM part, player
+				WHERE part.IDPart = player.IDPart player.IdUser = ?
+				ORDER BY part.modifOnAt;";
+		$attributes = array($idUser);
+		$result = MySqlConn::getInstance()->execute($query, $attributes);
+		if($result['status']=='error' || empty($result['result']))
+			return false;
+			
+			//
+			$parts = array();
+			foreach ($result['result'] as $key => $res_part){
+				$parts[$key] = array($res_part['IDPart']
+						, $res_part['designation']
+						, $res_part['state'],
+						, Part::getStaticLabelState($res_part['state'])
+						, $res_part['modifBy'],
+						, $res_part['modifOnAt']
+						, $res_part['winner']			
+				);
+			}
+			
+			return $parts;
+	}
 	/**
 	 * addUserInPart : ajouter un User à la partie (et un nouveau player)
 	 * @return boolean true/false
@@ -75,7 +113,13 @@ class Part{
 		if(Player::newPlayer($this->idPart, $idUser, $nb)==false) return false;
 		
 		checkUpdateState($idUser);
+		
+		return true;
 	}
+	/**
+	 * PRIVE checkUpdateState : contrôle l'état de la partie et éventuellement le change
+	 * @return boolean true/false
+	 */
 	private function checkUpdateState($idUser){
 		// Si partie terminée: ne rien faire
 		if($this->state == 99) return
@@ -143,11 +187,19 @@ class Part{
 		
 		return true;
 	}
+	/**
+	 * getCountPlayersAfterRefresh : Nombre de joueur de la partie
+	 * @return le nombre de joueur de la partie en cours après avoir cherché dans la BDD
+	 */
 	public function getCountPlayersAfterRefresh(){
 		// with refresh players
 		$this->setPlayers(Player::getPlayersPart($this->idPart));
 		return count($this->players);
 	}
+	/**
+	 * getCountPlayers : Nombre de joueur de la partie
+	 * @return le nombre de joueur de la partie en cours sans aller cherche dans la BDD
+	 */
 	public function getCountPlayers(){
 		// without refresh players
 		return count($this->players);
@@ -172,7 +224,6 @@ class Part{
 		if(Player::newPlayer($idPart, $idUser, 1) == false) return -1;
 		
 		return $idPart;
-		
 	}
 	
 	/**

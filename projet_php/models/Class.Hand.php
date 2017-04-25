@@ -19,29 +19,85 @@ class Hand{
 	 * Prépare 4 objets à enregistrer avec <$this->save()>
 	 * @return boolean true/false
 	 */
-	public static function newHands($idDonne, $tbl4Hands){
+	public static function newHands($idDonne){
 		// si pas de idDonne ne rien faire
 		if($idDonne < 1) return false;
 		
-		// si $tbl4Hands n'est pas un tableau ne rien faire
-		if (!isset($tbl4Hands)) return false;
+		// recherche le tableau des hands déjà existants
+		$hands = Hand::getHandsDonne($idDonne);
+		// si le tableau existe il y a une erreur 
+		if (isset($hands)) return false;
 		
-		// si pas un tableau de 4 ne rien faire
-		if (count($tbl4Hands) != 4) return false;
+		// tableau de valeurs ordonnés de 1 à 36
+		$packOfCards = range(1,36);
+		// mélange le tableau de façon RANDOM
+		shuffle($packOfCards);
 		
-		// si pas 36 éléments ne rien faire
-		if (count($tbl4Hands, COUNT_RECURSIVE) != 36) return false;
+		// prépare $tbl4Hands : un tableau de 4 tableaux de 9 cartes
+		// $key valeurs compris entre 0 à 35
+		foreach ($packOfCards as $key => $value){
+			$tbl4Hands[($key / 8) + 1][($key % 8) + 1] =  $value;
+		}
 		
-		// boucle
+		// boucle le tableau pour enregistrer les 4 mains (hands)
 		for ($i = 1; $i <= 4; $i++) {
 			$nrCards = $tbl4Hands[$i];
 			$hand = new Hand($idDonne, $i, $nrCards);
 			$hand->save();
-			
 		}
 		
 		return true;
 	}
+	
+	/**
+	 * getDonnesPart : renvoi toutes les donnes de la partie
+	 * @return un tableau de Donne de la partie
+	 */
+	public static function getHandsDonne($idDonne){
+		// tableau de hands à retourner
+		$hands = array();
+		// query select
+		$query = "SELECT IDHand
+					, IDDonne
+					, nrPlayer
+					, nrCard_1
+					, nrCard_2
+					, nrCard_3
+					, nrCard_4
+					, nrCard_5
+					, nrCard_6
+					, nrCard_7
+					, nrCard_8
+					, nrCard_9
+				 FROM hand
+				 WHERE IDDonne = ?
+				 ORDER BY nrPlayer;";
+		$attributes = array($idDonne);
+		$result = MySqlConn::getInstance()->execute($query, $attributes);
+		if($result['status']=='error' || empty($result['result']))
+			return false;
+			
+		//	 boucler le résultat et ajouter dans le tableau de hands
+		foreach ($result['result'] as $res_hand){
+			$nrPlayer = $res_hand['nrPlayer'];
+			$hands[$nrPlayer] = new Hand($res_hand['IDHand']
+					, $res_hand['IDDonne']
+					, $nrPlayer
+					, array(1 => $res_hand['nrCard_1']
+							,$res_hand['nrCard_2']
+							,$res_hand['nrCard_3']
+							,$res_hand['nrCard_4']
+							,$res_hand['nrCard_5']
+							,$res_hand['nrCard_6']
+							,$res_hand['nrCard_7']
+							,$res_hand['nrCard_8']
+							,$res_hand['nrCard_9'])
+					);
+		}
+		return $hands;
+	}
+	
+	
 	/**
 	 * save : création d'une nouvelle hand de la donne en cours
 	 * PRIVÈ car il faut utiliser newHands() pour créer 4 à la fois

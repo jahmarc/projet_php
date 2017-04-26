@@ -34,36 +34,36 @@ class Pli{
 					, nrCard_1
 					, nrCard_2
 					, nrCard_3
-					, nrCard_4 
-					, firstPlayer 
+					, nrCard_4
+					, firstPlayer
 					, pointsResult_1
 					, pointsResult_2
 					, annonces_1
 					, annonces_2
 					, stock_1
 					, stock_2
-					FROM pli 
-					WHERE IDDonne=? 
+					FROM pli
+					WHERE IDDonne=?
 					ORDER BY nrPli;";
 		$attributes = array($idDonne);
 		$result = MySqlConn::getInstance()->execute($query, $attributes);
 		if($result['status']=='error' || empty($result['result']))
 			return false;
-		//
-		foreach ($result['result'] as $key => $res_pli){
-			$ndx = $res_pli['nrPli'];
-			$plis[$ndx] = new Pli($res_pli['IDPli']
-					, $res_pli['IDDonne']
-					, $res_pli['nrPli']
-					, array(1 => $res_pli['nrCard_1'], $res_pli['nrCard_2'], $res_pli['nrCard_3'], $res_pli['nrCard_4'])
-					, $res_pli['firstPlayer']
-					, array(1 => $res_pli['pointsResult_1'], $res_pli['pointsResult_2'])
-					, array(1 => $res_pli['annonces_1'], $res_pli['annonces_2'])
-					, array(1 => $res_pli['stock_1'], $res_pli['stock_2'])
-					);
-		}
-		
-		return $plis;
+			//
+			foreach ($result['result'] as $key => $res_pli){
+				$ndx = $res_pli['nrPli'];
+				$plis[$ndx] = new Pli($res_pli['IDPli']
+						, $res_pli['IDDonne']
+						, $res_pli['nrPli']
+						, array(1 => $res_pli['nrCard_1'], $res_pli['nrCard_2'], $res_pli['nrCard_3'], $res_pli['nrCard_4'])
+						, $res_pli['firstPlayer']
+						, array(1 => $res_pli['pointsResult_1'], $res_pli['pointsResult_2'])
+						, array(1 => $res_pli['annonces_1'], $res_pli['annonces_2'])
+						, array(1 => $res_pli['stock_1'], $res_pli['stock_2'])
+						);
+			}
+			
+			return $plis;
 	}
 	/**
 	 * getLastNrPli : recherche  du dernier numéro de pli
@@ -77,9 +77,9 @@ class Pli{
 		if($result['status']=='error' || empty($result['result']))
 			return 0;
 			
-		// MAX(nrPli) as lastNrPli
-		return $result['result'][0];
-		
+			// MAX(nrPli) as lastNrPli
+			return $result['result'][0];
+			
 	}
 	
 	/**
@@ -157,7 +157,7 @@ class Pli{
 	public function setIdPli($idPli){
 		$this->idPli = $idPli;
 	}
-
+	
 	public function getIdDonne(){
 		return $this->idDonne;
 	}

@@ -17,7 +17,7 @@ class Donne{
 		$this->setAsset($asset);
 		$this->setChibre($chibre);
 	}
-
+	
 	/**
 	 * newDonne : création d'une nouvelle donne de la partie
 	 * @return idDonne de la donne créée (ok) sinon -1 en cas d'erreur
@@ -30,13 +30,14 @@ class Donne{
 		if($result['status']=='error') return -1;
 		
 		// last insert id
+		$idDonne = 0;
 		$idDonne = MySqlConn::getInstance()->last_Insert_Id();
 		if($idDonne < 1) return -1;
 		
-		if(Hand::newHands($idDonne)){
-			;
-		}
-		$firstPlayer = Hand::
+		if(!Hand::newHands($idDonne)) return -1;
+		
+		$firstPlayer = 1;
+		
 		$pli = Pli::newPli($idDonne, $firstPlayer);
 		
 		return $idDonne;

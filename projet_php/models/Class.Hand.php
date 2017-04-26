@@ -25,8 +25,9 @@ class Hand{
 		
 		// recherche le tableau des hands déjà existants
 		$hands = Hand::getHandsDonne($idDonne);
-		// si le tableau existe il y a une erreur 
-		if (isset($hands)) return false;
+		// si le tableau existe il y a une erreur
+		if(!empty($hands)) return false;
+		
 		
 		// tableau de valeurs ordonnés de 1 à 36
 		$packOfCards = range(1,36);
@@ -36,13 +37,13 @@ class Hand{
 		// prépare $tbl4Hands : un tableau de 4 tableaux de 9 cartes
 		// $key valeurs compris entre 0 à 35
 		foreach ($packOfCards as $key => $value){
-			$tbl4Hands[($key / 8) + 1][($key % 8) + 1] =  $value;
+			$tbl4Hands[($key % 4) + 1][($key % 9) + 1] =  $value;
 		}
 		
 		// boucle le tableau pour enregistrer les 4 mains (hands)
 		for ($i = 1; $i <= 4; $i++) {
 			$nrCards = $tbl4Hands[$i];
-			$hand = new Hand($idDonne, $i, $nrCards);
+			$hand = new Hand(null, $idDonne, $i, $nrCards);
 			$hand->save();
 		}
 		
@@ -71,30 +72,43 @@ class Hand{
 					, nrCard_9
 				 FROM hand
 				 WHERE IDDonne = ?
-				 ORDER BY nrPlayer;";
+				 ORDER BY nrPlayer ;";
 		$attributes = array($idDonne);
 		$result = MySqlConn::getInstance()->execute($query, $attributes);
 		if($result['status']=='error' || empty($result['result']))
 			return false;
 			
-		//	 boucler le résultat et ajouter dans le tableau de hands
-		foreach ($result['result'] as $res_hand){
-			$nrPlayer = $res_hand['nrPlayer'];
-			$hands[$nrPlayer] = new Hand($res_hand['IDHand']
-					, $res_hand['IDDonne']
-					, $nrPlayer
-					, array(1 => $res_hand['nrCard_1']
-							,$res_hand['nrCard_2']
-							,$res_hand['nrCard_3']
-							,$res_hand['nrCard_4']
-							,$res_hand['nrCard_5']
-							,$res_hand['nrCard_6']
-							,$res_hand['nrCard_7']
-							,$res_hand['nrCard_8']
-							,$res_hand['nrCard_9'])
-					);
-		}
-		return $hands;
+			//	 boucler le résultat et ajouter dans le tableau de hands
+			foreach ($result['result'] as $res_hand){
+				echo $res_hand['nrPlayer']
+				.$res_hand['IDHand']
+				.$res_hand['IDDonne']
+				.$res_hand['nrCard_1']
+				.$res_hand['nrCard_2']
+				.$res_hand['nrCard_3']
+				.$res_hand['nrCard_4']
+				.$res_hand['nrCard_5']
+				.$res_hand['nrCard_6']
+				.$res_hand['nrCard_7']
+				.$res_hand['nrCard_8']
+				.$res_hand['nrCard_9']
+				;
+				$nrPlayer = $res_hand['nrPlayer'];
+				$hands[$nrPlayer] = new Hand($res_hand['IDHand']
+						, $res_hand['IDDonne']
+						, $nrPlayer
+						, array(1 => $res_hand['nrCard_1']
+								,$res_hand['nrCard_2']
+								,$res_hand['nrCard_3']
+								,$res_hand['nrCard_4']
+								,$res_hand['nrCard_5']
+								,$res_hand['nrCard_6']
+								,$res_hand['nrCard_7']
+								,$res_hand['nrCard_8']
+								,$res_hand['nrCard_9'])
+						);
+			}
+			return $hands;
 	}
 	
 	

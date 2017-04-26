@@ -56,7 +56,7 @@ class Part{
 			
 			return $parts;
 	}
-		
+	
 	/**
 	 * getPartsOfUser : recherche la liste des parties de l'user
 	 * - en attente de joueurs (moins de 4) pour débuter la partie
@@ -70,9 +70,9 @@ class Part{
 				, part.state
 				, part.modifBy
 				, part.modifOnAt
-				, player.winner 
+				, player.winner
 				FROM part, player
-				WHERE part.IDPart = player.IDPart player.IdUser = ?
+				WHERE part.IDPart = player.IDPart AND player.IdUser = ?
 				ORDER BY part.modifOnAt;";
 		$attributes = array($idUser);
 		$result = MySqlConn::getInstance()->execute($query, $attributes);
@@ -84,11 +84,11 @@ class Part{
 			foreach ($result['result'] as $key => $res_part){
 				$parts[$key] = array($res_part['IDPart']
 						, $res_part['designation']
-						, $res_part['state'],
+						, $res_part['state']
 						, Part::getStaticLabelState($res_part['state'])
-						, $res_part['modifBy'],
+						, $res_part['modifBy']
 						, $res_part['modifOnAt']
-						, $res_part['winner']			
+						, $res_part['winner']
 				);
 			}
 			
@@ -101,7 +101,7 @@ class Part{
 	public function addUserInPart($idUser){
 		// a tester
 		// calcul nombre de joueur
-		$nbPlayers = getCountPlayersAfterRefresh();
+		$nbPlayers = Part::getCountPlayersAfterRefresh();
 		// max 4 joueurs
 		if($nbPlayers == 4) return false;
 		foreach ($this->players as $player) {
@@ -112,7 +112,7 @@ class Part{
 		$nb = $nbPlayers + 1;
 		if(Player::newPlayer($this->idPart, $idUser, $nb)==false) return false;
 		
-		checkUpdateState($idUser);
+		$this->checkUpdateState($idUser);
 		
 		return true;
 	}
@@ -123,9 +123,10 @@ class Part{
 	private function checkUpdateState($idUser){
 		// Si partie terminée: ne rien faire
 		if($this->state == 99) return
+		$nbPlayers = 0;
 		
 		// calcul nombre de joueur
-		$nbPlayers = getCountPlayersAfterRefresh();
+		$nbPlayers = $this->getCountPlayersAfterRefresh();
 		
 		// si nombre de joueur n'a pas changé ne rien faire
 		if($nbPlayers == $this->state) return ;
@@ -174,8 +175,8 @@ class Part{
 				$this->getDesignation()
 				, $this->getResult()[1]
 				, $this->getResult()[2]
-				, $this->getAnnonce()[1]
-				, $this->getAnnonce()[2]
+				, $this->getAnnonces()[1]
+				, $this->getAnnonces()[2]
 				, $this->getStock()[1]
 				, $this->getStock()[2]
 				, $this->getState()

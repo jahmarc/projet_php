@@ -8,18 +8,42 @@ class jassController extends Controller{
 		
 		// --- Début test Giuseppe
 		$this->vars['msg'] = "OK c'est bien";
+		
 		//		$this->redirect('jass', 'testGC');
 		//	$this->redirect('jass', 'testGC');
-				jassController::echoPartsPending();
+		//		jassController::echoPartsPending();
 		//		jassController::echoColorsCards();
+		/*
+		 $packOfCards = range(1,36);
+		 shuffle($packOfCards);
+		 $cards = Card::get36Cards();
+		 foreach ($packOfCards as $value){
+		 echo $cards[$value]->toString()."<br>";
+		 }
+		 */
+		$idPart = Part::newPart(1, "Partie ".time());
+		if($idPart<1) exit();
+		$currentPart1 = Part::getPartByIdPart($idPart);
 		
-		$packOfCards = range(1,36);
-		shuffle($packOfCards);
-		$cards = Card::get36Cards();
-		foreach ($packOfCards as $value){
-			echo $cards[$value]->toString()."<br>";
+		$currentPart2 = Part::getPartByIdPart($idPart);
+		$currentPart2->addUserInPart(2);
+		
+		$currentPart3 = Part::getPartByIdPart($idPart);
+		$currentPart3->addUserInPart(3);
+		
+		$currentPart4 = Part::getPartByIdPart($idPart);
+		$currentPart4->addUserInPart(4);
+		$donnes = Donne::getDonnesPart($idPart);
+		foreach ($donnes as $donne){
+			$hands = Hand::getHandsDonne($donne->getIdDonne());
+			foreach ($hands as $hand){
+				echo "<br> Joueur ".$hand->getNrPlayer()." : -> " ;
+				for ($i = 1; $i <= 9; $i++) {
+					echo $hand->getNrCards()[$i]."   ";
+					
+				}
+			}
 		}
-		
 		exit();
 		
 		

@@ -5,14 +5,14 @@ class Part{
 	private $result = array(1 => 0,0);	// Index commençant à 1 avec array()
 	private $annonces = array(1 => 0,0);	// Index commençant à 1 avec array()
 	private $stock = array(1 => 0,0);	// Index commençant à 1 avec array()
-	private $state = -1;
+	private $state = 0;
 	private $designation = '';
 	private $createdBy = 0;
 	private $createdOnAt;
 	private $modifBy = 0;
 	private $modifOnAt;
 	
-	public function __construct($idPart=null, $players, $result, $annonces, $stock, $state, $designation
+	public function __construct($idPart, $players, $result, $annonces, $stock, $state, $designation
 			, $createdBy, $createdOnAt, $modifBy, $modifOnAt){
 				$this->setIdPart($idPart);
 				$this->setPlayers($players);
@@ -99,7 +99,6 @@ class Part{
 	 * @return boolean true/false
 	 */
 	public function addUserInPart($idUser){
-		// a tester
 		// calcul nombre de joueur
 		$nbPlayers = Part::getCountPlayersAfterRefresh();
 		// max 4 joueurs
@@ -110,8 +109,7 @@ class Part{
 		}
 		// ajouter le nouve player
 		$nb = $nbPlayers + 1;
-		if(Player::newPlayer($this->idPart, $idUser, $nb)==false) return false;
-		
+		if(Player::newPlayer($this->idPart, $idUser, $nb) == false) return false;
 		$this->checkUpdateState($idUser);
 		
 		return true;
@@ -124,7 +122,6 @@ class Part{
 		// Si partie terminée: ne rien faire
 		if($this->state == 99) return
 		$nbPlayers = 0;
-		
 		// calcul nombre de joueur
 		$nbPlayers = $this->getCountPlayersAfterRefresh();
 		
@@ -160,7 +157,7 @@ class Part{
 	private function save($idUser){
 		// UPDATE (jamais modifier IdPart, createBy, createOnAt)
 		$query = "UPDATE part SET
-					  designation
+					  designation = ?
 					, pointsResult_1 = ?
 					, pointsResult_2 = ?
 					, annonces_1 = ?
@@ -247,29 +244,30 @@ class Part{
 					 , modifBy
 					 , modifOnAt
 					 FROM part
-					 WHERE IDPart = ?;";
+					 WHERE IDPart = ? ;";
 		$attributes = array($idPart);
 		$result = MySqlConn::getInstance()->execute($query, $attributes);
-		if($result['status']=='error' || empty($result['result']))
+		if($result['status']=='error' || empty($result['result'])){
 			return false;
-			
-			// recherche le tableau de players
-			$players = Player::getPlayersPart($idPart);
-			
-			$res_part = $result['result'][0];
-			$part = new Part($res_part['IDPart']
-					, $players
-					, array(1 => $res_part['pointsResult_1'], $res_part['pointsResult_2'])
-					, array(1 => $res_part['annonces_1'], $res_part['annonces_2'])
-					, array(1 => $res_part['stock_1'], $res_part['stock_2'])
-					, $res_part['state']
-					, $res_part['designation']
-					, $res_part['createdBy']
-					, $res_part['createdOnAt']
-					, $res_part['modifBy']
-					, $res_part['modifOnAt']);
-			
-			return $part;
+		}
+		// recherche le tableau de players
+		$players = Player::getPlayersPart($idPart);
+		
+		$res_part = $result['result'][0];
+		
+		$part = new Part($res_part['IDPart']
+				, $players
+				, array(1 => $res_part['pointsResult_1'], $res_part['pointsResult_2'])
+				, array(1 => $res_part['annonces_1'], $res_part['annonces_2'])
+				, array(1 => $res_part['stock_1'], $res_part['stock_2'])
+				, $res_part['state']
+				, $res_part['designation']
+				, $res_part['createdBy']
+				, $res_part['createdOnAt']
+				, $res_part['modifBy']
+				, $res_part['modifOnAt']);
+		
+		return $part;
 	}
 	
 	/**
@@ -359,7 +357,7 @@ class Part{
 		return $this->createdOnAt;
 	}
 	public function setCreatedOnAt($createdOnAt){
-		$this->state= $createdOnAt;
+		$this->createdOnAt= $createdOnAt;
 	}
 	
 	public function getModifBy(){
@@ -373,7 +371,7 @@ class Part{
 		return $this->modifOnAt;
 	}
 	public function setModifOnAt($modifOnAt){
-		$this->modifOnAt= $modifOnAt;
+		$this->modifOnAt = $modifOnAt;
 	}
 	
 	

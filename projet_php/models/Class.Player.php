@@ -5,7 +5,7 @@ class Player{
 	private $nrPlayer;
 	private $winner;
 	
-	public function __construct($idPart=null, $idUser, $nrPlayer, $winner){
+	public function __construct($idPart, $idUser, $nrPlayer, $winner){
 		$this->setIdPart($idPart);
 		$this->setIdUser($idUser);
 		$this->setNrPlayer($nrPlayer);

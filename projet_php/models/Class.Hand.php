@@ -80,19 +80,6 @@ class Hand{
 			
 			//	 boucler le résultat et ajouter dans le tableau de hands
 			foreach ($result['result'] as $res_hand){
-				echo $res_hand['nrPlayer']
-				.$res_hand['IDHand']
-				.$res_hand['IDDonne']
-				.$res_hand['nrCard_1']
-				.$res_hand['nrCard_2']
-				.$res_hand['nrCard_3']
-				.$res_hand['nrCard_4']
-				.$res_hand['nrCard_5']
-				.$res_hand['nrCard_6']
-				.$res_hand['nrCard_7']
-				.$res_hand['nrCard_8']
-				.$res_hand['nrCard_9']
-				;
 				$nrPlayer = $res_hand['nrPlayer'];
 				$hands[$nrPlayer] = new Hand($res_hand['IDHand']
 						, $res_hand['IDDonne']

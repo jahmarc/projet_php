@@ -14,7 +14,7 @@ class Chat{
 		$this->setTextChat($textChat);
 	}
 	/**
-	 * newChat : création d'une nouvelle chat 
+	 * newChat : création d'une nouvelle chat
 	 * @return id de la chat créée (ok) sinon -1 en cas d'erreur
 	 */
 	public static function newChat($IDPart, $idUser, $textChat){
@@ -28,11 +28,11 @@ class Chat{
 		// last insert id
 		$idChat= MySqlConn::getInstance()->last_Insert_Id();
 		if($idChat< 1) return -1;
-				
+		
 		return $idChat;
 	}
 	
-
+	
 	/**
 	 * getChatsPart : recherche les chats de la partie
 	 * @return un tableau de chats de la partie
@@ -41,20 +41,20 @@ class Chat{
 		// tableau de players à retourner
 		$chats = array();
 		// query select
-		$query = "SELECT IDChat, IDPart, IdUser, createdOnAt, textChat 
-				FROM chat 
-				WHERE IDPart = ?  
+		$query = "SELECT IDChat, IDPart, IdUser, createdOnAt, textChat
+				FROM chat
+				WHERE IDPart = ?
 				ORDER BY createdOnAt,idChat ;";
 		$attributes = array($idPart);
 		$result = MySqlConn::getInstance()->execute($query, $attributes);
 		if($result['status']=='error' || empty($result['result']))
 			return false;
-		//
-		foreach ($result['result'] as $res_chat){
-			$chats[] = new Chat($res_chat['IDChat'], $res_chat['IDPart'], $res_chat['IdUser'], $res_chat['createdOnAt'], $res_chat['textChat']);
-		}
-		
-		return $chats;
+			//
+			foreach ($result['result'] as $res_chat){
+				$chats[] = new Chat($res_chat['IDChat'], $res_chat['IDPart'], $res_chat['IdUser'], $res_chat['createdOnAt'], $res_chat['textChat']);
+			}
+			
+			return $chats;
 	}
 	
 	/**
@@ -91,7 +91,7 @@ class Chat{
 	public function setCreatedOnAt($createdOnAt){
 		$this->createdOnAt= $createdOnAt;
 	}
-		
+	
 	public function getTextChat(){
 		return $this->textChat;
 	}

@@ -7,13 +7,13 @@ define('SITE_NAME', substr(dirname($_SERVER['SCRIPT_NAME']),1)); //--> php_mvc
 define('ROOT_DIR', dirname(getcwd()) . '/' . SITE_NAME.'/'); //physical path on disk
 define('URL_DIR', $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT']
 		. '/' . SITE_NAME.'/');
+
 /*
 print(SITE_NAME); print('<br>');
 print(ROOT_DIR); print('<br>');
 print(URL_DIR); print('<br>');
 exit;
 
-Helena
 */
 
 //Load required classes automatically

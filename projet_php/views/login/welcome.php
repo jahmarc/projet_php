@@ -7,11 +7,21 @@ $user = $_SESSION['user'];
 ?>
 
 
-test
+
+	
 
 
 <br><br>
 	<div align="center" style="margin-top:20px;"><?php echo $msg;?>
+	
+	<div>
+		<!-- <a href="<?php echo URL_DIR.'game/game_test';?>">New Game</a>7-->
+		<input type="button" class="OK" value="NEW GAME"/>
+		<input type="button" class="OK" value="JOIN A PARTY"/>	
+	</div>
+	
+	
+	
 	<h1>Welcome <?php echo '<a style="color:#00a1ff;"> '.$user->getFirstname().' '.$user->getLastname();?></a>	</h1>	
 	<h2>The list of registered users</h2>
 	<?php

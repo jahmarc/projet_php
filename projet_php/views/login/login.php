@@ -1,5 +1,4 @@
 <?php include_once ROOT_DIR.'views/header.inc';
-
 //Collect data from controller
 $msg = $this->vars['msg'];
 

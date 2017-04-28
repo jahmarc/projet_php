@@ -15,7 +15,7 @@ $user = $_SESSION['user'];
 	<div style="display: inline-block; margin-top:20px;">
 		<!-- <a href="<?php echo URL_DIR.'game/game_test';?>">New Game</a>7-->
 		<input type="button" class="OK" value="NEW GAME"/>
-		<input type="button" class="OK" value="JOIN A PARTY"/>	
+		<a href="<?php echo URL_DIR.'game/game_test';?>" type="button" class="OK">JOIN A PARTY</a>	
 	</div>
 	
 	<div align="center" style="margin-top:20px;"><?php echo $msg;?>

@@ -1,6 +1,8 @@
 @CHARSET "ISO-8859-1";
 
---Stephanie
+body{
+	margin:0;
+}
 
 .error {
 	color: red;
@@ -14,3 +16,156 @@
 .table{
 	background-color:black;
 }
+
+
+/******************** MENU NAV HEADER *********************/
+
+nav{
+    background-color: black;
+    width: 100%;
+    margin: 0 auto;
+    position: fixed;
+}
+ul {
+ padding:0;
+ margin:0;
+ list-style-type:none;
+ float:right;
+ }
+li {
+ float:left; /*pour IE*/
+ border-left:1px solid black;
+ }
+ul li a {
+ display:block;
+ float:left;   
+ width:100px;
+ line-height:50px; /*hauteur de l'image de fond*/
+ background:black url("sources/noir-1.png") repeat-x;
+ color:#DCDCDC;
+ text-decoration:none;
+ text-align:center;
+ }
+ul li a:hover {
+ background:black url("sources/noir-2.png") repeat-x;
+ background-color:#0b213c;
+ color:white;
+ }  
+ 
+ 
+ /*************************************HELENA CODE POUR GAME*******************************/
+ 
+ 
+  
+html, body{
+    height:100%;
+    width:100%;
+    margin:0 auto;
+    color:white;
+}
+
+
+#table{
+    background-image: url("sources/carta.jpg");
+    background-repeat: no-repeat;
+    width: 60%;
+    height: 80%;
+    /* margin: 0 auto; */
+    background-size: 100%;
+    position: absolute;
+    float: none;
+    margin-left: 20%;
+}
+
+
+#gameHeader{
+    height:70px;
+    width:100%;
+    background-color: black;
+}
+
+
+#gauche{
+    float:left;
+    background-color: black;
+    position: absolute;
+    width: 20%;
+    height:70%;
+    bottom:0;
+   }
+
+#droite{
+    float:right;
+   /* background-color: yellow;
+    height: 900px;*/
+    width: 20%;
+    margin-left: 80%;
+}
+
+
+#atout, #main{
+    text-align:Center;
+    padding-top:25px;
+    font-size: large;
+    font-variant: all-small-caps;
+    font-size: 20px;
+    float: left;
+    margin-left: 23%;
+}
+
+#main{
+    margin-left: 20%;
+}
+
+#player1{
+    text-align:Center;
+    background-color: bisque;
+    width:20%;
+    height: 20%;
+    margin:0 auto;
+}
+
+#player2{
+    text-align:Center;
+    background-color: bisque;
+    float: right;
+    width:20%;
+    height: 20%;
+    margin:0 auto;
+}
+
+#player3{
+
+
+    text-align:Center;
+    width:20%;
+    height: 20%;
+    margin:0 auto;
+    bottom: 0px;
+    position: fixed;
+    margin-left: 21%;
+
+}
+
+#player4{
+    text-align:Center;
+    background-color: bisque;
+    float: left;
+    width:20%;
+    height: 20%;
+    margin:0 auto;
+
+}
+
+
+#carte1{
+    transform: rotate(270deg);
+}
+
+#carte2{
+}
+
+#carte4{
+    transform: rotate(180deg);
+}
+ 

@@ -60,7 +60,7 @@ $user = $_SESSION['user'];
 			<tr style='margin-top:50px;'><td></td></tr>";
 	}
 	
-	
+	 
 	?>
 	</table>
 	

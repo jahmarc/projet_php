@@ -7,6 +7,9 @@ $user = $_SESSION['user'];
 ?>
 
 
+test
+
+
 <br><br>
 	<div align="center" style="margin-top:20px;"><?php echo $msg;?>
 	<h1>Welcome <?php echo '<a style="color:#00a1ff;"> '.$user->getFirstname().' '.$user->getLastname();?></a>	</h1>	

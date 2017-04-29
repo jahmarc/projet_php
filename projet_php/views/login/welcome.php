@@ -1,5 +1,5 @@
 <?php
-include_once ROOT_DIR.'views/nav-header.inc';
+include_once ROOT_DIR.'views/header.inc';
 
 //Collect data from controller and session
 $msg = $this->vars['msg'];

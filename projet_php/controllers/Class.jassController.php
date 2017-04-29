@@ -4,6 +4,9 @@ class jassController extends Controller{
 	 * Method called by the form of the page login.php
 	 */
 	
+	
+	
+	
 	function testGC(){
 		
 		// --- Début test Giuseppe

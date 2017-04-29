@@ -12,3 +12,14 @@
 	</head>  
 	<body>
 
+	<body>
+	
+		<nav>
+			<ul>
+				 <li><a href="#">Play</a></li>
+				 <li><a href="<?php echo URL_DIR.'login/welcome';?>">Users</a></li>
+				 <li><a href="<?php echo URL_DIR.'login/logout';?>">LOGOUT</a></li>
+			</ul>
+		</nav>
+	
+	</body>

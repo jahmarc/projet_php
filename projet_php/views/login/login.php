@@ -3,7 +3,7 @@
 $msg = $this->vars['msg'];
 
 ?>
-<br><br>
+<br><br><br><br><br><br>
 <form action="<?php echo URL_DIR.'login/connection';?>" method="post">
 	<table align="center" id="tableLogin" >		
 		<tr>

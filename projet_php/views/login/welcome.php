@@ -14,8 +14,8 @@ $user = $_SESSION['user'];
 <br><br>
 	<div style="display: inline-block; margin-top:20px;">
 		<!-- <a href="<?php echo URL_DIR.'game/game_test';?>">New Game</a>7-->
-		<input type="button" class="OK" value="NEW GAME"/>
-		<a href="<?php echo URL_DIR.'game/game_test';?>" type="button" class="OK">JOIN A PARTY</a>	
+		<a href="<?php echo URL_DIR.'party/listOfTables';?>" type="button" class="OK">JOIN A PARTY</a>	
+		<a href="<?php echo URL_DIR.'party/newParty';?>" type="button" class="OK">NEW PARTY</a>	
 	</div>
 	
 	<div align="center" style="margin-top:20px;"><?php echo $msg;?>
@@ -49,7 +49,7 @@ $user = $_SESSION['user'];
 		while($row = $result->fetch_assoc()) 
 		{
 			echo "
-						<td>USER : " . $row["username"]. "</td><tr>
+						<td><strong>USER : " . $row["username"]. "</strong></td><tr>
 				  	</tr>
 					<tr>
 						<td style='padding-left:10%;'> NAME : " . $row["firstname"]. "</td>

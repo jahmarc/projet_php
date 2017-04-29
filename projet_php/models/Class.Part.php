@@ -12,20 +12,26 @@ class Part{
 	private $modifBy = 0;
 	private $modifOnAt;
 	
-	public function __construct($idPart, $players, $result, $annonces, $stock, $state, $designation
-			, $createdBy, $createdOnAt, $modifBy, $modifOnAt){
-				$this->setIdPart($idPart);
-				$this->setPlayers($players);
-				$this->setResult($result);
-				$this->setAnnonces($annonces);
-				$this->setStock($stock);
-				$this->setState($state);
-				$this->setDesignation($designation);
-				$this->setCreatedBy($createdBy);
-				$this->setCreatedOnAt($createdOnAt);
-				$this->setModifby($modifBy);
-				$this->setModifOnAt($modifOnAt);
-	}
+	
+		public function __construct($designation){
+					$this->setDesignation($designation);
+		}
+	
+	
+// 	public function __construct($idPart, $players, $result, $annonces, $stock, $state, $designation
+// 			, $createdBy, $createdOnAt, $modifBy, $modifOnAt){
+// 				$this->setIdPart($idPart);
+// 				$this->setPlayers($players);
+// 				$this->setResult($result);
+// 				$this->setAnnonces($annonces);
+// 				$this->setStock($stock);
+// 				$this->setState($state);
+// 				$this->setDesignation($designation);
+// 				$this->setCreatedBy($createdBy);
+// 				$this->setCreatedOnAt($createdOnAt);
+// 				$this->setModifby($modifBy);
+// 				$this->setModifOnAt($modifOnAt);
+// 	}
 	
 	/**
 	 * getPartsPendingToStart : recherche la liste des parties existantes
@@ -150,6 +156,11 @@ class Part{
 		};
 		
 	}
+	
+	
+	
+	
+	
 	/**
 	 * save : sauve (update) de l'objet en cours
 	 * @return boolean true/false

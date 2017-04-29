@@ -14,11 +14,22 @@ class User{
 		$this->setPassword($password);
 	}
 	
-	//renvoie de tous les utilisateurs 
-	public function getAllUsers($idUser){	
-		$query = "SELECT username, firstname, lastname FROM user WHERE idUser = ?;";
-		$attributes = array($this->firstname, $this->lastname, $this->username);
+	//renvoie la liste de tous les autres utilisateurs
+	public static function getAllOthersUsers($idUser){	
+		$query = "SELECT firstname, lastname, username FROM user WHERE id != ?;";
+		$attributes = array($idUser);
 		$result = MySqlConn::getInstance()->execute($query, $attributes);
+		if($result['status']=='error' || empty($result['result']))
+			return false;
+				
+			$users = array();
+			foreach ($result['result'] as $key => $res_user){
+				$users[$key] = array($res_user['firstname']
+						, $res_user['lastname']
+						, $res_user['username']
+				);
+			}				
+			return $users;
 		
 	}
 	

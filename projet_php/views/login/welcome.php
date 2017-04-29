@@ -34,31 +34,36 @@ $user = $_SESSION['user'];
 			die("Connection failed: " . $conn->connect_error);
 		}
 		
-		$sql = "SELECT id, firstname, lastname, username FROM user";
-		$result = $conn->query($sql);
+		//$sql = "SELECT id, firstname, lastname, username FROM user";
+		//$result = $conn->query($sql);
 		
 		?>
 		
 		<table id="tableLogin" style="margin-top:50px; width:40%;">
 		
+		 
 		<?php
-		while($row = $result->fetch_assoc()) 
-		{
-			echo "
-						<td><strong>USER : " . $row["username"]. "</strong></td><tr>
-				  	</tr>
-					<tr>
-						<td style='padding-left:10%;'> NAME : " . $row["firstname"]. "</td>
-						<td	> SURNAME : " . $row["lastname"]. "</td>
-					</tr>
-				<tr><td><hr></td><td><hr></td></tr>
+		
+		$this->echoListOfOthersUsers();
+		
+		//while($row = $result->fetch_assoc()) 
+		//{
+		//	echo "
+		//				<td><strong>USER : " . $row["username"]. "</strong></td><tr>
+		//		  	</tr>
+		//			<tr>
+		//				<td style='padding-left:10%;'> NAME : " . $row["firstname"]. "</td>
+		//				<td	> SURNAME : " . $row["lastname"]. "</td>
+		//			</tr>
+		//		<tr><td><hr></td><td><hr></td></tr>
 				
 				
-				<tr style='margin-top:50px;'><td></td></tr>";
-		}
+		//		<tr style='margin-top:50px;'><td></td></tr>";
+		//}
 		
 		 
 		?>
+		
 		</table>
 		
 	

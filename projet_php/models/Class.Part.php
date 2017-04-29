@@ -117,6 +117,21 @@ class Part{
 			
 			return $parts;
 	}
+	
+	/**
+	 * HELENA
+	 * 
+	 * ADD USER IN PART
+	 */
+	public static function addUserToPart($idPart){
+		
+		
+	}
+	
+	
+	
+	
+	
 	/**
 	 * addUserInPart : ajouter un User à la partie (et un nouveau player)
 	 * @return boolean true/false

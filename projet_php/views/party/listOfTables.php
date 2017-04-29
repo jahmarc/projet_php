@@ -17,7 +17,7 @@ $user = $_SESSION['user'];
 </div>
 
 
-<div style="margin:0 auto; width:600px;">	
+<div style="margin:0 auto; width:800px;">	
 	<?php $this->echoPartsPending(); ?>
 	
 

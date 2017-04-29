@@ -12,7 +12,7 @@ a{
 
 #tableLogin{
 	padding:2%;
-	background-color:rgba(0, 255, 221, 0.41);
+	background-color:rgba(0, 161, 255, 0.85);
     border-radius: 25px;
 }
 
@@ -26,9 +26,9 @@ input[type="text"],input[type="password"]{
 }
 
 .OK{
-    background-color: #00a1ff; /* Green */
-    border: #00a1ff;
-    color: white;
+        background-color: white;
+    border: white;
+    color: #018de1;
     padding: 9px 19px;
     text-align: center;
     text-decoration: none;
@@ -40,9 +40,8 @@ input[type="text"],input[type="password"]{
 	float:right;
 }
 .OK:hover{
-
-	background-color: white;
-    color: #00a1ff;
+	background-color: #00a1ff;
+    color: white; 
 }
 
 h3{

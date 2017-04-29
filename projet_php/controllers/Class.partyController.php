@@ -34,12 +34,12 @@ class partyController extends Controller{
 		
 		$link = URL_DIR.'party/partyRegister' ;
 		
-		echo '<form action="'.$link.'" method="post">';
+		echo '<form action="'.$link.'" method="get">';
 			
 		echo '<table align="center" style="border-bottom-style="double">';
 		
 		foreach ($strPparts as $value){
-			echo '<tr><td>'.$value[1].'</td><td>'.$value[2].'</td><td><input type="submit" value="inscription" name="'.$value[0].'"></td></tr>';
+			echo '<tr><td>'.$value[1].'</td><td>'.$value[2].'</td><td><input class="OK" type="submit" value="inscription" name="'.$value[0].'"></td></tr>';
 		}
 	
 		echo '</table></form>';
@@ -49,19 +49,15 @@ class partyController extends Controller{
 	
 	
 	public function partyRegister(){
-		echo $this->inscription;
+				
+		foreach($_GET as $key=>$value){
+			$key;
+		}
+
+		$user = $_SESSION['user'];
+		$idUser = $user->getId();
 		
-		
-		$e = $_POST['inscription'];
-		$a = $_SERVER['REQUEST_URI'];
-		
-			
-		
-		//$this->redirect($login, $welcome);
-// 		$user = $_SESSION['user'];
-// 		$idUser = $user->getId();
-		
-// 		Part::addUserInPart($idUser);
+		Part::addUserToPart($key);
 	}
 	
 	

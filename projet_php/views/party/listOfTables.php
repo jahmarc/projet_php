@@ -8,33 +8,12 @@ $user = $_SESSION['user'];
 
 <br><br><br><br><br><br>
 
-
-<div>
-	<?php include URL_DIR.'party/showTables';
-
-echo $msg;
+<h2><?php echo $msg;?></h2>
 
 
+<div style="margin:0 auto; width:400px;">
 
-	?>
-	
-	
-		
-		
-		
-		
-	
-	</form>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+<?php $this->echoPartsPending(); ?>
 	
 
 </div>

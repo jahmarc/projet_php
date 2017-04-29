@@ -13,13 +13,13 @@ class Part{
 	private $modifOnAt;
 	
 	
-		public function __construct($designation){
-					$this->setDesignation($designation);
-		}
+	public function __construct($designation){
+				$this->setDesignation($designation);
+	}
+	
+	public function Part(){
 		
-		public function Part(){
-			
-		}
+	}
 	
 	
 // 	public function __construct($idPart, $players, $result, $annonces, $stock, $state, $designation

@@ -31,25 +31,37 @@ class partyController extends Controller{
 		$user = $_SESSION['user'];
 		$idUser = $user->getId();
 		$strPparts = Part::getPartsPendingToStart($idUser);
+		
+		$link = URL_DIR.'party/partyRegister' ;
+		
+		echo '<form action="'.$link.'" method="post">';
+			
 		echo '<table align="center" style="border-bottom-style="double">';
 		
 		foreach ($strPparts as $value){
-			echo '<tr><td><a href="'.$url.'">'.$value[1].'<a/></td><td>'.$value[2].'</td></tr>';
+			echo '<tr><td>'.$value[1].'</td><td>'.$value[2].'</td><td><input type="submit" value="inscription" name="'.$value[0].'"></td></tr>';
 		}
 	
-		echo '</table>';
+		echo '</table></form>';
 	}
 	
 
 	
 	
 	public function partyRegister(){
-		
-		$user = $_SESSION['user'];
-		$idUser = $user->getId();
+		echo $this->inscription;
 		
 		
-		Part::addUserInPart($idUser);
+		$e = $_POST['inscription'];
+		$a = $_SERVER['REQUEST_URI'];
+		
+			
+		
+		//$this->redirect($login, $welcome);
+// 		$user = $_SESSION['user'];
+// 		$idUser = $user->getId();
+		
+// 		Part::addUserInPart($idUser);
 	}
 	
 	

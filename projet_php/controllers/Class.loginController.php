@@ -115,4 +115,11 @@ class loginController extends Controller{
 		
 	}
 	
+	function ListOfUsers(){
+		
+		$user = $_SESSION['user'];
+		$idUser = $user->getId();
+		
+	}
+	
 }

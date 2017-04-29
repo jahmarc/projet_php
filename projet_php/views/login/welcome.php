@@ -7,10 +7,6 @@ $user = $_SESSION['user'];
 ?>
 
 
-
-	
-
-
 <br><br>
 	<div style="display: inline-block; margin-top:20px;">
 		<!-- <a href="<?php echo URL_DIR.'game/game_test';?>">New Game</a>7-->

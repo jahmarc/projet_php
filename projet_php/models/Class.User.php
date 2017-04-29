@@ -12,7 +12,15 @@ class User{
 		$this->setLastname($lastname);
 		$this->setUsername($username);
 		$this->setPassword($password);
-	}	
+	}
+	
+	//renvoie de tous les utilisateurs 
+	public function getAllUsers($idUser){	
+		$query = "SELECT username, firstname, lastname FROM user WHERE idUser = ?;";
+		$attributes = array($this->firstname, $this->lastname, $this->username);
+		$result = MySqlConn::getInstance()->execute($query, $attributes);
+		
+	}
 	
 	public function getId(){
 		return $this->id;

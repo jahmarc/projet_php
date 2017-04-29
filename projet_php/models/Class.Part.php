@@ -45,14 +45,22 @@ class Part{
 	 */
 	public static function getPartsPendingToStart($idUser){
 		// query select
-		$query = "SELECT part.IDPart
-				, part.designation
-				, COUNT(player.IdUser) As countPlayers
-				, SUM(IF(player.IdUser = ?,1,0)) As currentUser
-				, part.state
-				FROM part, player
-				WHERE part.IDPart = player.IDPart AND part.state < 4
-				GROUP BY player.IDPart, part.designation  HAVING currentUser = 0;";
+// 		$query = "SELECT part.IDPart
+// 				, part.designation
+// 				, COUNT(player.IdUser) As countPlayers
+// 				, SUM(IF(player.IdUser = ?,1,0)) As currentUser
+// 				, part.state
+// 				FROM part, player
+// 				WHERE part.IDPart = player.IDPart AND part.state < 4
+// 				GROUP BY player.IDPart, part.designation  HAVING currentUser = 0;";
+		
+		$query = "SELECT part.IDPart, part.designation, part.state
+				FROM part, player WHERE part.IDPart = player.IDPart AND part.state < 4 GROUP BY player.IDPart, part.designation;";
+		
+		
+		
+		
+		
 		$attributes = array($idUser);
 		$result = MySqlConn::getInstance()->execute($query, $attributes);
 		if($result['status']=='error' || empty($result['result']))
@@ -61,7 +69,12 @@ class Part{
 			//
 			$parts = array();
 			foreach ($result['result'] as $key => $res_part){
-				$parts[$key] = array($res_part['IDPart'], $res_part['designation'], $res_part['countPlayers'], Part::getStaticLabelState($res_part['state']));
+				//$parts[$key] = array($res_part['IDPart'], $res_part['designation'], $res_part['countPlayers'], Part::getStaticLabelState($res_part['state']));
+			
+				/**Helena*/
+				$parts[$key] = array($res_part['IDPart'], $res_part['designation'], Part::getStaticLabelState($res_part['state']));
+				
+			
 			}
 			
 			return $parts;

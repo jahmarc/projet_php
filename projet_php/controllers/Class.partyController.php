@@ -15,22 +15,19 @@ class partyController extends Controller{
 		$user = $_SESSION['user'];
 		$idUser = $user->getId();
 
-		//$strPparts = Part::getPartsPendingToStart($idUser);
-		
 		$this->echoPartsPending();
-		
-		echo "<br><br><br><br><br>";
-		
+				
 	
 	}
 	
-	
+
 	public function echoPartsPending(){
 		$user = $_SESSION['user'];
 		$idUser = $user->getId();
 		$strPparts = Part::getPartsPendingToStart($idUser);
+		
 		foreach ($strPparts as $value){
-			echo $value[0].' - '.$value[1].' - '.$value[2].' - '.$value[3]."<br>";
+			echo $value[0].' - '.$value[1].' - '.$value[2]."<br>";
 		}
 	
 	}

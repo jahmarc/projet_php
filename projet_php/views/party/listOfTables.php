@@ -10,9 +10,7 @@ $user = $_SESSION['user'];
 
 
 <div>
-	<?php $tables = URL_DIR.'party/showTables';
-echo $tables;
-	
+	<?php include URL_DIR.'party/showTables';
 
 echo $msg;
 

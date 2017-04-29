@@ -98,6 +98,516 @@ class Hand{
 			return $hands;
 	}
 	
+	/**
+	 * getHandPlayer : renvoi toutes les cartes d'un joueur
+	 * @return un tableau de cartes
+	 */
+	public static function getHandPlayer($idDonne, $nrPlayer){
+		// tableau de hands à retourner
+		$hand = array();
+		// query select
+		$query = "SELECT IDHand
+					, IDDonne
+					, nrPlayer
+					, nrCard_1
+					, nrCard_2
+					, nrCard_3
+					, nrCard_4
+					, nrCard_5
+					, nrCard_6
+					, nrCard_7
+					, nrCard_8
+					, nrCard_9
+				 FROM hand
+				 WHERE IDDonne = ?
+				 AND nrPlayer = ?;";
+		
+		$attributes = array($idDonne, $nrPlayer);
+		$result = MySqlConn::getInstance()->execute($query, $attributes);
+		if($result['status']=='error' || empty($result['result']))
+			return false;
+			
+			//	 boucler le résultat et ajouter dans le tableau de hands
+			foreach ($result['result'] as $res_hand){
+				$hand= new Hand($res_hand['IDHand']
+						, $res_hand['IDDonne']
+						, $nrPlayer
+						, array(1 => $res_hand['nrCard_1']
+								,$res_hand['nrCard_2']
+								,$res_hand['nrCard_3']
+								,$res_hand['nrCard_4']
+								,$res_hand['nrCard_5']
+								,$res_hand['nrCard_6']
+								,$res_hand['nrCard_7']
+								,$res_hand['nrCard_8']
+								,$res_hand['nrCard_9'])
+						);
+			}
+			return $hand;
+	}
+	
+	/**
+	 * checkAnnonces : Contrôle la main d'un joueur afin de vérifier quels sont les annonces qu'il possède
+	 * @return l'id de l'annonce correspondante
+	 */
+	public static function checkAnnonces($idHand, $idDonne, $nrPlayer){
+		// variable à retourner à la fin
+		$annonce;
+		
+		//Création d'un tableau de bool afin de garder les résultats en mémoires
+		
+		//On va cherche la main du joueur à tester
+		$hand = getHandPlayer($idDonne, $nrPlayer);
+		
+		//TEST 1 : 4 valets
+		$isTrue = fourValetTest($hand);
+		if($isTrue == true){
+			$annonce = 6;
+			return;
+		}
+		
+		//TEST 2 : 4 neufs
+		$isTrue = fourNineTest($hand);
+		if($isTrue == true){
+			$annonce = 5;
+			return;
+		}
+		
+		//TEST 3 : 5 cartes conséqutives
+		$isTrue = fiveCardTest($hand);
+		if($isTrue == true){
+			$annonce = 4;
+			return;
+		}
+		
+		//TEST 4 : 4 cartes identiques
+		$isTrue = fourIdenticalCardsTest($hand);
+		if($isTrue == true){
+			$annonce = 3;
+			return;
+		}
+		
+		//TEST 5 : 4 cartes conséqutives
+		$isTrue = fourCardTest($hand);
+		if($isTrue == true){
+			$annonce = 2;
+			return;
+		}
+		
+		//TEST 6 : 3 cartes conséqutives
+		$isTrue = threeCardTest($hand);
+		if($isTrue == true){
+			$annonce = 1;
+			return;
+		}		
+	}
+	
+	/**
+	 * threeCardsTest : Contrôle la main d'un joueur afin de vérifier s'il a trois cartes conséqutives
+	 * @return vrai ou faux
+	 */
+	public static function threeCardsTest($hand){
+		// variable à retourner à la fin
+		$result = false;
+		$var1;
+		$var2;
+		
+
+		for ($i=0; $i<=8; $i++)
+		{
+			$id1 = $card[i]->getNrCards();
+			for($j=i+1; $j<=8; $j++)
+			{
+				$id2 = $card[j]->getNrCards();
+				$var1 = min($id1,$id2);
+				$var2 = max($id1,$id2);
+				if($var2-$var1 == 1)
+				{
+					for($k=j+1; $k<=8; $k++){
+						$id3 = $card[k]->getNrCards();
+						if($id3>$var2){
+							if($id3-$var2==1)
+							{
+								$result=true;
+							}
+						}
+						else{
+							if($var1-$id3==1)
+							{
+								$result=true;
+							}
+						}
+					}
+				}
+			}
+		}
+		return $result;
+	}
+	
+	/**
+	 * fourCardsTest : Contrôle la main d'un joueur afin de vérifier s'il a quatre cartes conséqutives
+	 * @return vrai ou faux
+	 */
+	public static function fourCardsTest($hand){
+		// variable à retourner à la fin
+		$result = false;
+		$var1;
+		$var2;
+		
+		
+		for ($i=0; $i<=8; $i++)
+		{
+			$id1 = $card[i]->getNrCards();
+			for($j=i+1; $j<=8; $j++)
+			{
+				$id2 = $card[j]->getNrCards();
+				$var1 = min($id1,$id2);
+				$var2 = max($id1,$id2);
+				if($var2-$var1 == 1)
+				{
+					for($k=j+1; $k<=8; $k++){
+						$id3 = $card[k]->getNrCards();
+						if($id3>$var2){
+							if($id3-$var2==1)
+							{
+								$var2 = $id3;
+								for($l=k+1; $l<=8; $l++){
+									$id4 = $card[l]->getNrCards();
+									if($id4>$var2){
+										if($id4-$var2==1){
+											$result=true;
+										}
+									}
+									else{
+										if($var1-$id4==1){
+											$result=true;
+										}
+									}
+								}
+							}
+						}
+						else{
+							if($var1-$id3==1)
+							{
+								$var1 = $id3;
+								for($l=k+1; $l<=8; $l++){
+									$id4 = $card[l]->getNrCards();
+									if($id4>$var2){
+										if($id4-$var2==1){
+											$result=true;
+										}
+									}
+									else{
+										if($var1-$id4==1){
+											$result=true;
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		return $result;
+	}
+	
+	
+	/**
+	 * fiveCardsTest : Contrôle la main d'un joueur afin de vérifier s'il a cinq cartes conséqutives
+	 * @return vrai ou faux
+	 */
+	public static function fiveCardsTest($hand){
+		// variable à retourner à la fin
+		$result = false;
+		$var1;
+		$var2;
+		
+		
+		for ($i=0; $i<=8; $i++)
+		{
+			$id1 = $card[i]->getNrCards();
+			for($j=i+1; $j<=8; $j++)
+			{
+				$id2 = $card[j]->getNrCards();
+				$var1 = min($id1,$id2);
+				$var2 = max($id1,$id2);
+				if($var2-$var1 == 1)
+				{
+					for($k=j+1; $k<=8; $k++){
+						$id3 = $card[k]->getNrCards();
+						if($id3>$var2){
+							if($id3-$var2==1)
+							{
+								$var2 = $id3;
+								for($l=k+1; $l<=8; $l++){
+									$id4 = $card[l]->getNrCards();
+									if($id4>$var2){ 
+										if($id4-$var2==1){
+											$var2 = $id4;
+											for($m=l+1; $m<=8; $m++){
+												$id5 = $card[m]->getNrCards();
+												if($id5>$var2){
+													if($id5-$var2==1)
+													{
+														$result=true;
+													}
+												}
+												else{
+													if($var1-$id5==1){
+														$result=true;
+													}
+												}
+											}
+										}
+									}
+									else{
+										if($var1-$id4==1){
+											$var1 = $id4;
+											for($m=l+1; $m<=8; $m++){
+												$id5 = $card[m]->getNrCards();
+												if($id5>$var2){
+													if($id5-$var2==1){
+														$result=true;
+													}
+												}
+												else{
+													if($var1-$id5==1){
+														$result=true;
+													}
+												}
+											}
+										}	
+									}
+								}
+							}
+							else{
+								if($var1-$id3==1)
+								{
+									$var1 = $id3;
+									for($l=k+1; $l<=8; $l++){
+										$id4 = $card[l]->getNrCards();
+										if($id4>$var2){
+											if($id4-$var2==1){
+												$result=true;
+											}
+										}
+										else{
+											if($var1-$id4==1){
+												$result=true;
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	return $result;
+	}
+
+	
+		/**
+	 * fourIdenticalCardsTest : Contrôle la main d'un joueur afin de vérifier s'il a quatre cartes identiques
+	 * @return vrai ou faux
+	 */
+	public static function fourIdenticalCardsTest($hand){
+		// variable à retourner à la fin
+		$result = false;
+		
+		
+		for ($i=0; $i<=8; $i++)
+		{
+			$id1 = $card[i]->getNrCards();
+			if($id1<=5 && $id1>=9)
+			{
+			for($j=i+1; $j<=8; $j++)
+			{
+				$id2 = $card[j]->getNrCards();
+				if($id2-$id1 == 9)
+				{
+					for($k=j+1; $k<=8; $k++){
+						$id3 = $card[k]->getNrCards();
+							if($id3-$id2==9)
+							{
+								for($l=k+1; $l<=8; $l++){
+									$id4 = $card[l]->getNrCards();
+										if($id4-$id3==9){
+											$result=true;
+									}
+								}							
+							}
+						}
+					}
+				}
+			}
+		}
+		return $result;
+	}
+	
+	
+	/**
+	 * fourNineTest : Contrôle la main d'un joueur afin de vérifier s'il a quatre cartes identiques
+	 * @return vrai ou faux
+	 */
+	public static function fourNineTest($hand){
+		// variable à retourner à la fin
+		$result = false;
+		
+		
+		for ($i=0; $i<=8; $i++)
+		{
+			$id1 = $card[i]->getNrCards();
+			if($id1==4)
+			{
+				for($j=i+1; $j<=8; $j++)
+				{
+					$id2 = $card[j]->getNrCards();
+					if($id2==13)
+					{
+						for($k=j+1; $k<=8; $k++){
+							$id3 = $card[k]->getNrCards();
+							if($id3==22)
+							{
+								for($l=k+1; $l<=8; $l++){
+									$id4 = $card[l]->getNrCards();
+									if($id4==31){
+										$result=true;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		return $result;
+	}
+	
+	
+	/**
+	 * fourNineTest : Contrôle la main d'un joueur afin de vérifier s'il a quatre cartes identiques
+	 * @return vrai ou faux
+	 */
+	public static function fourValetTest($hand){
+		// variable à retourner à la fin
+		$result = false;
+		
+		
+		for ($i=0; $i<=8; $i++)
+		{
+			$id1 = $card[i]->getNrCards();
+			if($id1==6)
+			{
+				for($j=i+1; $j<=8; $j++)
+				{
+					$id2 = $card[j]->getNrCards();
+					if($id2==15)
+					{
+						for($k=j+1; $k<=8; $k++){
+							$id3 = $card[k]->getNrCards();
+							if($id3==24)
+							{
+								for($l=k+1; $l<=8; $l++){
+									$id4 = $card[l]->getNrCards();
+									if($id4==33){
+										$result=true;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		return $result;
+	}
+	
+	/**
+	 * stockTest : Contrôle la main d'un joueur afin de vérifier s'il a quatre cartes identiques
+	 * @return vrai ou faux
+	 */
+	public static function stockTest($hand, $asset){
+		// variable à retourner à la fin
+		$result = false;
+		
+		switch($asset)
+		{
+			case 1:
+				for ($i=0; $i<=8; $i++)
+				{
+					$id1 = $card[i]->getNrCards();
+					if($id1==7)
+					{
+						for($j=i+1; $j<=8; $j++)
+						{
+							$id2 = $card[j]->getNrCards();
+							if($id2==8)
+							{
+								$result=true;
+							}
+						}
+					}
+				}
+				break;
+			case 2:
+				for ($i=0; $i<=8; $i++)
+				{
+					$id1 = $card[i]->getNrCards();
+					if($id1==16)
+					{
+						for($j=i+1; $j<=8; $j++)
+						{
+							$id2 = $card[j]->getNrCards();
+							if($id2==17)
+							{
+								$result=true;
+							}
+						}
+					}
+				}
+				break;
+			case 3:
+				for ($i=0; $i<=8; $i++)
+				{
+					$id1 = $card[i]->getNrCards();
+					if($id1==25)
+					{
+						for($j=i+1; $j<=8; $j++)
+						{
+							$id2 = $card[j]->getNrCards();
+							if($id2==26)
+							{
+								$result=true;
+							}
+						}
+					}
+				}
+				break;
+			case 4:
+				for ($i=0; $i<=8; $i++)
+				{
+					$id1 = $card[i]->getNrCards();
+					if($id1==34)
+					{
+						for($j=i+1; $j<=8; $j++)
+						{
+							$id2 = $card[j]->getNrCards();
+							if($id2==35)
+							{
+								$result=true;
+							}
+						}
+					}
+				}
+				break;
+			}
+		
+		return $result;
+	}
+	
 	
 	/**
 	 * save : création d'une nouvelle hand de la donne en cours

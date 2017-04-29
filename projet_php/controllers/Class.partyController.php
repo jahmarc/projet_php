@@ -14,8 +14,6 @@ class partyController extends Controller{
 		$this->vars['msg'] = "Liste des Tables";
 		$user = $_SESSION['user'];
 		$idUser = $user->getId();
-
-		$this->echoPartsPending();
 				
 	
 	}
@@ -27,7 +25,7 @@ class partyController extends Controller{
 		$strPparts = Part::getPartsPendingToStart($idUser);
 		
 		foreach ($strPparts as $value){
-			echo $value[0].' - '.$value[1].' - '.$value[2]."<br>";
+			echo $value[1].' - '.$value[2]."<br><br>";
 		}
 	
 	}

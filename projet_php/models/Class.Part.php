@@ -121,7 +121,7 @@ class Part{
 	 * addUserInPart : ajouter un User à la partie (et un nouveau player)
 	 * @return boolean true/false
 	 */
-	public function addUserInPart($idUser){
+	public static function addUserInPart($idUser){
 		// calcul nombre de joueur
 		$nbPlayers = Part::getCountPlayersAfterRefresh();
 		// max 4 joueurs

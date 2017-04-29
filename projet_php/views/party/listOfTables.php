@@ -8,12 +8,17 @@ $user = $_SESSION['user'];
 
 <br><br><br><br><br><br>
 
-<h2><?php echo $msg;?></h2>
+	
 
 
-<div style="margin:0 auto; width:400px;">
+<div align="center" style="margin:0 auto; width:500px;">
 
-<?php $this->echoPartsPending(); ?>
+	<h1><?php echo $msg;?></h1>
+</div>
+
+
+<div style="margin:0 auto; width:600px;">	
+	<?php $this->echoPartsPending(); ?>
 	
 
 </div>

@@ -3,6 +3,10 @@ class partyController extends Controller{
 	/**
 	 * Method called by the form of the page newParty.php and listOfparty
 	 */
+	
+	
+	
+	
 
 	function newParty(){
 		$this->vars['msg'] = "Nouvelle partie";
@@ -11,7 +15,7 @@ class partyController extends Controller{
 	}
 	
 	function listOfTables(){
-		$this->vars['msg'] = "Liste des Tables";
+		$this->vars['msg'] = "List of parties in progress";
 		$user = $_SESSION['user'];
 		$idUser = $user->getId();
 				
@@ -20,17 +24,34 @@ class partyController extends Controller{
 	
 
 	public function echoPartsPending(){
+		$url = URL_DIR."party/newParty";
+		
+		
+		
 		$user = $_SESSION['user'];
 		$idUser = $user->getId();
 		$strPparts = Part::getPartsPendingToStart($idUser);
+		echo '<table align="center" style="border-bottom-style="double">';
 		
 		foreach ($strPparts as $value){
-			echo $value[1].' - '.$value[2]."<br><br>";
+			echo '<tr><td><a href="'.$url.'">'.$value[1].'<a/></td><td>'.$value[2].'</td></tr>';
 		}
 	
+		echo '</table>';
 	}
 	
 
+	
+	
+	public function partyRegister(){
+		
+		$user = $_SESSION['user'];
+		$idUser = $user->getId();
+		
+		
+		Part::addUserInPart($idUser);
+	}
+	
 	
 	function showTables(){
 		$user = $_SESSION['user'];

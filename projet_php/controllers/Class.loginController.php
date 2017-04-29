@@ -124,11 +124,6 @@ class loginController extends Controller {
 	}
 	
 	// renvoie la liste de tous les autres utilisateurs
-	function ListOfOthersUsers() {
-		$this->vars ['msg'] = "The list of registered users";
-		$user = $_SESSION ['user'];
-		$idUser = $user->getId ();
-	}
 	public function echoListOfOthersUsers() {
 		$user = $_SESSION ['user'];
 		$idUser = $user->getId ();

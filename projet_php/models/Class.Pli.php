@@ -6,18 +6,18 @@ class Pli{
 	private $firstPlayer = 0;
 	private $nrCards = array(1 => 0, 0, 0, 0);
 	private $result = array(1 => 0, 0);
-	private $annonce= array(1 => 0, 0);
-	private $stock = array(1 => 0, 0);
+// 	private $annonce= array(1 => 0, 0);
+// 	private $stock = array(1 => 0, 0);
 	
-	public function __construct($idPli=null, $idDonne, $nrPli, $firstPlayer, $nrCards, $result, $annonce, $stock){
+	public function __construct($idPli=null, $idDonne, $nrPli, $firstPlayer, $nrCards, $result){
 		$this->setIdPli($idPli);
 		$this->setIdDonne($idDonne);
 		$this->setNrPli($nrPli);
 		$this->setFirstPlayer($firstPlayer);
 		$this->setNrCards($nrCards);
 		$this->setResult($result);
-		$this->setAnnonce($annonce);
-		$this->setStock($stock);
+// 		$this->setAnnonce($annonce);
+// 		$this->setStock($stock);
 	}
 	
 	/**
@@ -38,10 +38,10 @@ class Pli{
 					, firstPlayer
 					, pointsResult_1
 					, pointsResult_2
-					, annonces_1
-					, annonces_2
-					, stock_1
-					, stock_2
+// 					, annonces_1
+// 					, annonces_2
+// 					, stock_1
+// 					, stock_2
 					FROM pli
 					WHERE IDDonne=?
 					ORDER BY nrPli;";
@@ -58,13 +58,13 @@ class Pli{
 						, array(1 => $res_pli['nrCard_1'], $res_pli['nrCard_2'], $res_pli['nrCard_3'], $res_pli['nrCard_4'])
 						, $res_pli['firstPlayer']
 						, array(1 => $res_pli['pointsResult_1'], $res_pli['pointsResult_2'])
-						, array(1 => $res_pli['annonces_1'], $res_pli['annonces_2'])
-						, array(1 => $res_pli['stock_1'], $res_pli['stock_2'])
+// 						, array(1 => $res_pli['annonces_1'], $res_pli['annonces_2'])
+// 						, array(1 => $res_pli['stock_1'], $res_pli['stock_2'])
 						);
 			}
-			
 			return $plis;
 	}
+	
 	/**
 	 * getLastNrPli : recherche  du dernier numéro de pli
 	 * @return le nrPli de la dernière pli créée (ok) sinon 0
@@ -101,7 +101,7 @@ class Pli{
 		
 	}
 	/**
-	 * save : sauve (update) de l'objet en cours
+	 * save : save (update) de l'objet en cours
 	 * @return boolean true/false
 	 */
 	public function save(){
@@ -109,10 +109,10 @@ class Pli{
 		$query = "UPDATE pli SET
 					  pointsResult_1 = ?
 					, pointsResult_2 = ?
-					, annonces_1 = ?
-					, annonces_2 = ?
-					, stock_1 = ?
-					, stock_2 = ?
+// 					, annonces_1 = ?
+// 					, annonces_2 = ?
+// 					, stock_1 = ?
+// 					, stock_2 = ?
 					, nrCard_1 = ?
 					, nrCard_2 = ?
 					, nrCard_3 = ?
@@ -121,10 +121,10 @@ class Pli{
 		$attributes = array(
 				$this->getResult()[1]
 				, $this->getResult()[2]
-				, $this->getAnnonce()[1]
-				, $this->getAnnonce()[2]
-				, $this->getStock()[1]
-				, $this->getStock()[2]
+// 				, $this->getAnnonce()[1]
+// 				, $this->getAnnonce()[2]
+// 				, $this->getStock()[1]
+// 				, $this->getStock()[2]
 				, $this->getNrCards()[1]
 				, $this->getNrCards()[2]
 				, $this->getNrCards()[3]
@@ -148,6 +148,7 @@ class Pli{
 			$this->nrCards[$nr] = $value;
 		}
 	}
+	
 	/**
 	 * Getter and setter
 	 */

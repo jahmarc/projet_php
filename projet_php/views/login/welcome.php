@@ -19,61 +19,14 @@ $user = $_SESSION['user'];
 		
 		<h1>Welcome <?php echo '<a style="color:#00a1ff;"> '.$user->getFirstname().' '.$user->getLastname();?></a>	</h1>	
 		<h2>The list of registered users</h2>
-		<?php
-		
-		$servername = "localhost";
-		$username = "root";
-		$password = "";
-		$dbname = "php_mvc";
-		
-		// Create connection
-		$conn = new mysqli($servername, $username, $password, $dbname);
-		
-		// Check connection
-		if ($conn->connect_error) {
-			die("Connection failed: " . $conn->connect_error);
-		}
-		
-		//$sql = "SELECT id, firstname, lastname, username FROM user";
-		//$result = $conn->query($sql);
-		
-		?>
 		
 		<table id="tableLogin" style="margin-top:50px; width:40%;">
 		
-		 
-		<?php
-		
-		$this->echoListOfOthersUsers();
-		
-		//while($row = $result->fetch_assoc()) 
-		//{
-		//	echo "
-		//				<td><strong>USER : " . $row["username"]. "</strong></td><tr>
-		//		  	</tr>
-		//			<tr>
-		//				<td style='padding-left:10%;'> NAME : " . $row["firstname"]. "</td>
-		//				<td	> SURNAME : " . $row["lastname"]. "</td>
-		//			</tr>
-		//		<tr><td><hr></td><td><hr></td></tr>
-				
-				
-		//		<tr style='margin-top:50px;'><td></td></tr>";
-		//}
-		
-		 
-		?>
+		<?php $this->echoListOfOthersUsers();?>
 		
 		</table>
-		
 	
-	</div>	
-	
-	
-	
-	
-	
-				
+	</div>			
 	
 <br/><br/><br/><br/>
 <?php 

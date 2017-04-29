@@ -1,4 +1,4 @@
-<?php include_once ROOT_DIR.'views/header.inc';
+<?php include_once ROOT_DIR.'views/first-nav.inc';
 //Collect data from controller
 $msg = $this->vars['msg'];
 

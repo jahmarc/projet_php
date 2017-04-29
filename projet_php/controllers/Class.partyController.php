@@ -15,7 +15,7 @@ class partyController extends Controller{
 		$user = $_SESSION['user'];
 		$idUser = $user->getId();
 		$partx = array();
-		$partx = new Part("test");
+		$partx = new Part("ADSFA");
 
 		$partx->getPartsPendingToStart($idUser);
 		

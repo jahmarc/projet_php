@@ -16,6 +16,10 @@ class Part{
 		public function __construct($designation){
 					$this->setDesignation($designation);
 		}
+		
+		public function Part(){
+			
+		}
 	
 	
 // 	public function __construct($idPart, $players, $result, $annonces, $stock, $state, $designation

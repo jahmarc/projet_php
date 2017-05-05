@@ -6,7 +6,7 @@ class Pli{
 	private $firstPlayer = 0;
 	private $nrCards = array(1 => 0, 0, 0, 0);
 	private $result = array(1 => 0, 0);
- 	private $annonce= array(1 => 0, 0);
+// 	private $annonce= array(1 => 0, 0);
 // 	private $stock = array(1 => 0, 0);
 	
 	public function __construct($idPli=null, $idDonne, $nrPli, $firstPlayer, $nrCards, $result){
@@ -19,6 +19,7 @@ class Pli{
 // 		$this->setAnnonce($annonce);
 // 		$this->setStock($stock);
 	}
+	
 	
 	/**
 	 * getPlisDonne : recherche les plis de la donne
@@ -65,6 +66,7 @@ class Pli{
 			return $plis;
 	}
 	
+	
 	/**
 	 * getLastNrPli : recherche  du dernier numéro de pli
 	 * @return le nrPli de la dernière pli créée (ok) sinon 0
@@ -82,6 +84,7 @@ class Pli{
 			
 	}
 	
+	
 	/**
 	 * newPli : création d'une nouvelle pli de la donne
 	 * @return idPli de la pli créée (ok) sinon -1 en cas d'erreur
@@ -98,8 +101,9 @@ class Pli{
 		$id = MySqlConn::getInstance()->last_Insert_Id();
 		if($id < 1) return -1;
 		return $id;
-		
 	}
+	
+	
 	/**
 	 * save : save (update) de l'objet en cours
 	 * @return boolean true/false

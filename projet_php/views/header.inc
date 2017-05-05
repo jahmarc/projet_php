@@ -16,7 +16,7 @@
 	
 		<nav>
 		<ul style="float:left;">
-			<li style="float:left;"><a href="<?php echo URL_DIR.'login/welcome';?>">
+			<li><a href="<?php echo URL_DIR.'login/welcome';?>">
 					<p id="title-nav">JASS VS</p></a></li>
 		</ul>
 			<ul>

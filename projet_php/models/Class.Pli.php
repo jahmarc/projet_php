@@ -153,6 +153,25 @@ class Pli{
 		}
 	}
 	
+	
+	/**
+	 * getNextPlayer : renvoi le prochain joueur jusqu'à ce que tous aient joué
+	 */
+	
+	
+	/**
+	 * getFirstPlayer : renvoi le premier joueur du pli
+	 * la première fois le premier joueur est celui qui a choisi l'atoût
+	 * le premier joueur est celui qui a gagné le pli précédent
+	 */
+	
+	
+	/**
+	 * countResult : renvoi le résultat de chaque équipe pour le pli joué
+	 */
+	
+	
+	
 	/**
 	 * Getter and setter
 	 */

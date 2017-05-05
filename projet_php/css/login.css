@@ -42,7 +42,8 @@ input[type="text"],input[type="password"]{
 	float:right;
 }
 .OK:hover{
-	background-color: #00a1ff;
+	/*background-color: #00a1ff;*/
+	background-color: black;
     color: white; 
 }
 
@@ -57,5 +58,23 @@ h3{
 }
 
 #register:hover{
-	color:#00a1ff;
+	color:black;
+}
+
+#title{
+	font-style: italic;
+    margin: 0 auto;
+    padding-left: 63px;
+    font-size: 54px;
+    color: #0089d9;
+    margin-top: -63px;
+    font-family: fantasy;
+}
+
+#title-nav{
+	font-style: italic;
+    font-size: 54px;
+    color: #0089d9;
+    font-family: fantasy;
+}
 }

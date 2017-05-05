@@ -5,6 +5,7 @@ include_once ROOT_DIR.'views/header.inc';
 $msg = $this->vars['msg'];
 $user = $_SESSION['user'];
 ?>
+<title>WELCOME | JASS VS</title>
 
 
 <br><br>

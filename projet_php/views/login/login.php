@@ -3,10 +3,10 @@
 $msg = $this->vars['msg'];
 ?>
 
-<br><br><br><br><br><br>
+<br><br><br><br><br>
 <div>
-
-	<p>JASS</p>
+<title>LOGIN | JASS VS</title>
+	<p id="title">JASS VS</p>
 </div>
 <form action="<?php echo URL_DIR.'login/connection';?>" method="post">
 	<table align="center" id="tableLogin" >		

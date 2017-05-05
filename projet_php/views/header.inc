@@ -15,15 +15,15 @@
 	<body>
 	
 		<nav>
-		<ul style="float:left;">
+		<ul id="ul-left">
 			<li><a href="<?php echo URL_DIR.'login/welcome';?>">
 					<p id="title-nav">JASS VS</p></a></li>
 		</ul>
 			<ul>
 				
-				 <li><a href="#">Play</a></li>
-				 <li><a href="<?php echo URL_DIR.'login/welcome';?>">Users</a></li>
-				 <li><a href="<?php echo URL_DIR.'login/logout';?>">LOGOUT</a></li>
+				 <li class="li-right"><a href="#">Play</a></li>
+				 <li class="li-right"><a href="<?php echo URL_DIR.'login/welcome';?>">Users</a></li>
+				 <li class="li-right"><a href="<?php echo URL_DIR.'login/logout';?>">LOGOUT</a></li>
 			</ul>
 		</nav>
 	

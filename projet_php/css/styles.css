@@ -42,15 +42,35 @@ ul li a {
  width:100px;
  line-height:50px; /*hauteur de l'image de fond*/
  background:black url("sources/noir-1.png") repeat-x;
- color:#DCDCDC;
  text-decoration:none;
  text-align:center;
- }
+}
+ 
+ 
 ul li a:hover {
  background:black url("sources/noir-2.png") repeat-x;
- background-color:#0089d9;
- color:white;
+ /*background-color:#0089d9;
+ */color:white;
  }  
+ 
+ 
+.li-right a:hover{
+	background-color:#00a1ff;
+	    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+}
+
+
+
+#ul-left{
+ float: left;
+    width: 30px;
+    background-color: red;
+    height: 11px;}
+    
+#ul-left ul li a:hover{
+   background-color:none; 
+}
  
  
  /*************************************HELENA CODE POUR GAME*******************************/

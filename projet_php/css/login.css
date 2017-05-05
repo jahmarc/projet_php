@@ -5,6 +5,7 @@ html{
 	background-repeat: no-repeat;
     background-size: cover;
 	color:white;
+	background-color:black;
 	font-family:Verdana, Geneva, sans-serif;
 	 
 }
@@ -74,7 +75,12 @@ h3{
 #title-nav{
 	font-style: italic;
     font-size: 54px;
-    color: #0089d9;
     font-family: fantasy;
+    padding-top: -17px;
+    margin-top: 42px;
+    margin-left: 17px;
+
 }
-}
+
+#title-nav:hover{
+	background-color:none;

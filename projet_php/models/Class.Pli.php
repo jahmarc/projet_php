@@ -6,7 +6,7 @@ class Pli{
 	private $firstPlayer = 0;
 	private $nrCards = array(1 => 0, 0, 0, 0);
 	private $result = array(1 => 0, 0);
-// 	private $annonce= array(1 => 0, 0);
+ 	private $annonce= array(1 => 0, 0);
 // 	private $stock = array(1 => 0, 0);
 	
 	public function __construct($idPli=null, $idDonne, $nrPli, $firstPlayer, $nrCards, $result){

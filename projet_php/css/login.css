@@ -1,7 +1,9 @@
 @CHARSET "ISO-8859-1";
 
 html{
-	background-image :url("sources/vegas.jpg");
+	background-image :url("sources/joker.jpg");
+	background-repeat: no-repeat;
+    background-size: cover;
 	color:white;
 	font-family:Verdana, Geneva, sans-serif;
 	 

@@ -129,8 +129,7 @@ class Part{
 	}
 	
 	
-	
-	
+
 	
 	/**
 	 * addUserInPart : ajouter un User à la partie (et un nouveau player)

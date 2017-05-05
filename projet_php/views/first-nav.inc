@@ -4,7 +4,7 @@
      
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
-		<title>PHP MVC</title>
+	<title><?php echo $_SESSION['title'];?> | JASS VS</title>
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
 		<link rel="stylesheet" href="/<?php echo SITE_NAME; ?>/css/styles.css" type="text/css">
 		<link rel="stylesheet" href="/<?php echo SITE_NAME; ?>/css/login.css" type="text/css"></link>

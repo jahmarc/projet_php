@@ -1,9 +1,13 @@
 <?php include_once ROOT_DIR.'views/first-nav.inc';
 //Collect data from controller
 $msg = $this->vars['msg'];
-
 ?>
+
 <br><br><br><br><br><br>
+<div>
+
+	<p>JASS</p>
+</div>
 <form action="<?php echo URL_DIR.'login/connection';?>" method="post">
 	<table align="center" id="tableLogin" >		
 		<tr>

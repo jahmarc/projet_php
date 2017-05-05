@@ -20,6 +20,7 @@ $persistence = $this->vars['persistence'];
 			Last name<br><input type="text" name="lastname" value="<?php echo $persistence[1];?>"><br>
 			User name<br><input type="text" name="username" value="<?php echo $persistence[2];?>"><br>
 			Password<br><input type="password" name="password" value="<?php echo $persistence[3];?>"><br><br>
+			<a class="CANCEL" href="<?php echo URL_DIR.'login/login'?>">CANCEL</a>
 			<input class="OK" type="submit" name="action" value="Register"><br><br>
 			
 			</td>

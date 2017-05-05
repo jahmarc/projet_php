@@ -16,7 +16,7 @@ a{
 #tableLogin{
 	padding:2%;
 	background-color:rgba(0, 161, 255, 0.85);
-    border-radius: 25px;
+    width:260px;
 }
 
 input[type="text"],input[type="password"]{
@@ -29,7 +29,7 @@ input[type="text"],input[type="password"]{
 }
 
 .OK{
-        background-color: white;
+    background-color: white;
     border: white;
     color: #018de1;
     padding: 9px 19px;
@@ -47,6 +47,30 @@ input[type="text"],input[type="password"]{
 	background-color: black;
     color: white; 
 }
+
+
+.CANCEL{
+	position:absolute;
+    background-color: black;
+    border: white;
+    color: #018de1;
+    padding: 9px 19px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+     -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    margin:0 auto;
+	float:right;
+}
+.CANCEL:hover{
+	background-color: black;
+    color: white; 
+}
+
+
+
 
 h3{
 	color:white;
@@ -67,7 +91,7 @@ h3{
     margin: 0 auto;
     padding-left: 63px;
     font-size: 54px;
-    color: #0089d9;
+    color: white;
     margin-top: -63px;
     font-family: fantasy;
 }

@@ -15,7 +15,7 @@ $msg = $this->vars['msg'];
 				<?php echo $msg;?>
 				<h3>LOGIN |<a id="register" href="<?php echo URL_DIR.'login/newuser';?>">REGISTER</a>	</h3>			
 				Username<br><input type="text" name="username" size="25"/><br>
-				Password<br><input type="password" name="password" size="25"/><br><br>			
+				Password<br><input type="password" name="password" size="25"/><br><br>
 				<input class="OK" type="submit" name="Submit" value="  OK  "/>
 				<br/><br/>							
 								

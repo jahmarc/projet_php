@@ -1,11 +1,12 @@
 <?php
-include_once ROOT_DIR.'views/nav-header.inc';
 include_once ROOT_DIR.'views/header.inc';
 
 //Collect data from controller and session
 $msg = $this->vars['msg'];
 $user = $_SESSION['user'];
 ?>
+
+<title>GAMING... | JASS VS</title>
 
 	
 	<div style="padding-top:30px;">
@@ -21,10 +22,18 @@ $user = $_SESSION['user'];
     </div>
 
     <div id="gauche">
-		<p>Discussions</p>
-		
-		<input type="text" placeholder="messsage.... +  enter"  style="bottom:0; width:80%; position:absolute;padding:5px; margin-bottom:20px;" class="OK" />
+        	
+        	
+    <p>Discussions</p>
+    
+    	<iframe style="width:240px; bottom: 49px;position: fixed;">
+    	<input type="text" placeholder="messsage.... +  enter"  style="bottom:0; width:80%; position:absolute;padding:5px; margin-bottom:20px;" class="OK" />
+    
+    </iframe>
+    
 
+		
+		
 		
     </div>
 

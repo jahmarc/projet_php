@@ -7,7 +7,8 @@
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
 		<link rel="stylesheet" href="/<?php echo SITE_NAME; ?>/css/styles.css" type="text/css">
 		<link rel="stylesheet" href="/<?php echo SITE_NAME; ?>/css/login.css" type="text/css"></link>
-				<link rel="icon" image/x-icon href="/<?php echo SITE_NAME; ?>/css/sources/favicon.ico" />
+		<link rel="stylesheet" href="/<?php echo SITE_NAME; ?>/css/chat.css" type="text/css"></link>
+		<link rel="icon" image/x-icon href="/<?php echo SITE_NAME; ?>/css/sources/favicon.ico" />
 		
 	</head>  
 	<body>

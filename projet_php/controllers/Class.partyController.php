@@ -26,8 +26,6 @@ class partyController extends Controller{
 	public function echoPartsPending(){
 		$url = URL_DIR."party/newParty";
 		
-		
-		
 		$user = $_SESSION['user'];
 		$idUser = $user->getId();
 		$strPparts = Part::getPartsPendingToStart($idUser);
@@ -36,10 +34,12 @@ class partyController extends Controller{
 		
 		echo '<form action="'.$link.'" method="get">';
 			
-		echo '<table align="center" style="border-bottom-style="double">';
+		echo '<table align="center" style="width:50%; border-bottom-style=double; border-width:0px;">';
 		
 		foreach ($strPparts as $value){
-			echo '<tr><td>'.$value[1].'</td><td>'.$value[2].'</td><td><input class="OK" type="submit" value="inscription" name="'.$value[0].'"></td></tr>';
+			echo '<tr><td>'.$value[1].'</td><td></td></tr>
+					<tr><td style="font-size:10px;">'.$value[2].'</td><td><input class="OK" type="submit" value="inscription" name="'.$value[0].'"></td></tr>
+						<tr><td colspan="2" style="background-color:#018de1; height:0.5px;"></td></tr>	';
 		}
 	
 		echo '</table></form>';
@@ -51,13 +51,18 @@ class partyController extends Controller{
 	public function partyRegister(){
 				
 		foreach($_GET as $key=>$value){
-			$key;
+			echo $key;
 		}
 
+		
 		$user = $_SESSION['user'];
 		$idUser = $user->getId();
 		
-		Part::addUserToPart($key);
+		
+
+		$currentPart2 = Part::getPartByIdPart($key);
+		$currentPart2->Part::addUserInPart($idUser);
+		
 	}
 	
 	
@@ -93,7 +98,7 @@ class partyController extends Controller{
 				}
 			}
 		
-			$this->redirect('newParty', 'listOfTables');
+			//$this->redirect('newParty', 'listOfTables');
 		}
 	
 	

@@ -16,7 +16,7 @@ $user = $_SESSION['user'];
 		<a href="<?php echo URL_DIR.'party/newParty';?>" type="button" class="OK">NEW PARTY</a>	
 	</div>
 	
-	<div align="center" style="margin-top:20px;"><?php echo $msg;?>
+	<div align="center" style="margin-top:20px;">
 
 		
 		<h1>Welcome <?php echo '<a style="color:#00a1ff;"> '.$user->getFirstname().' '.$user->getLastname();?></a>	</h1>	

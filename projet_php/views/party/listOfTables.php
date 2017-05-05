@@ -7,8 +7,7 @@ $user = $_SESSION['user'];
 ?>
 
 <br><br><br><br><br><br>
-
-	
+<title>List Of Tables | JASS VS</title>
 
 
 <div align="center" style="margin:0 auto; width:500px;">

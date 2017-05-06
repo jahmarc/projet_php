@@ -2,10 +2,10 @@
 class Hand{
 	private $idHand;
 	private $idDonne;
-	// numéro du joueur (1-4)
+	// numï¿½ro du joueur (1-4)
 	private $nrPlayer;
 	// tableau de 9 integer (1-9) : chaque int est l'index du jeu de carte <Card::get36Cards()>
-	private $nrCards = array(1 => 0,0,0,0,0,0,0,0,0); // Index commençant à 1 avec array()
+	private $nrCards = array(1 => 0,0,0,0,0,0,0,0,0); // Index commenï¿½ant ï¿½ 1 avec array()
 	
 	public function __construct($idHand=null, $idDonne, $nrPlayer, $nrCards){
 		$this->setIdHand($idHand);
@@ -14,28 +14,28 @@ class Hand{
 		$this->setNrCards($nrCards);
 	}
 	/**
-	 * newHands : création de 4 hands (mains) liées à la donne <$idDonne>
+	 * newHands : crï¿½ation de 4 hands (mains) liï¿½es ï¿½ la donne <$idDonne>
 	 * $tbl4Hands est une matrice de 4 x 9 integer (cartes random)
-	 * Prépare 4 objets à enregistrer avec <$this->save()>
+	 * Prï¿½pare 4 objets ï¿½ enregistrer avec <$this->save()>
 	 * @return boolean true/false
 	 */
 	public static function newHands($idDonne){
 		// si pas de idDonne ne rien faire
 		if($idDonne < 1) return false;
 		
-		// recherche le tableau des hands déjà existants
+		// recherche le tableau des hands dï¿½jï¿½ existants
 		$hands = Hand::getHandsDonne($idDonne);
 		// si le tableau existe il y a une erreur
 		if(!empty($hands)) return false;
 		
 		
-		// tableau de valeurs ordonnés de 1 à 36
+		// tableau de valeurs ordonnï¿½s de 1 ï¿½ 36
 		$packOfCards = range(1,36);
-		// mélange le tableau de façon RANDOM
+		// mï¿½lange le tableau de faï¿½on RANDOM
 		shuffle($packOfCards);
 		
-		// prépare $tbl4Hands : un tableau de 4 tableaux de 9 cartes
-		// $key valeurs compris entre 0 à 35
+		// prï¿½pare $tbl4Hands : un tableau de 4 tableaux de 9 cartes
+		// $key valeurs compris entre 0 ï¿½ 35
 		foreach ($packOfCards as $key => $value){
 			$tbl4Hands[($key % 4) + 1][($key % 9) + 1] =  $value;
 		}
@@ -55,7 +55,7 @@ class Hand{
 	 * @return un tableau de Donne de la partie
 	 */
 	public static function getHandsDonne($idDonne){
-		// tableau de hands à retourner
+		// tableau de hands ï¿½ retourner
 		$hands = array();
 		// query select
 		$query = "SELECT IDHand
@@ -78,7 +78,7 @@ class Hand{
 		if($result['status']=='error' || empty($result['result']))
 			return false;
 			
-			//	 boucler le résultat et ajouter dans le tableau de hands
+			//	 boucler le rï¿½sultat et ajouter dans le tableau de hands
 			foreach ($result['result'] as $res_hand){
 				$nrPlayer = $res_hand['nrPlayer'];
 				$hands[$nrPlayer] = new Hand($res_hand['IDHand']
@@ -103,7 +103,7 @@ class Hand{
 	 * @return un tableau de cartes
 	 */
 	public static function getHandPlayer($idDonne, $nrPlayer){
-		// tableau de hands à retourner
+		// tableau de hands ï¿½ retourner
 		$hand = array();
 		// query select
 		$query = "SELECT IDHand
@@ -127,7 +127,7 @@ class Hand{
 		if($result['status']=='error' || empty($result['result']))
 			return false;
 			
-			//	 boucler le résultat et ajouter dans le tableau de hands
+			//	 boucler le rï¿½sultat et ajouter dans le tableau de hands
 			foreach ($result['result'] as $res_hand){
 				$hand= new Hand($res_hand['IDHand']
 						, $res_hand['IDDonne']
@@ -147,16 +147,16 @@ class Hand{
 	}
 	
 	/**
-	 * checkAnnonces : Contrôle la main d'un joueur afin de vérifier quels sont les annonces qu'il possède
+	 * checkAnnonces : Contrï¿½le la main d'un joueur afin de vï¿½rifier quels sont les annonces qu'il possï¿½de
 	 * @return l'id de l'annonce correspondante
 	 */
 	public static function checkAnnonces($idHand, $idDonne, $nrPlayer){
-		// variable à retourner à la fin
+		// variable ï¿½ retourner ï¿½ la fin
 		$annonce;
 		
-		//Création d'un tableau de bool afin de garder les résultats en mémoires
+		//Crï¿½ation d'un tableau de bool afin de garder les rï¿½sultats en mï¿½moires
 		
-		//On va cherche la main du joueur à tester
+		//On va cherche la main du joueur ï¿½ tester
 		$hand = getHandPlayer($idDonne, $nrPlayer);
 		
 		//TEST 1 : 4 valets
@@ -173,7 +173,7 @@ class Hand{
 			return;
 		}
 		
-		//TEST 3 : 5 cartes conséqutives
+		//TEST 3 : 5 cartes consï¿½qutives
 		$isTrue = fiveCardTest($hand);
 		if($isTrue == true){
 			$annonce = 4;
@@ -187,32 +187,32 @@ class Hand{
 			return;
 		}
 		
-		//TEST 5 : 4 cartes conséqutives
+		//TEST 5 : 4 cartes consï¿½qutives
 		$isTrue = fourCardTest($hand);
 		if($isTrue == true){
 			$annonce = 2;
 			return;
 		}
 		
-		//TEST 6 : 3 cartes conséqutives
+		//TEST 6 : 3 cartes consï¿½qutives
 		$isTrue = threeCardTest($hand);
 		if($isTrue == true){
 			$annonce = 1;
 			return;
-		}		
+		}
 	}
 	
 	/**
-	 * threeCardsTest : Contrôle la main d'un joueur afin de vérifier s'il a trois cartes conséqutives
+	 * threeCardsTest : Contrï¿½le la main d'un joueur afin de vï¿½rifier s'il a trois cartes consï¿½qutives
 	 * @return vrai ou faux
 	 */
 	public static function threeCardsTest($hand){
-		// variable à retourner à la fin
+		// variable ï¿½ retourner ï¿½ la fin
 		$result = false;
 		$var1;
 		$var2;
 		
-
+		
 		for ($i=0; $i<=8; $i++)
 		{
 			$id1 = $card[i]->getNrCards();
@@ -245,11 +245,11 @@ class Hand{
 	}
 	
 	/**
-	 * fourCardsTest : Contrôle la main d'un joueur afin de vérifier s'il a quatre cartes conséqutives
+	 * fourCardsTest : Contrï¿½le la main d'un joueur afin de vï¿½rifier s'il a quatre cartes consï¿½qutives
 	 * @return vrai ou faux
 	 */
 	public static function fourCardsTest($hand){
-		// variable à retourner à la fin
+		// variable ï¿½ retourner ï¿½ la fin
 		$result = false;
 		$var1;
 		$var2;
@@ -314,11 +314,11 @@ class Hand{
 	
 	
 	/**
-	 * fiveCardsTest : Contrôle la main d'un joueur afin de vérifier s'il a cinq cartes conséqutives
+	 * fiveCardsTest : Contrï¿½le la main d'un joueur afin de vï¿½rifier s'il a cinq cartes consï¿½qutives
 	 * @return vrai ou faux
 	 */
 	public static function fiveCardsTest($hand){
-		// variable à retourner à la fin
+		// variable ï¿½ retourner ï¿½ la fin
 		$result = false;
 		$var1;
 		$var2;
@@ -342,7 +342,7 @@ class Hand{
 								$var2 = $id3;
 								for($l=k+1; $l<=8; $l++){
 									$id4 = $card[l]->getNrCards();
-									if($id4>$var2){ 
+									if($id4>$var2){
 										if($id4-$var2==1){
 											$var2 = $id4;
 											for($m=l+1; $m<=8; $m++){
@@ -377,7 +377,7 @@ class Hand{
 													}
 												}
 											}
-										}	
+										}
 									}
 								}
 							}
@@ -405,16 +405,16 @@ class Hand{
 				}
 			}
 		}
-	return $result;
+		return $result;
 	}
-
 	
-		/**
-	 * fourIdenticalCardsTest : Contrôle la main d'un joueur afin de vérifier s'il a quatre cartes identiques
+	
+	/**
+	 * fourIdenticalCardsTest : Contrï¿½le la main d'un joueur afin de vï¿½rifier s'il a quatre cartes identiques
 	 * @return vrai ou faux
 	 */
 	public static function fourIdenticalCardsTest($hand){
-		// variable à retourner à la fin
+		// variable ï¿½ retourner ï¿½ la fin
 		$result = false;
 		
 		
@@ -423,21 +423,21 @@ class Hand{
 			$id1 = $card[i]->getNrCards();
 			if($id1<=5 && $id1>=9)
 			{
-			for($j=i+1; $j<=8; $j++)
-			{
-				$id2 = $card[j]->getNrCards();
-				if($id2-$id1 == 9)
+				for($j=i+1; $j<=8; $j++)
 				{
-					for($k=j+1; $k<=8; $k++){
-						$id3 = $card[k]->getNrCards();
+					$id2 = $card[j]->getNrCards();
+					if($id2-$id1 == 9)
+					{
+						for($k=j+1; $k<=8; $k++){
+							$id3 = $card[k]->getNrCards();
 							if($id3-$id2==9)
 							{
 								for($l=k+1; $l<=8; $l++){
 									$id4 = $card[l]->getNrCards();
-										if($id4-$id3==9){
-											$result=true;
+									if($id4-$id3==9){
+										$result=true;
 									}
-								}							
+								}
 							}
 						}
 					}
@@ -449,11 +449,11 @@ class Hand{
 	
 	
 	/**
-	 * fourNineTest : Contrôle la main d'un joueur afin de vérifier s'il a quatre cartes identiques
+	 * fourNineTest : Contrï¿½le la main d'un joueur afin de vï¿½rifier s'il a quatre cartes identiques
 	 * @return vrai ou faux
 	 */
 	public static function fourNineTest($hand){
-		// variable à retourner à la fin
+		// variable ï¿½ retourner ï¿½ la fin
 		$result = false;
 		
 		
@@ -488,11 +488,11 @@ class Hand{
 	
 	
 	/**
-	 * fourNineTest : Contrôle la main d'un joueur afin de vérifier s'il a quatre cartes identiques
+	 * fourNineTest : Contrï¿½le la main d'un joueur afin de vï¿½rifier s'il a quatre cartes identiques
 	 * @return vrai ou faux
 	 */
 	public static function fourValetTest($hand){
-		// variable à retourner à la fin
+		// variable ï¿½ retourner ï¿½ la fin
 		$result = false;
 		
 		
@@ -526,11 +526,11 @@ class Hand{
 	}
 	
 	/**
-	 * stockTest : Contrôle la main d'un joueur afin de vérifier s'il a quatre cartes identiques
+	 * stockTest : Contrï¿½le la main d'un joueur afin de vï¿½rifier s'il a quatre cartes identiques
 	 * @return vrai ou faux
 	 */
 	public static function stockTest($hand, $asset){
-		// variable à retourner à la fin
+		// variable ï¿½ retourner ï¿½ la fin
 		$result = false;
 		
 		switch($asset)
@@ -603,17 +603,17 @@ class Hand{
 					}
 				}
 				break;
-			}
+		}
 		
 		return $result;
 	}
 	
 	
 	/**
-	 * save : création d'une nouvelle hand de la donne en cours
-	 * PRIVÈ car il faut utiliser newHands() pour créer 4 à la fois
+	 * save : crï¿½ation d'une nouvelle hand de la donne en cours
+	 * PRIVï¿½ car il faut utiliser newHands() pour crï¿½er 4 ï¿½ la fois
 	 * Sauve l'objet <Hand> en cours
-	 * @return idHand de la hand créée (ok) sinon -1 en cas d'erreur
+	 * @return idHand de la hand crï¿½ï¿½e (ok) sinon -1 en cas d'erreur
 	 */
 	private function save(){
 		// insert

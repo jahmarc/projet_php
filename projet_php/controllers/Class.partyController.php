@@ -29,27 +29,35 @@ class partyController extends Controller{
 		$user = $_SESSION['user'];
 		$idUser = $user->getId();
 		$strPparts = Part::getPartsPendingToStart($idUser);
+
+
 		
 		$link = URL_DIR.'party/partyRegister' ;
 		
 		echo '<form action="'.$link.'" method="get">';
 			
 		echo '<table align="center" style="width:50%; border-bottom-style=double; border-width:0px;">';
-		
+
+		echo '<table align="center" style="border-bottom-style="double">';
+
+ 
 		foreach ($strPparts as $value){
-			echo '<tr><td>'.$value[1].'</td><td></td></tr>
+echo '<tr><td>'.$value[1].'</td><td></td></tr>
 					<tr><td style="font-size:10px;">'.$value[2].'</td><td><input class="OK" type="submit" value="inscription" name="'.$value[0].'"></td></tr>
 						<tr><td colspan="2" style="background-color:#018de1; height:0.5px;"></td></tr>	';
-		}
+			echo '<tr><td><a href="'.$url.'">'.$value[1].'<a/></td><td>'.$value[2].'</td></tr>';
+
+	}
 	
-		echo '</table></form>';
+		echo '</table>';
 	}
 	
 
 	
 	
 	public function partyRegister(){
-				
+
+
 		foreach($_GET as $key=>$value){
 			echo $key;
 		}
@@ -60,9 +68,13 @@ class partyController extends Controller{
 		
 		
 
+				
 		$currentPart2 = Part::getPartByIdPart($key);
 		$currentPart2->Part::addUserInPart($idUser);
 		
+
+		Part::addUserInPart($idUser);
+
 	}
 	
 	

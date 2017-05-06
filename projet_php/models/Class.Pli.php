@@ -20,6 +20,7 @@ class Pli{
 // 		$this->setStock($stock);
 	}
 	
+	
 	/**
 	 * getPlisDonne : recherche les plis de la donne
 	 * @return un tableau de plis de la donne
@@ -65,6 +66,7 @@ class Pli{
 			return $plis;
 	}
 	
+	
 	/**
 	 * getLastNrPli : recherche  du dernier numéro de pli
 	 * @return le nrPli de la dernière pli créée (ok) sinon 0
@@ -82,6 +84,7 @@ class Pli{
 			
 	}
 	
+	
 	/**
 	 * newPli : création d'une nouvelle pli de la donne
 	 * @return idPli de la pli créée (ok) sinon -1 en cas d'erreur
@@ -98,8 +101,9 @@ class Pli{
 		$id = MySqlConn::getInstance()->last_Insert_Id();
 		if($id < 1) return -1;
 		return $id;
-		
 	}
+	
+	
 	/**
 	 * save : save (update) de l'objet en cours
 	 * @return boolean true/false
@@ -148,6 +152,25 @@ class Pli{
 			$this->nrCards[$nr] = $value;
 		}
 	}
+	
+	
+	/**
+	 * getNextPlayer : renvoi le prochain joueur jusqu'à ce que tous aient joué
+	 */
+	
+	
+	/**
+	 * getFirstPlayer : renvoi le premier joueur du pli
+	 * la première fois le premier joueur est celui qui a choisi l'atoût
+	 * le premier joueur est celui qui a gagné le pli précédent
+	 */
+	
+	
+	/**
+	 * countResult : renvoi le résultat de chaque équipe pour le pli joué
+	 */
+	
+	
 	
 	/**
 	 * Getter and setter

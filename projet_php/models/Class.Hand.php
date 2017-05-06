@@ -152,7 +152,7 @@ class Hand{
 	 */
 	public static function checkAnnonces($idHand, $idDonne, $nrPlayer){
 		// variable � retourner � la fin
-		$annonce;
+		$annonce=0;
 		
 		//Cr�ation d'un tableau de bool afin de garder les r�sultats en m�moires
 		
@@ -163,43 +163,45 @@ class Hand{
 		$isTrue = fourValetTest($hand);
 		if($isTrue == true){
 			$annonce = 6;
-			return;
+			return $annonce;
 		}
 		
 		//TEST 2 : 4 neufs
 		$isTrue = fourNineTest($hand);
 		if($isTrue == true){
 			$annonce = 5;
-			return;
+			return $annonce;
 		}
 		
 		//TEST 3 : 5 cartes cons�qutives
 		$isTrue = fiveCardTest($hand);
 		if($isTrue == true){
 			$annonce = 4;
-			return;
+			return $annonce;
 		}
 		
 		//TEST 4 : 4 cartes identiques
 		$isTrue = fourIdenticalCardsTest($hand);
 		if($isTrue == true){
 			$annonce = 3;
-			return;
+			return $annonce;
 		}
 		
 		//TEST 5 : 4 cartes cons�qutives
 		$isTrue = fourCardTest($hand);
 		if($isTrue == true){
 			$annonce = 2;
-			return;
+			return $annonce;
 		}
 		
 		//TEST 6 : 3 cartes cons�qutives
 		$isTrue = threeCardTest($hand);
 		if($isTrue == true){
 			$annonce = 1;
-			return;
+			return $annonce;
 		}
+		
+		return $annonce;
 	}
 	
 	/**
@@ -216,14 +218,14 @@ class Hand{
 		for ($i=0; $i<=8; $i++)
 		{
 			$id1 = $card[i]->getNrCards();
-			for($j=i+1; $j<=8; $j++)
+			for($j=0; $j<=8; $j++)
 			{
 				$id2 = $card[j]->getNrCards();
 				$var1 = min($id1,$id2);
 				$var2 = max($id1,$id2);
 				if($var2-$var1 == 1)
 				{
-					for($k=j+1; $k<=8; $k++){
+					for($k=0; $k<=8; $k++){
 						$id3 = $card[k]->getNrCards();
 						if($id3>$var2){
 							if($id3-$var2==1)
@@ -258,20 +260,20 @@ class Hand{
 		for ($i=0; $i<=8; $i++)
 		{
 			$id1 = $card[i]->getNrCards();
-			for($j=i+1; $j<=8; $j++)
+			for($j=0; $j<=8; $j++)
 			{
 				$id2 = $card[j]->getNrCards();
 				$var1 = min($id1,$id2);
 				$var2 = max($id1,$id2);
 				if($var2-$var1 == 1)
 				{
-					for($k=j+1; $k<=8; $k++){
+					for($k=0; $k<=8; $k++){
 						$id3 = $card[k]->getNrCards();
 						if($id3>$var2){
 							if($id3-$var2==1)
 							{
 								$var2 = $id3;
-								for($l=k+1; $l<=8; $l++){
+								for($l=0; $l<=8; $l++){
 									$id4 = $card[l]->getNrCards();
 									if($id4>$var2){
 										if($id4-$var2==1){
@@ -290,7 +292,7 @@ class Hand{
 							if($var1-$id3==1)
 							{
 								$var1 = $id3;
-								for($l=k+1; $l<=8; $l++){
+								for($l=0; $l<=8; $l++){
 									$id4 = $card[l]->getNrCards();
 									if($id4>$var2){
 										if($id4-$var2==1){
@@ -327,25 +329,25 @@ class Hand{
 		for ($i=0; $i<=8; $i++)
 		{
 			$id1 = $card[i]->getNrCards();
-			for($j=i+1; $j<=8; $j++)
+			for($j=0; $j<=8; $j++)
 			{
 				$id2 = $card[j]->getNrCards();
 				$var1 = min($id1,$id2);
 				$var2 = max($id1,$id2);
 				if($var2-$var1 == 1)
 				{
-					for($k=j+1; $k<=8; $k++){
+					for($k=0; $k<=8; $k++){
 						$id3 = $card[k]->getNrCards();
 						if($id3>$var2){
 							if($id3-$var2==1)
 							{
 								$var2 = $id3;
-								for($l=k+1; $l<=8; $l++){
+								for($l=0; $l<=8; $l++){
 									$id4 = $card[l]->getNrCards();
 									if($id4>$var2){
 										if($id4-$var2==1){
 											$var2 = $id4;
-											for($m=l+1; $m<=8; $m++){
+											for($m=0; $m<=8; $m++){
 												$id5 = $card[m]->getNrCards();
 												if($id5>$var2){
 													if($id5-$var2==1)
@@ -364,7 +366,7 @@ class Hand{
 									else{
 										if($var1-$id4==1){
 											$var1 = $id4;
-											for($m=l+1; $m<=8; $m++){
+											for($m=0; $m<=8; $m++){
 												$id5 = $card[m]->getNrCards();
 												if($id5>$var2){
 													if($id5-$var2==1){
@@ -385,7 +387,7 @@ class Hand{
 								if($var1-$id3==1)
 								{
 									$var1 = $id3;
-									for($l=k+1; $l<=8; $l++){
+									for($l=0; $l<=8; $l++){
 										$id4 = $card[l]->getNrCards();
 										if($id4>$var2){
 											if($id4-$var2==1){
@@ -606,6 +608,28 @@ class Hand{
 		}
 		
 		return $result;
+	}
+	
+	
+	/**
+	 * firstPlayerTest : Contrôle la main d'un joueur afin de contrôler s'il possède le 7 de carreau
+	 * @return $nrPlayer
+	 */
+	public static function firstPlayerTest($hand, $nrPlayer){
+		// variable � retourner � la fin
+		$result=0;
+		
+		for ($i=0; $i<=8; $i++)
+		{
+			$id1 = $card[i]->getNrCards();
+			if($id1==11)
+			{
+				$result = $nrPlayer;
+			}
+		}
+		
+		return $result;
+				
 	}
 	
 	

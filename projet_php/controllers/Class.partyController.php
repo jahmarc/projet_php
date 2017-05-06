@@ -15,68 +15,44 @@ class partyController extends Controller{
 	}
 	
 	function listOfTables(){
-		$this->vars['msg'] = "List of parties in progress";
-		$user = $_SESSION['user'];
-		$idUser = $user->getId();
-				
-	
-	}
-	
-
-	public function echoPartsPending(){
-		$url = URL_DIR."party/newParty";
+		$user = $_SESSION ['user'];
+		$idUser = $user->getId ();
+		$strPparts = Part::getPartsPendingToStart ( $idUser );
 		
-		$user = $_SESSION['user'];
-		$idUser = $user->getId();
-		$strPparts = Part::getPartsPendingToStart($idUser);
-
-
-		
-		$link = URL_DIR.'party/partyRegister' ;
-		
-		echo '<form action="'.$link.'" method="get">';
-			
-		echo '<table align="center" style="width:50%; border-bottom-style=double; border-width:0px;">';
-
-		echo '<table align="center" style="border-bottom-style="double">';
-
- 
-		foreach ($strPparts as $value){
-echo '<tr><td>'.$value[1].'</td><td></td></tr>
-					<tr><td style="font-size:10px;">'.$value[2].'</td><td><input class="OK" type="submit" value="inscription" name="'.$value[0].'"></td></tr>
-						<tr><td colspan="2" style="background-color:#018de1; height:0.5px;"></td></tr>	';
-			echo '<tr><td><a href="'.$url.'">'.$value[1].'<a/></td><td>'.$value[2].'</td></tr>';
-
-	}
-	
-		echo '</table>';
+		$this->vars ['msg'] = "List of parties in progress";
+		$this->vars ['strPparts'] = $strPparts;
 	}
 	
 
 	
-	
-	public function partyRegister(){
 
-
-		foreach($_GET as $key=>$value){
-			echo $key;
+	public function partyRegister() {
+		$idPart = 0;
+		foreach ( $_GET as $key => $value ) {
+			$idPart = $key;
 		}
-
 		
-		$user = $_SESSION['user'];
+		$user = $_SESSION ['user'];
 		$idUser = $user->getId();
 		
-		
-
-				
-		$currentPart2 = Part::getPartByIdPart($key);
-		$currentPart2->Part::addUserInPart($idUser);
-		
-
-		Part::addUserInPart($idUser);
-
+		if ($idPart > 0) {
+			// charge la partie
+			$currentPart = Part::getPartByIdPart( $idPart );
+			// ajoute l'user
+			if($currentPart->addUserInPart( $idUser ) == false){
+				// impossible d'ajouter l'user
+				// retourner dans la page des parties in progress
+				$this->redirect ( 'party', 'listOfTables' );
+			}else{
+				// user ajouté à la partie
+				// aller dans la partie (même si en attente)
+				$currentPart = Part::getPartByIdPart( $idPart );
+				echo 'idUser : ' . $idUser. ' ; idPart : ' . $idPart. ' ; currentPart->getCountPlayers : ' . $currentPart->getCountPlayers();
+			}
+		}
 	}
 	
+		
 	
 	function showTables(){
 		$user = $_SESSION['user'];
@@ -84,34 +60,33 @@ echo '<tr><td>'.$value[1].'</td><td></td></tr>
 		$a = $this->getPartsPendingToStart($idUser);
 	}
 	
-		function register(){
-			//Get data posted by the form
-			$designation = $_POST['designation'];
-			$user = $_SESSION['user'];
-			$idUser = $user->getId();
-			//Check if data valid/**
-			
-			if(empty($designation)){
-				$_SESSION['msg'] = '<span class="error">A required field is empty!</span>';
-				$_SESSION['persistence'] = array($designation);
-			}
-			
-			else{
-
-				$part = new Part($designation);
-				$result = $part->newPart($idUser,$designation);
-				if($result['status']=='error'){
-					$_SESSION['msg'] = '<span class="error">'.$result['result'].'</span>';
-					$_SESSION['persistence'] = array($idPart, $players, $result, $annonces, $stock, $state, $designation, $createdBy, $createdOnAt, $modifBy, $modifOnAt);
-				}
-				else{
-					$_SESSION['msg'] = '<span class="success">New part created!</span>';
-					unset($_SESSION['persistence']);
-				}
-			}
+	function register(){
+		//Get data posted by the form
+		$designation = $_POST['designation'];
+		$user = $_SESSION['user'];
+		$idUser = $user->getId();
+		//Check if data valid/**
 		
-			//$this->redirect('newParty', 'listOfTables');
+		if(empty($designation)){
+			$_SESSION['msg'] = '<span class="error">A required field is empty!</span>';
+			$_SESSION['persistence'] = array($designation);
+		}
+		
+		else{
+			$idPart = Part::newPart ( $idUser, $designation );
+			if ($idPart < 1) {
+				$_SESSION ['msg'] = '<span class="error">Unkown error!</span>';
+				$_SESSION ['persistence'] = array (
+						$designation
+				);
+			} else {
+				$_SESSION ['msg'] = '<span class="success">New part created!</span>';
+				unset ( $_SESSION ['persistence'] );
+			}
 		}
 	
+		$this->redirect('newParty', 'listOfTables');
+	}
+
 	
 	}

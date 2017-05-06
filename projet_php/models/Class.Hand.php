@@ -610,6 +610,28 @@ class Hand{
 	
 	
 	/**
+	 * firstPlayerTest : Contrôle la main d'un joueur afin de contrôler s'il possède le 7 de carreau
+	 * @return $nrPlayer
+	 */
+	public static function firstPlayerTest($hand, $nrPlayer){
+		// variable � retourner � la fin
+		$result=0;
+		
+		for ($i=0; $i<=8; $i++)
+		{
+			$id1 = $card[i]->getNrCards();
+			if($id1==11)
+			{
+				$result = $nrPlayer;
+			}
+		}
+		
+		return $result;
+				
+	}
+	
+	
+	/**
 	 * save : cr�ation d'une nouvelle hand de la donne en cours
 	 * PRIV� car il faut utiliser newHands() pour cr�er 4 � la fois
 	 * Sauve l'objet <Hand> en cours

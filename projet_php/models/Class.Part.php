@@ -13,29 +13,20 @@ class Part{
 	private $modifOnAt;
 	
 	
-	public function __construct($designation){
+	public function __construct($idPart, $players, $result, $annonces, $stock, $state, $designation
+			, $createdBy, $createdOnAt, $modifBy, $modifOnAt){
+				$this->setIdPart($idPart);
+				$this->setPlayers($players);
+				$this->setResult($result);
+				$this->setAnnonces($annonces);
+				$this->setStock($stock);
+				$this->setState($state);
 				$this->setDesignation($designation);
+				$this->setCreatedBy($createdBy);
+				$this->setCreatedOnAt($createdOnAt);
+				$this->setModifby($modifBy);
+				$this->setModifOnAt($modifOnAt);
 	}
-	
-	public function Part(){
-		
-	}
-	
-	
-// 	public function __construct($idPart, $players, $result, $annonces, $stock, $state, $designation
-// 			, $createdBy, $createdOnAt, $modifBy, $modifOnAt){
-// 				$this->setIdPart($idPart);
-// 				$this->setPlayers($players);
-// 				$this->setResult($result);
-// 				$this->setAnnonces($annonces);
-// 				$this->setStock($stock);
-// 				$this->setState($state);
-// 				$this->setDesignation($designation);
-// 				$this->setCreatedBy($createdBy);
-// 				$this->setCreatedOnAt($createdOnAt);
-// 				$this->setModifby($modifBy);
-// 				$this->setModifOnAt($modifOnAt);
-// 	}
 	
 	/**
 	 * getPartsPendingToStart : recherche la liste des parties existantes
@@ -45,17 +36,17 @@ class Part{
 	 */
 	public static function getPartsPendingToStart($idUser){
 		// query select
-// 		$query = "SELECT part.IDPart
-// 				, part.designation
-// 				, COUNT(player.IdUser) As countPlayers
-// 				, SUM(IF(player.IdUser = ?,1,0)) As currentUser
-// 				, part.state
-// 				FROM part, player
-// 				WHERE part.IDPart = player.IDPart AND part.state < 4
-// 				GROUP BY player.IDPart, part.designation  HAVING currentUser = 0;";
+		 		$query = "SELECT part.IDPart
+		 				, part.designation
+		 				, COUNT(player.IdUser) As countPlayers
+		 				, SUM(IF(player.IdUser = ?,1,0)) As currentUser
+		 				, part.state
+		 				FROM part, player
+		 				WHERE part.IDPart = player.IDPart AND part.state < 4
+		 				GROUP BY player.IDPart, part.designation  HAVING currentUser = 0;";
 		
-		$query = "SELECT part.IDPart, part.designation, part.state
-				FROM part, player WHERE part.IDPart = player.IDPart AND part.state < 4 GROUP BY player.IDPart, part.designation;";
+		//$query = "SELECT part.IDPart, part.designation, part.state
+		//		FROM part, player WHERE part.IDPart = player.IDPart AND part.state < 4 GROUP BY player.IDPart, part.designation;";
 		
 		
 		
@@ -70,11 +61,11 @@ class Part{
 			$parts = array();
 			foreach ($result['result'] as $key => $res_part){
 				//$parts[$key] = array($res_part['IDPart'], $res_part['designation'], $res_part['countPlayers'], Part::getStaticLabelState($res_part['state']));
-			
+				
 				/**Helena*/
 				$parts[$key] = array($res_part['IDPart'], $res_part['designation'], Part::getStaticLabelState($res_part['state']));
 				
-			
+				
 			}
 			
 			return $parts;
@@ -120,7 +111,7 @@ class Part{
 	
 	/**
 	 * HELENA
-	 * 
+	 *
 	 * ADD USER IN PART
 	 */
 	public static function addUserToPart($idPart){
@@ -129,14 +120,14 @@ class Part{
 	}
 	
 	
-
 	
-
+	
+	
 	/**
 	 * addUserInPart : ajouter un User à la partie (et un nouveau player)
 	 * @return boolean true/false
 	 */
-	public static function addUserInPart($idUser){
+	public function addUserInPart($idUser){
 		// calcul nombre de joueur
 		$nbPlayers = Part::getCountPlayersAfterRefresh();
 		// max 4 joueurs

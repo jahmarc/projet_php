@@ -121,24 +121,13 @@ class loginController extends Controller {
 		
 		// Get message from connection process
 		$this->vars ['msg'] = isset ( $_SESSION ['msg'] ) ? $_SESSION ['msg'] : '';
-	}
-	
-	// renvoie la liste de tous les autres utilisateurs
-	public function echoListOfOthersUsers() {
 		$user = $_SESSION ['user'];
 		$idUser = $user->getId ();
-		$strUsers = User::getAllOthersUsers ( $idUser );
+		//		$this->vars['strUsers'] = User::getAllOthersUsers( $idUser );
+		// on passe la liste des users à la view par l'attribut <$this->vars['strUsers']>
+		$strUsers = User::getAllOthersUsers( $idUser );
+		$this->vars['strUsers'] = isset ( $strUsers) ? $strUsers: '';
 		
-		foreach ( $strUsers as $value ) {
-			echo "<td><strong>USER : " .$value[2]. "</strong></td><tr>
-				  	</tr>
-					<tr>
-						<td style='padding-left:10%;'>NAME : " .$value[0]. "</td>
-						<td> SURNAME : " . $value [1] . "</td>
-					</tr>
-				<tr><td><hr></td><td><hr></td></tr>";
-			
-			// <tr style='margin-top:50px;'><td></td></tr>"
-		}
 	}
+	
 }

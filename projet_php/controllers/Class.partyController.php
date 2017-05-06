@@ -14,15 +14,18 @@ class partyController extends Controller{
 		$this->vars ['msg'] = "List of parties in progress";
 		$this->vars ['strPparts'] = $strPparts;
 	}
-
+	
 
 	public function partyRegister() {
 		$idPart = 0;
 		foreach ( $_GET as $key => $value ) {
 			$idPart = $key;
 		}
+		
 		$user = $_SESSION ['user'];
 		$idUser = $user->getId();
+
+		
 		if ($idPart > 0) {
 			// charge la partie
 			$currentPart = Part::getPartByIdPart( $idPart );
@@ -32,18 +35,23 @@ class partyController extends Controller{
 				// retourner dans la page des parties in progress
 				$this->redirect ( 'party', 'listOfTables' );
 			}else{
-				// user ajouté à la partie
-				// aller dans la partie (même si en attente)
+				// user ajout� � la partie
+				// aller dans la partie (m�me si en attente)
 				$currentPart = Part::getPartByIdPart( $idPart );
 				echo 'idUser : ' . $idUser. ' ; idPart : ' . $idPart. ' ; currentPart->getCountPlayers : ' . $currentPart->getCountPlayers();
 			}
 		}
-	}
+			
+	}	
+		
+	
 	function showTables(){
 		$user = $_SESSION['user'];
 		$idUser = $user->getId();
 		$a = $this->getPartsPendingToStart($idUser);
 	}
+
+				
 	function register(){
 		//Get data posted by the form
 		$designation = $_POST['designation'];
@@ -54,6 +62,20 @@ class partyController extends Controller{
 			$_SESSION['msg'] = '<span class="error">A required field is empty!</span>';
 			$_SESSION['persistence'] = array($designation);
 		}
+	}
+	
+	function register(){
+		//Get data posted by the form
+		$designation = $_POST['designation'];
+		$user = $_SESSION['user'];
+		$idUser = $user->getId();
+		//Check if data valid
+		
+		if(empty($designation)){
+			$_SESSION['msg'] = '<span class="error">A required field is empty!</span>';
+			$_SESSION['persistence'] = array($designation);
+		}
+		
 		else{
 			$idPart = Part::newPart ( $idUser, $designation );
 			if ($idPart < 1) {
@@ -67,6 +89,4 @@ class partyController extends Controller{
 			}
 		}
 		$this->redirect('newParty', 'listOfTables');
-	}
-
-}
+	}}

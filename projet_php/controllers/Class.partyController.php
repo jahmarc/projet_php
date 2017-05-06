@@ -52,17 +52,7 @@ class partyController extends Controller{
 	}
 
 				
-	function register(){
-		//Get data posted by the form
-		$designation = $_POST['designation'];
-		$user = $_SESSION['user'];
-		$idUser = $user->getId();
-		//Check if data valid/**
-		if(empty($designation)){
-			$_SESSION['msg'] = '<span class="error">A required field is empty!</span>';
-			$_SESSION['persistence'] = array($designation);
-		}
-	}
+
 	
 	function register(){
 		//Get data posted by the form

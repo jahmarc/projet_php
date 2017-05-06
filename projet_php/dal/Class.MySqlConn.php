@@ -11,6 +11,10 @@ class MySqlConn {
 	const USER = "root";
 	const PWD = "";
 	
+	//const DATABASE = "grp4";
+	//const USER = "grp4";
+	//const PWD = "Guadeloupe2015";
+	
 	private static $instance;
 	private $_conn;
 	

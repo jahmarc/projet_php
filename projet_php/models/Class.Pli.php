@@ -4,20 +4,18 @@ class Pli{
 	private $idDonne;
 	private $nrPli = 0;
 	private $firstPlayer = 0;
+	private $winner = 0;
 	private $nrCards = array(1 => 0, 0, 0, 0);
-	private $result = array(1 => 0, 0);
-// 	private $annonce= array(1 => 0, 0);
-// 	private $stock = array(1 => 0, 0);
+	private $result = 0;
 	
-	public function __construct($idPli=null, $idDonne, $nrPli, $firstPlayer, $nrCards, $result){
+	public function __construct($idPli=null, $idDonne, $nrPli, $firstPlayer, $winner, $nrCards, $result){
 		$this->setIdPli($idPli);
 		$this->setIdDonne($idDonne);
 		$this->setNrPli($nrPli);
 		$this->setFirstPlayer($firstPlayer);
+		$this->setWinner($winner);
 		$this->setNrCards($nrCards);
 		$this->setResult($result);
-// 		$this->setAnnonce($annonce);
-// 		$this->setStock($stock);
 	}
 	
 	
@@ -37,12 +35,8 @@ class Pli{
 					, nrCard_3
 					, nrCard_4
 					, firstPlayer
-					, pointsResult_1
-					, pointsResult_2
-// 					, annonces_1
-// 					, annonces_2
-// 					, stock_1
-// 					, stock_2
+					, winner
+					, pointsResult
 					FROM pli
 					WHERE IDDonne=?
 					ORDER BY nrPli;";
@@ -58,9 +52,8 @@ class Pli{
 						, $res_pli['nrPli']
 						, array(1 => $res_pli['nrCard_1'], $res_pli['nrCard_2'], $res_pli['nrCard_3'], $res_pli['nrCard_4'])
 						, $res_pli['firstPlayer']
-						, array(1 => $res_pli['pointsResult_1'], $res_pli['pointsResult_2'])
-// 						, array(1 => $res_pli['annonces_1'], $res_pli['annonces_2'])
-// 						, array(1 => $res_pli['stock_1'], $res_pli['stock_2'])
+						, $res_pli['winner']						
+						, array(1 => $res_pli['pointsResult'])
 						);
 			}
 			return $plis;
@@ -111,28 +104,20 @@ class Pli{
 	public function save(){
 		// UPDATE (jamais modifier ni idPli, ni idDonne, ni NrPli, ni firstPlayer)
 		$query = "UPDATE pli SET
-					  pointsResult_1 = ?
-					, pointsResult_2 = ?
-// 					, annonces_1 = ?
-// 					, annonces_2 = ?
-// 					, stock_1 = ?
-// 					, stock_2 = ?
+					  pointsResult = ?
 					, nrCard_1 = ?
 					, nrCard_2 = ?
 					, nrCard_3 = ?
 					, nrCard_4 = ?
+					, winner = ?
 					 WHERE IDPli = ?;";
 		$attributes = array(
-				$this->getResult()[1]
-				, $this->getResult()[2]
-// 				, $this->getAnnonce()[1]
-// 				, $this->getAnnonce()[2]
-// 				, $this->getStock()[1]
-// 				, $this->getStock()[2]
+				$this->getResult()
 				, $this->getNrCards()[1]
 				, $this->getNrCards()[2]
 				, $this->getNrCards()[3]
 				, $this->getNrCards()[4]
+				, $this->winner()
 				, $this->getIdPli()
 		);
 		$result = MySqlConn::getInstance()->execute($query, $attributes);
@@ -155,8 +140,18 @@ class Pli{
 	
 	
 	/**
-	 * getNextPlayer : renvoi le prochain joueur jusqu'à ce que tous aient joué
+	 * getNextPlayer : renvoi le prochain joueur jusqu'à ce que toutes les cartes aient été jouées
+	 * si c'est le premier pli le firstPlayer est celui récupéré par la classe Hand
+	 * sinon c'est celui récupéré par la méthode getFirstPlayer
 	 */
+	public static function getNextPlayer(){
+		if($idPli=1){
+			$firstPlayer = Hand::firstPlayerTest($hand, $nrPlayer);
+		}
+		else{
+			$firstPlayer->getFirstPlayer();
+		}
+	}
 	
 	
 	/**
@@ -164,6 +159,18 @@ class Pli{
 	 * la première fois le premier joueur est celui qui a choisi l'atoût
 	 * le premier joueur est celui qui a gagné le pli précédent
 	 */
+	public static function getFirstPlayer(){
+		$result = Hand::firstPlayerTest();
+		
+		for ($i=0; $i<=4; $i++)
+		{
+			if($result!=0)
+			{
+				$result = $nrPlayer;
+			}
+		}
+		return $result;
+	}
 	
 	
 	/**
@@ -203,6 +210,13 @@ class Pli{
 		$this->firstPlayer = $firstPlayer;
 	}
 	
+	public function getWinner(){
+		return $this->winner;
+	}
+	public function setWinner($winner){
+		$this->winner = $winner;
+	}
+	
 	public function getNrCards(){
 		return $this->nrCards;
 	}
@@ -221,21 +235,5 @@ class Pli{
 	
 	public function setResult($result){
 		$this->result = $result;
-	}
-	
-	public function getAnnonce(){
-		return $this->annonce;
-	}
-	
-	public function setAnnonce($annonce){
-		$this->annonce = $annonce;
-	}
-	
-	public function getStock(){
-		return $this->stock;
-	}
-	
-	public function setStock($stock){
-		$this->stock = $stock;
 	}
 }

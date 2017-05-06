@@ -215,17 +215,17 @@ class Hand{
 		$var2;
 		
 		
-		for ($i=0; $i<=8; $i++)
+		for ($i=1; $i<=9; $i++)
 		{
 			$id1 = $card[i]->getNrCards();
-			for($j=0; $j<=8; $j++)
+			for($j=1; $j<=9; $j++)
 			{
 				$id2 = $card[j]->getNrCards();
 				$var1 = min($id1,$id2);
 				$var2 = max($id1,$id2);
 				if($var2-$var1 == 1)
 				{
-					for($k=0; $k<=8; $k++){
+					for($k=1; $k<=9; $k++){
 						$id3 = $card[k]->getNrCards();
 						if($id3>$var2){
 							if($id3-$var2==1)
@@ -257,23 +257,23 @@ class Hand{
 		$var2;
 		
 		
-		for ($i=0; $i<=8; $i++)
+		for ($i=1; $i<=9; $i++)
 		{
 			$id1 = $card[i]->getNrCards();
-			for($j=0; $j<=8; $j++)
+			for($j=1; $j<=9; $j++)
 			{
 				$id2 = $card[j]->getNrCards();
 				$var1 = min($id1,$id2);
 				$var2 = max($id1,$id2);
 				if($var2-$var1 == 1)
 				{
-					for($k=0; $k<=8; $k++){
+					for($k=1; $k<=9; $k++){
 						$id3 = $card[k]->getNrCards();
 						if($id3>$var2){
 							if($id3-$var2==1)
 							{
 								$var2 = $id3;
-								for($l=0; $l<=8; $l++){
+								for($l=1; $l<=9; $l++){
 									$id4 = $card[l]->getNrCards();
 									if($id4>$var2){
 										if($id4-$var2==1){
@@ -292,7 +292,7 @@ class Hand{
 							if($var1-$id3==1)
 							{
 								$var1 = $id3;
-								for($l=0; $l<=8; $l++){
+								for($l=1; $l<=9; $l++){
 									$id4 = $card[l]->getNrCards();
 									if($id4>$var2){
 										if($id4-$var2==1){
@@ -326,28 +326,28 @@ class Hand{
 		$var2;
 		
 		
-		for ($i=0; $i<=8; $i++)
+		for ($i=1; $i<=9; $i++)
 		{
 			$id1 = $card[i]->getNrCards();
-			for($j=0; $j<=8; $j++)
+			for($j=1; $j<=9; $j++)
 			{
 				$id2 = $card[j]->getNrCards();
 				$var1 = min($id1,$id2);
 				$var2 = max($id1,$id2);
 				if($var2-$var1 == 1)
 				{
-					for($k=0; $k<=8; $k++){
+					for($k=1; $k<=9; $k++){
 						$id3 = $card[k]->getNrCards();
 						if($id3>$var2){
 							if($id3-$var2==1)
 							{
 								$var2 = $id3;
-								for($l=0; $l<=8; $l++){
+								for($l=1; $l<=9; $l++){
 									$id4 = $card[l]->getNrCards();
 									if($id4>$var2){
 										if($id4-$var2==1){
 											$var2 = $id4;
-											for($m=0; $m<=8; $m++){
+											for($m=1; $m<=9; $m++){
 												$id5 = $card[m]->getNrCards();
 												if($id5>$var2){
 													if($id5-$var2==1)
@@ -366,7 +366,7 @@ class Hand{
 									else{
 										if($var1-$id4==1){
 											$var1 = $id4;
-											for($m=0; $m<=8; $m++){
+											for($m=1; $m<=9; $m++){
 												$id5 = $card[m]->getNrCards();
 												if($id5>$var2){
 													if($id5-$var2==1){
@@ -387,7 +387,7 @@ class Hand{
 								if($var1-$id3==1)
 								{
 									$var1 = $id3;
-									for($l=0; $l<=8; $l++){
+									for($l=1; $l<=9; $l++){
 										$id4 = $card[l]->getNrCards();
 										if($id4>$var2){
 											if($id4-$var2==1){
@@ -420,21 +420,21 @@ class Hand{
 		$result = false;
 		
 		
-		for ($i=0; $i<=8; $i++)
+		for ($i=1; $i<=9; $i++)
 		{
 			$id1 = $card[i]->getNrCards();
 			if($id1<=5 && $id1>=9)
 			{
-				for($j=i+1; $j<=8; $j++)
+				for($j=i+1; $j<=9; $j++)
 				{
 					$id2 = $card[j]->getNrCards();
 					if($id2-$id1 == 9)
 					{
-						for($k=j+1; $k<=8; $k++){
+						for($k=j+1; $k<=9; $k++){
 							$id3 = $card[k]->getNrCards();
 							if($id3-$id2==9)
 							{
-								for($l=k+1; $l<=8; $l++){
+								for($l=k+1; $l<=9; $l++){
 									$id4 = $card[l]->getNrCards();
 									if($id4-$id3==9){
 										$result=true;
@@ -459,21 +459,21 @@ class Hand{
 		$result = false;
 		
 		
-		for ($i=0; $i<=8; $i++)
+		for ($i=1; $i<=9; $i++)
 		{
 			$id1 = $card[i]->getNrCards();
 			if($id1==4)
 			{
-				for($j=i+1; $j<=8; $j++)
+				for($j=i+1; $j<=9; $j++)
 				{
 					$id2 = $card[j]->getNrCards();
 					if($id2==13)
 					{
-						for($k=j+1; $k<=8; $k++){
+						for($k=j+1; $k<=9; $k++){
 							$id3 = $card[k]->getNrCards();
 							if($id3==22)
 							{
-								for($l=k+1; $l<=8; $l++){
+								for($l=k+1; $l<=9; $l++){
 									$id4 = $card[l]->getNrCards();
 									if($id4==31){
 										$result=true;
@@ -498,21 +498,21 @@ class Hand{
 		$result = false;
 		
 		
-		for ($i=0; $i<=8; $i++)
+		for ($i=1; $i<=9; $i++)
 		{
 			$id1 = $card[i]->getNrCards();
 			if($id1==6)
 			{
-				for($j=i+1; $j<=8; $j++)
+				for($j=i+1; $j<=9; $j++)
 				{
 					$id2 = $card[j]->getNrCards();
 					if($id2==15)
 					{
-						for($k=j+1; $k<=8; $k++){
+						for($k=j+1; $k<=9; $k++){
 							$id3 = $card[k]->getNrCards();
 							if($id3==24)
 							{
-								for($l=k+1; $l<=8; $l++){
+								for($l=k+1; $l<=9; $l++){
 									$id4 = $card[l]->getNrCards();
 									if($id4==33){
 										$result=true;
@@ -538,12 +538,12 @@ class Hand{
 		switch($asset)
 		{
 			case 1:
-				for ($i=0; $i<=8; $i++)
+				for ($i=1; $i<=9; $i++)
 				{
 					$id1 = $card[i]->getNrCards();
 					if($id1==7)
 					{
-						for($j=i+1; $j<=8; $j++)
+						for($j=i+1; $j<=9; $j++)
 						{
 							$id2 = $card[j]->getNrCards();
 							if($id2==8)
@@ -555,12 +555,12 @@ class Hand{
 				}
 				break;
 			case 2:
-				for ($i=0; $i<=8; $i++)
+				for ($i=1; $i<=9; $i++)
 				{
 					$id1 = $card[i]->getNrCards();
 					if($id1==16)
 					{
-						for($j=i+1; $j<=8; $j++)
+						for($j=i+1; $j<=9; $j++)
 						{
 							$id2 = $card[j]->getNrCards();
 							if($id2==17)
@@ -572,12 +572,12 @@ class Hand{
 				}
 				break;
 			case 3:
-				for ($i=0; $i<=8; $i++)
+				for ($i=1; $i<=9; $i++)
 				{
 					$id1 = $card[i]->getNrCards();
 					if($id1==25)
 					{
-						for($j=i+1; $j<=8; $j++)
+						for($j=i+1; $j<=9; $j++)
 						{
 							$id2 = $card[j]->getNrCards();
 							if($id2==26)
@@ -589,12 +589,12 @@ class Hand{
 				}
 				break;
 			case 4:
-				for ($i=0; $i<=8; $i++)
+				for ($i=1; $i<=9; $i++)
 				{
 					$id1 = $card[i]->getNrCards();
 					if($id1==34)
 					{
-						for($j=i+1; $j<=8; $j++)
+						for($j=i+1; $j<=9; $j++)
 						{
 							$id2 = $card[j]->getNrCards();
 							if($id2==35)
@@ -619,7 +619,7 @@ class Hand{
 		// variable � retourner � la fin
 		$result=0;
 		
-		for ($i=0; $i<=8; $i++)
+		for ($i=1; $i<=9; $i++)
 		{
 			$id1 = $card[i]->getNrCards();
 			if($id1==11)

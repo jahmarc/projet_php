@@ -141,17 +141,14 @@ class Pli{
 	
 	/**
 	 * getNextPlayer : renvoi le prochain joueur jusqu'à ce que toutes les cartes aient été jouées
-	 * si c'est le premier pli le firstPlayer est celui récupéré par la classe Hand
-	 * sinon c'est celui récupéré par la méthode getFirstPlayer
+	 * si c'est le premier joueur a laissé sa carte c'est le firstplayer qui comment
+	 * sinon c'est le prochain
 	 */
 	public static function getNextPlayer(){
-		if($idPli=1){
-			$firstPlayer = Hand::firstPlayerTest($hand, $nrPlayer);
-		}
-		else{
-			$firstPlayer->getFirstPlayer();
-		}
+		
 	}
+	
+	
 	
 	
 	/**
@@ -160,16 +157,13 @@ class Pli{
 	 * le premier joueur est celui qui a gagné le pli précédent
 	 */
 	public static function getFirstPlayer(){
-		$result = Hand::firstPlayerTest();
-		
-		for ($i=0; $i<=4; $i++)
-		{
-			if($result!=0)
-			{
-				$result = $nrPlayer;
-			}
+		if($idPli=1){
+			//Je ne sais pas si c'est comme cela qu'on appelle la méthode
+			$firstPlayer = Hand::firstPlayerTest($hand, $nrPlayer);
 		}
-		return $result;
+		else{
+			$firstPlayer = getWinner();
+		}
 	}
 	
 	
@@ -177,6 +171,10 @@ class Pli{
 	 * countResult : renvoi le résultat de chaque équipe pour le pli joué
 	 */
 	
+	
+	/**
+	 * getWinner : renvoi le gagnant du pli qui vient d'être joué
+	 */
 	
 	
 	/**
@@ -213,6 +211,7 @@ class Pli{
 	public function getWinner(){
 		return $this->winner;
 	}
+	
 	public function setWinner($winner){
 		$this->winner = $winner;
 	}

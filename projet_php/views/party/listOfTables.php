@@ -26,8 +26,9 @@ $strPparts = $this->vars['strPparts']
 	
 	echo '<table align="center" style="border-bottom-style="double">';
 	
-	foreach ( $strPparts as $value ) {
-		echo '<tr><td>' . $value [1] . '</td><td>' . $value [2] . '</td><td><input class="OK" type="submit" value="inscription" name="' . $value [0] . '"></td></tr>';
+	foreach ($strPparts as $value)
+	{
+		//echo '<tr><td>' . $value [1] . '</td><td>' . $value [2] . '</td><td><input class="OK" type="submit" value="inscription" name="' . $value [0] . '"></td></tr>';
 	}
 	
 	echo '</table></form>'

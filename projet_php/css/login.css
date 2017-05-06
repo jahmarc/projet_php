@@ -17,8 +17,6 @@ a{
 	padding:2%;
 	background-color:rgba(0, 161, 255, 0.85);
     width:260px;
-	background-color:rgba(0, 255, 221, 0.41);
-    border-radius: 25px;
 }
 
 input[type="text"],input[type="password"]{
@@ -33,26 +31,21 @@ input[type="text"],input[type="password"]{
 .OK{
     background-color: white;
     border: white;
-    color: #018de1;
-    background-color: #00a1ff; /* Green */
     border: #00a1ff;
-    color: white;
+    color: black;
     padding: 9px 19px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
-     -webkit-transition-duration: 0.4s; /* Safari */
+    -webkit-transition-duration: 0.4s;
     transition-duration: 0.4s;
-    margin:0 auto;
-	float:right;
+    margin: 0 auto;
+    float: right;
 }
 .OK:hover{
-	/*background-color: #00a1ff;*/
 	background-color: black;
     color: white; 
-	background-color: white;
-    color: #00a1ff;
 }
 
 

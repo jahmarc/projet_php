@@ -1,7 +1,7 @@
 <?php
 class partyController extends Controller{
 	/**
-	 * Method called by the form of the page newParty.php and listOfparty
+	 * Method called by the form of the page newparty.php and listOfparty
 	 */
 
 	function newParty(){
@@ -33,7 +33,7 @@ class partyController extends Controller{
 			if($currentPart->addUserInPart( $idUser ) == false){
 				// impossible d'ajouter l'user
 				// retourner dans la page des parties in progress
-				$this->redirect ( 'party', 'listOfTables' );
+				$this->redirect ( 'party', 'listoftables' );
 			}else{
 				// user ajout� � la partie
 				// aller dans la partie (m�me si en attente)
@@ -78,5 +78,5 @@ class partyController extends Controller{
 				unset ( $_SESSION ['persistence'] );
 			}
 		}
-		$this->redirect('newParty', 'listOfTables');
+		$this->redirect('party', 'listoftables');
 	}}

@@ -13,8 +13,8 @@ $user = $_SESSION['user'];
 	<div style="margin-top: 12px;
     display: list-item;">
 		<!-- <a href="<?php echo URL_DIR.'game/game_test';?>">New Game</a>7-->
-		<a href="<?php echo URL_DIR.'party/listOfTables';?>" type="button" class="OK">JOIN A PARTY</a>	
-		<a href="<?php echo URL_DIR.'party/newParty';?>" type="button" class="OK">NEW PARTY</a>	
+		<a href="<?php echo URL_DIR.'party/listoftables';?>" type="button" class="OK">JOIN A PARTY</a>	
+		<a href="<?php echo URL_DIR.'party/newparty';?>" type="button" class="OK">NEW PARTY</a>	
 	</div>
 	
 	<div align="center" style="margin-top:20px;">

@@ -1,8 +1,7 @@
 <?php
 class Game{
 
-	
-	
+	private $part = new Part($idPart, $players, $result, $annonces, $stock, $state, $designation, $createdBy, $createdOnAt, $modifBy, $modifOnAt);
 	
 	
 	public function __construct(){

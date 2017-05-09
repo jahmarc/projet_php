@@ -19,14 +19,14 @@ class Player{
 	public static function getPlayerByIDPartIDUser($idPart,$idUser){
 		// recherche tableau de players
 		$players = getPlayersPart($idPart);
-		if (!is_array($players)) return false;
+		if (!is_array($players)) return null;
 		// boucler le tableu pour chercher et retourner l'user demandé
 		foreach ($players as $key => $p){
 			if($p->getIdUser()==$idUser)
 				return $p;
 		}
 		
-		return false;
+		return null;
 	}
 	
 	/**

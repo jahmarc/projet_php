@@ -90,6 +90,26 @@ class Game{
 	public function  getCurrentPlayerCards(){
 		return $this->$currentPlayerCards;
 	}
+	/**
+	 * Calcul et set  les cartes qu'il vous reste à jouer
+	 */
+	public function  setCurrentPlayerCards(){
+		$_idDonne = $this->getCurrentDonne()->getIdDonne();
+		$_nrPlayer = $this->currentPlayer;
+		// mes cartes initiales
+		$myCards = Hand::getHandPlayer($_idDonne, $_nrPlayer);
+		// les plis avec les cartes déjà jouées
+		$plis = Pli::getPlisDonne($_idDonne);
+		// boucler les plis pour effacer les carte déjà jouées
+		//--------------------------
+		//  CONTINUER ICI
+		//--------------------------
+		
+		
+		
+		
+		$this->$currentPlayerCards = $myCards;
+	}
 	
 	
 	/**

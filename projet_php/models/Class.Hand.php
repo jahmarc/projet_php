@@ -5,7 +5,7 @@ class Hand{
 	// num�ro du joueur (1-4)
 	private $nrPlayer;
 	// tableau de 9 integer (1-9) : chaque int est l'index du jeu de carte <Card::get36Cards()>
-	private $nrCards = array(1 => 0,0,0,0,0,0,0,0,0); // Index commen�ant � 1 avec array()
+	private $nrCards = array(1 => 0,0,0,0,0,0,0,0,0); // Index commencant a 1 avec array()
 	
 	public function __construct($idHand=null, $idDonne, $nrPlayer, $nrCards){
 		$this->setIdHand($idHand);

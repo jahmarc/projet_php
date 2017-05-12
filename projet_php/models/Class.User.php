@@ -14,6 +14,12 @@ class User{
 		$this->setPassword($password);
 	}
 	
+	
+	public static function getNames(){
+		echo getFistname()+ "  " +getLastname();
+	}
+	
+	
 	//renvoie la liste de tous les autres utilisateurs
 	public static function getAllOthersUsers($idUser){	
 		$query = "SELECT firstname, lastname, username FROM user WHERE id != ?;";

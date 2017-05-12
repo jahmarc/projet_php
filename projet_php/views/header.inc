@@ -10,6 +10,19 @@
 		<link rel="stylesheet" href="/<?php echo SITE_NAME; ?>/css/chat.css" type="text/css"></link>
 		<link rel="icon" image/x-icon href="/<?php echo SITE_NAME; ?>/css/sources/favicon.ico" />
 		
+		<!-- 
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		
+		<link rel="stylesheet" href="/<?php echo SITE_NAME; ?>/css/bootstrap/bootstrap.css" type="text/css">
+		
+		-->
+		
+		
+		<?php 
+		$user = $_SESSION['user'];
+		?>
+		
 	</head>  
 	<body>
 
@@ -21,9 +34,25 @@
 					<p id="title-nav">JASS VS</p></a></li>
 		</ul>
 			<ul>
+				 <li class="li-right"><ul>
+				 		<li>
+				 			<div class="dropdown">
+				 			
+				 				 <span><?php echo $user->getFirstname();?></span></a>
+								  <div class="dropdown-content">
+								     <a class="dropdown" href="<?php echo URL_DIR.'party/mygames';?>">My Games</a>
+								     <a class="dropdown" href="<?php echo URL_DIR.'user/settings';?>">Settings</a>
+								  </div>
+
+				 			</div>
+				 		</li>
+				 	</ul>
+				 
+				 </li>
+				 
 				
-				 <li class="li-right"><a href="#">Play</a></li>
 				 <li class="li-right"><a href="<?php echo URL_DIR.'login/welcome';?>">Users</a></li>
+				
 				 <li class="li-right"><a href="<?php echo URL_DIR.'login/logout';?>">LOGOUT</a></li>
 			</ul>
 		</nav>

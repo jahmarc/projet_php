@@ -15,6 +15,15 @@ class partyController extends Controller{
 		$this->vars ['strPparts'] = $strPparts;
 	}
 	
+	
+	function mygames()
+	{
+		
+		$this->vars ['msg'] = "My Games Statistics";
+		
+	}
+	
+	
 
 	public function partyRegister() {
 		$idPart = 0;

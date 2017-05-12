@@ -1,7 +1,7 @@
 <?php
 class Game{
 
-	private $part = null;//new Part($idPart, $players, $result, $annonces, $stock, $state, $designation, $createdBy, $createdOnAt, $modifBy, $modifOnAt);
+	private $part = null;
 	private $idUser = null;
 	private $currentDonne = null;
 	private $currentPli = null;
@@ -9,6 +9,9 @@ class Game{
 	private $currentPlayer = 0;
 	private $currentPlayerCards = array(1 => 0,0,0,0,0,0,0,0,0); // Index commencant a 1 avec array()
 	private $lastModification;
+	private $currentPointsPart = 0;
+	//Qui a choisi l'atoût
+	//Get du nrPlayer
 	
 	public function __construct($idPart,$idUser){
 		// même dans le constructeur lancer la même procédure RefreshPart
@@ -16,12 +19,14 @@ class Game{
 		$this->RefreshPart($idPart, $idUser);
 	}
 	
+	
 	/**
 	 * Renvoi la donne en cours
 	 */
 	public function  getCurrentDonne(){
 		return $this->currentDonne;
 	}
+	
 	/**
 	 * Calcul et set la donne en cours
 	 */
@@ -39,6 +44,7 @@ class Game{
 	public function  getCurrentPli(){
 		return $this->currentPli;
 	}
+	
 	/**
 	 * Calcul et set la pli en cours
 	 */
@@ -49,6 +55,7 @@ class Game{
 		// return le dernier pli du tableau
 		$this->currentPli = $plis[$lastNDX];
 	}
+	
 	
 	/**
 	 * Renvoi l'atoût en cours
@@ -101,13 +108,7 @@ class Game{
 		// les plis avec les cartes déjà jouées
 		$plis = Pli::getPlisDonne($_idDonne);
 		// boucler les plis pour effacer les carte déjà jouées
-		//--------------------------
-		//  CONTINUER ICI
-		//--------------------------
-		
-		
-		
-		
+		//CONTINUER		
 		$this->$currentPlayerCards = $myCards;
 	}
 	
@@ -116,8 +117,16 @@ class Game{
 	 * Renvoi les points de la partie en cours
 	 */
 	public function  GetPointsPart(){
-	
+		return $this->$currentPointsPart();
 	}
+	/**
+	 * Set  les points de la partie
+	 */
+	public function setPointsPart(){
+		$_idPart = $this->part->getIdPart;
+		
+	}
+	
 	
 	
 	/**
@@ -157,6 +166,8 @@ class Game{
 		$this->setCurrentDonne();
 		$this->setCurrentPli();
 		$this->setCurrentAsset();
+		$this->setCurrentPlayer();
+		
 		
 		
 		// enregistrer la derniere modification

@@ -1,10 +1,13 @@
 <?php
+echo "doiajsijafd";
 include_once ROOT_DIR.'views/header.inc';
 
 //Collect data from controller and session
 $msg = $this->vars['msg'];
-$user = $_SESSION['user'];
+$designation = $this->var['designation'];
 
+
+$user = $_SESSION['user'];
 $idPart = $_SESSION['idPart'];
 
 
@@ -12,7 +15,7 @@ $idPart = $_SESSION['idPart'];
 
 <title>GAMING... | JASS VS</title>
 
-<p><?php echo $idPart;?></p>
+<p><?php echo $designation;?></p>
 
 
 	

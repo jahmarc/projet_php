@@ -8,11 +8,18 @@ class gameController extends Controller{
 		// --- Début test Giuseppe
 		$this->vars['msg'] = "OK c'est bien";
 
-		$idPart = $_SESSION['user'];
+		$user = $_SESSION['user'];
 		$idPart = $_SESSION['idPart'];
 		
+		
+		$idUser = $user->getId();
+		
 		$currentGame = new Game($idPart,$idUser);
-		$currentGame;
+		
+		
+		$currentPart = $currentGame->getCurrentPart();
+		
+		$this->var['designation'] = $currentPart->getDesignation();
 
 	}
 	

@@ -43,9 +43,8 @@ class Game {
 			if ($partTemp->getModifOnAt () == $this->lastModification && $this->idUser = $idUser)
 				exit ();
 		}
-	
 		// lire et calculer tous les membres de la classe
-		$this->idUser = $idUser;
+		$this->idUser = $idUser;	
 		$this->part = $partTemp;
 		$this->setCurrentDonne ();
 		$this->setCurrentPli ();
@@ -74,7 +73,7 @@ class Game {
 	 * Calcul et set la donne en cours
 	 */
 	private function setCurrentDonne() {
-		$donnes = Donne::getDonnesPart ( $part->getIdPart () );
+		$donnes = Donne::getDonnesPart ( $this->part->getIdPart () );		
 		$lastNDX = count ( $donnes );
 		// return la derniere donne du tableau
 		$this->currentDonne = $donnes [$lastNDX];
@@ -91,7 +90,8 @@ class Game {
 	 * Calcul et set la pli en cours
 	 */
 	private function setCurrentPli() {
-		$idDonne = $this->currentDonne->getIdDonne();
+
+		echo $idDonne = $this->currentDonne->getIdDonne();	
 		$plis = Pli::getPlisDonne ( $idDonne );
 		$lastNDX = count ( $plis );
 		// return le dernier pli du tableau

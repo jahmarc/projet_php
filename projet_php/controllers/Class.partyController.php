@@ -82,6 +82,7 @@ class partyController extends Controller{
 		
 		else{
 			$idPart = Part::newPart ( $idUser, $designation );
+				
 			if ($idPart < 1) {
 				$_SESSION ['msg'] = '<span class="error">Unkown error!</span>';
 				$_SESSION ['persistence'] = array (
@@ -90,7 +91,14 @@ class partyController extends Controller{
 			} else {
 				$_SESSION ['msg'] = '<span class="success">New part created!</span>';
 				unset ( $_SESSION ['persistence'] );
+				$_SESSION['idPart']= $idPart;
+				
+				$this->redirect('game', 'game');
 			}
+			
+			
 		}
-		$this->redirect('party', 'listoftables');
+		
+		
+		
 	}}

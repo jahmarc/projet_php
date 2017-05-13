@@ -145,7 +145,7 @@ class Pli{
 	 * sinon c'est le prochain
 	 */
 	public static function getNextPlayer(){
-		
+
 	}
 	
 	
@@ -157,7 +157,7 @@ class Pli{
 	 * le premier joueur est celui qui a gagné le pli précédent
 	 */
 	public static function getFirstPlayer(){
-		if($idPli=1){
+		if($nrPli=1){
 			//Je ne sais pas si c'est comme cela qu'on appelle la méthode
 			$firstPlayer = Hand::firstPlayerTest($hand, $nrPlayer);
 		}
@@ -170,12 +170,88 @@ class Pli{
 	/**
 	 * countResult : renvoi le résultat de chaque équipe pour le pli joué
 	 */
+	public static function countResult(){
+		$cards = $this->nrCards;
+		$idcard1 = nrCards[1];
+		$idcard2 = nrCards[2];
+		$idcard3 = nrCards[3];
+		$idcard4 = nrCards[4];
+		
+	}
 	
 	
 	/**
 	 * getWinner : renvoi le gagnant du pli qui vient d'être joué
 	 */
-	
+	public static function getWinner(){
+		$cards = $this->nrCards;
+		$idcard1 = nrCards[1];
+		$idcard2 = nrCards[2];
+		$idcard3 = nrCards[3];
+		$idcard4 = nrCards[4];
+		$winner = 0;
+		
+		
+		//je vais chercher mes 4 valeurs
+		$valeur1 = Card::getValeur($idCard1);
+		$valeur2 = Card::getValeur($idcard2);
+		$valeur3 = Card::getValeur($idcard3);
+		$valeur4 = Card::getValeur($idcard4);
+		
+		
+		//Je compare la 1ère et 2ème
+		if ($valeur1 > $valeur2){
+			$winner = 1;
+			//1ère et 3ème
+			if($valeur1 > $valeur3){
+				$winner = 1;
+				//1ère et 4ème
+				if($valeur1 > $valeur4){
+					$winner = 1;
+				}
+				else{
+					$winner = 4;
+				}
+			}
+			else{
+				$winner = 3;
+				//3ème et 4ème
+				if($valeur3 > $valeur4){
+					$winner = 3;
+				}
+				else{
+					$winner = 4;
+				}
+			}
+		}
+		else{
+			$winner = 2;
+			//2ème et 3ème
+			if($valeur2 > $valeur3){
+				$winner = 2;
+				//2ème et 4ème
+				if($valeur2 > $valeur4){
+					$winner = 2;
+				}
+				else{
+					$winner = 4;
+				}
+			}
+			else{
+				$winner = 3;
+				//3ème et 4ème
+				if($valeur3 > $valeur4){
+					$winner = 3;
+				}
+				else{
+					$winner = 4;
+				}
+			}
+		}
+		
+		// je retourne le numéro de joueur qui a gagné
+		return $winner;
+	}
 	
 	/**
 	 * Getter and setter

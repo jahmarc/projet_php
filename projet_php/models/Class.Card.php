@@ -26,6 +26,11 @@ class Card{
 		return $this->getNdxCard().' '.$this->getShortDescription().' '.$this->getDescription().' '.$this->getPicture();
 	}
 	
+	public static function getValeur($idCard){
+		return Card::getValeur($idCard);
+	}
+	
+	
 	public static function get36Cards(){
 		$src = 'images/cards/';
 		/*

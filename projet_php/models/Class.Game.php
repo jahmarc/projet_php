@@ -1,177 +1,201 @@
 <?php
-class Game{
-
+class Game {
 	private $part = null;
 	private $idUser = null;
 	private $currentDonne = null;
 	private $currentPli = null;
 	private $currentAsset = 0;
 	private $currentPlayer = 0;
-	private $currentPlayerCards = array(1 => 0,0,0,0,0,0,0,0,0); // Index commencant a 1 avec array()
+	private $currentPlayerCards = array (
+			1 => 0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0 
+	); // Index commencant a 1 avec array()
 	private $lastModification;
 	private $currentPointsPart = 0;
-	//Qui a choisi l'atoût
-	//Get du nrPlayer
-	
-	public function __construct($idPart,$idUser){
+	// Qui a choisi l'atoût
+	private $nrPlayer = 0;
+	public function __construct($idPart, $idUser) {
 		// même dans le constructeur lancer la même procédure RefreshPart
-		$this->lastModification = -1;
-		$this->RefreshPart($idPart, $idUser);
+		$this->lastModification = - 1;
+		$this->RefreshPart ( $idPart, $idUser );
 	}
-	
 	
 	/**
 	 * Renvoi la donne en cours
 	 */
-	public function  getCurrentDonne(){
+	public function getCurrentDonne() {
 		return $this->currentDonne;
+	}
+	
+	/**
+	 * Renvoi de la partie en cours
+	 */
+	public function getCurrentPart(){
+		return $this->part;
 	}
 	
 	/**
 	 * Calcul et set la donne en cours
 	 */
-	private function  setCurrentDonne(){
-		$donnes = Donne::getDonnesPart($part->getIdPart());
-		$lastNDX = count($donnes);
+	private function setCurrentDonne() {
+		$donnes = Donne::getDonnesPart ( $part->getIdPart () );
+		$lastNDX = count ( $donnes );
 		// return la derniere donne du tableau
-		$this->currentDonne = $donnes[$lastNDX];
+		$this->currentDonne = $donnes [$lastNDX];
 	}
-	
 	
 	/**
 	 * Renvoi le pli en cours
 	 */
-	public function  getCurrentPli(){
+	public function getCurrentPli() {
 		return $this->currentPli;
 	}
 	
 	/**
 	 * Calcul et set la pli en cours
 	 */
-	private function setCurrentPli(){
-		$idDonne = $this->currentDonne->getIdDonne();
-		$plis = Pli::getPlisDonne($idDonne);
-		$lastNDX = count($plis);
+	private function setCurrentPli() {
+		$idDonne = $this->currentDonne->getIdDonne ();
+		$plis = Pli::getPlisDonne ( $idDonne );
+		$lastNDX = count ( $plis );
 		// return le dernier pli du tableau
-		$this->currentPli = $plis[$lastNDX];
+		$this->currentPli = $plis [$lastNDX];
 	}
-	
 	
 	/**
 	 * Renvoi l'atoût en cours
 	 */
-	public function getCurrentAsset(){
+	public function getCurrentAsset() {
 		return $this->currentAsset;
 	}
 	/**
 	 * Calcul et set l'atoût en cours
 	 */
-	private function setCurrentAsset(){
-		$this->currentAsset = $this->currentDonne->getAsset();
+	private function setCurrentAsset() {
+		$this->currentAsset = $this->currentDonne->getAsset ();
 	}
-	
 	
 	/**
 	 * Renvoi le joueur qui doit jouer
 	 */
-	public function getCurrentPlayer(){
+	public function getCurrentPlayer() {
 		return $this->currentPlayer;
 	}
 	/**
 	 * Calcul et set le joueur en cours
 	 */
-	private function setCurrentPlayer(){
+	private function setCurrentPlayer() {
 		$_idPart = $this->part->getIdPart;
 		$_idUser = $this->$idUser;
 		// cherche le player selon idPartie et idUser
-		$player = Player::getPlayerByIDPartIDUser($_idPart,$_idUser);
-		// le numéro du joueur entre 1 et 4		
-		$this->currentPlayer = $player.getNrPlayer;
+		$player = Player::getPlayerByIDPartIDUser ( $_idPart, $_idUser );
+		// le numéro du joueur entre 1 et 4
+		$this->currentPlayer = $player . getNrPlayer;
 	}
 	
+	/**
+	 * Renvoi le nrPlayer
+	 */
+	public function getNrPlayer() {
+		return $this->nrPlayer;
+	}
+	/**
+	 * Calcul et set le nr du joueur en cours ??????
+	 */
+	public function setNrPlayer() {
+		$_idPart = $this->part->getIdPart;
+		$_idUser = $this->$idUser;
+		// cherche le player selon idPartie et idUser
+		$player = Player::getPlayerByIDPartNrPlayer ( $_idPart, $_idUser );
+		// le numéro du joueur entre 1 et 4
+		$this->currentPlayer = $player . getNrPlayer;
+	}
 	
 	/**
 	 * Renvoi les cartes qu'il vous reste à jouer
-	 * public function  getMyCards(){
+	 * public function getMyCards(){
 	 */
-	public function  getCurrentPlayerCards(){
+	public function getCurrentPlayerCards() {
 		return $this->$currentPlayerCards;
 	}
 	/**
-	 * Calcul et set  les cartes qu'il vous reste à jouer
+	 * Calcul et set les cartes qu'il vous reste à jouer
 	 */
-	public function  setCurrentPlayerCards(){
-		$_idDonne = $this->getCurrentDonne()->getIdDonne();
+	public function setCurrentPlayerCards() {
+		$_idDonne = $this->getCurrentDonne ()->getIdDonne ();
 		$_nrPlayer = $this->currentPlayer;
 		// mes cartes initiales
-		$myCards = Hand::getHandPlayer($_idDonne, $_nrPlayer);
+		$myCards = Hand::getHandPlayer ( $_idDonne, $_nrPlayer );
 		// les plis avec les cartes déjà jouées
-		$plis = Pli::getPlisDonne($_idDonne);
+		$plis = Pli::getPlisDonne ( $_idDonne );
 		// boucler les plis pour effacer les carte déjà jouées
-		//CONTINUER		
+		// CONTINUER
+		
 		$this->$currentPlayerCards = $myCards;
 	}
-	
 	
 	/**
 	 * Renvoi les points de la partie en cours
 	 */
-	public function  GetPointsPart(){
-		return $this->$currentPointsPart();
+	public function GetPointsPart() {
+		return $this->$currentPointsPart ();
 	}
 	/**
-	 * Set  les points de la partie
+	 * Set les points de la partie
 	 */
-	public function setPointsPart(){
+	public function setPointsPart() {
 		$_idPart = $this->part->getIdPart;
-		
 	}
-	
-	
 	
 	/**
 	 * Renvoi les points de la donne en cours
 	 */
-	public function  GetPointsDonne(){
-	
+	public function GetPointsDonne() {
+		return $this->$currentPointsDonne();
 	}
-	
+	/**
+	 * Set les points de la donne
+	 */
+	public function SetPointsDonne(){
+		
+	}
 	
 	/**
 	 * Renvoi les conversations de la partie en cours
 	 */
-	public function  GetChat(){
-	
+	public function GetChat() {
 	}
-	
 	
 	/**
 	 * Met à jour toutes les données nécessaires à la partie
-	 * 
 	 */
-	public function  RefreshPart($idPart, $idUser){
+	public function RefreshPart($idPart, $idUser) {
 		
 		// lire la partie
-		$partTemp = Part::getPartByIdPart($idPart);
+		$partTemp = Part::getPartByIdPart ( $idPart );
 		// si la partie en cours n'est pas null
-		if ($partTemp != null){
+		if ($partTemp != null) {
 			// si il n'y pas a une modification pour la même partie du même utilisateur alors ne rien faire
-			if ($partTemp->getModifOnAt() == $this->ModifyOnAt && $this->idUser = $idUser)
-				exit;
+			if ($partTemp->getModifOnAt () == $this->ModifyOnAt && $this->idUser = $idUser)
+				exit ();
 		}
 		
 		// lire et calculer tous les membres de la classe
 		$this->idUser = $idUser;
 		$this->part = $partTemp;
-		$this->setCurrentDonne();
-		$this->setCurrentPli();
-		$this->setCurrentAsset();
-		$this->setCurrentPlayer();
-		
-		
+		$this->setCurrentDonne ();
+		$this->setCurrentPli ();
+		$this->setCurrentAsset ();
+		$this->setCurrentPlayer ();
 		
 		// enregistrer la derniere modification
-		$this->ModifyOnAt = $this->part->getModifOnAt();
+		$this->ModifyOnAt = $this->part->getModifOnAt ();
 	}
-	
 }

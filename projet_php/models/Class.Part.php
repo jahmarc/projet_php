@@ -328,6 +328,26 @@ class Part{
 	}
 	
 	/**
+	 * SP
+	 * getCountResult calcul combien chaque équipe a de points dans la partie en cours
+	 */
+	public function getCountResult($idPArt){
+		// query select + count
+		$query = "SELECT COUNT(pointsResult_1)
+					 , COUNT(pointsResult_2)
+					 FROM part
+					 WHERE IDPart = ? ;";
+		$attributes = array($idPArt);
+		$result = MySqlConn::getInstance()->execute($query, $attributes);
+		if($result['status']=='error' || empty($result['result']))
+			return false;
+		
+			
+	}
+	
+	
+	
+	/**
 	 * Getter and setter
 	 */
 	

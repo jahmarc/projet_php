@@ -115,6 +115,26 @@ class Donne{
 	}
 	
 	
+	
+	/**
+	 * SP
+	 * getCountResult calcul combien chaque équipe a de points dans la donne en cours
+	 */
+	public function getCountResult($idDonne){
+		// query select + count
+		$query = "SELECT COUNT(pointsResult_1)
+					 , COUNT(pointsResult_2)
+					 FROM donne
+					 WHERE IDDonne = ?;";
+		$attributes = array($idDonne);
+		$result = MySqlConn::getInstance()->execute($query, $attributes);
+		if($result['status']=='error' || empty($result['result']))
+			return false;
+	
+			return $result;
+	}
+	
+	
 	/**
 	 * Getter and setter
 	 */

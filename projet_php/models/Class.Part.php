@@ -342,7 +342,7 @@ class Part{
 		if($result['status']=='error' || empty($result['result']))
 			return false;
 		
-			
+		return $result;	
 	}
 	
 	

@@ -18,13 +18,39 @@ class partyController extends Controller{
 	
 	function mygames()
 	{
-		
+		$user = $_SESSION ['user'];
+		$idUser = $user->getId ();
+		$strPparts = Part::getPartsOfUser( $idUser );
 		$this->vars ['msg'] = "My Games Statistics";
-		
+		$this->vars ['strPparts'] = $strPparts;
 	}
 	
 	
-
+	public function partyContinous() {
+		$idPart = 0;
+		foreach ( $_GET as $key => $value ) {
+			$idPart = $key;
+		}
+		
+		$user = $_SESSION ['user'];
+		$idUser = $user->getId();
+		
+		
+		if ($idPart > 0) {
+			// charge la partie
+			$currentPart = Part::getPartByIdPart( $idPart );
+			// ajoute l'user
+			if($currentPart->getState( ) < 99){
+				// continue la partie
+				$_SESSION ['idPart'] = $idPart;
+				$this->redirect ( 'game', 'game' );
+			}else{
+				$this->redirect ( 'party', 'mygames' );
+			}
+		}
+		
+	}
+	
 	public function partyRegister() {
 		$idPart = 0;
 		foreach ( $_GET as $key => $value ) {

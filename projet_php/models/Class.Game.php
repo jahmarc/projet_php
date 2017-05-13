@@ -16,7 +16,7 @@ class Game {
 			0,
 			0,
 			0,
-			0 
+			0
 	); // Index commencant a 1 avec array()
 	private $lastModification;
 	private $currentPointsPart = 0;
@@ -34,7 +34,7 @@ class Game {
 	 * Met à jour toutes les données nécessaires à la partie
 	 */
 	public function RefreshPart($idPart, $idUser) {
-	
+		
 		// lire la partie
 		$partTemp = Part::getPartByIdPart ( $idPart );
 		// si la partie en cours n'est pas null
@@ -44,15 +44,26 @@ class Game {
 				exit ();
 		}
 		// lire et calculer tous les membres de la classe
-		$this->idUser = $idUser;	
+		$this->idUser = $idUser;
 		$this->part = $partTemp;
-		$this->setCurrentDonne ();
-		$this->setCurrentPli ();
-		$this->setCurrentAsset ();
-		$this->setCurrentPlayer ();
-	
+		$this->setMyNrPlayer();
+		$state = $this->part->getState();
+		if($state < 4){
+			// partie en attente de joueurs
+			
+		}elseif($state == 99){
+			// partie terminee
+			
+		}else{
+			// partie en cours
+			$this->setCurrentDonne();
+			$this->setCurrentPli();
+			$this->setCurrentAsset();
+			$this->setCurrentPlayer();
+		}
+		
 		// enregistrer la derniere modification
-		$this->lastModification = $this->part->getModifOnAt ();
+		$this->lastModification = $this->part->getModifOnAt();
 	}
 	
 	/**
@@ -73,10 +84,12 @@ class Game {
 	 * Calcul et set la donne en cours
 	 */
 	private function setCurrentDonne() {
-		$donnes = Donne::getDonnesPart ( $this->part->getIdPart () );		
-		$lastNDX = count ( $donnes );
+		$donnes = Donne::getDonnesPart ( $this->part->getIdPart() );
+		$lastNDX = count ( $donnes ) ;
+		$donne = $donnes[$lastNDX];
+		
 		// return la derniere donne du tableau
-		$this->currentDonne = $donnes [$lastNDX];
+		$this->currentDonne = $donnes[$lastNDX];
 	}
 	
 	/**
@@ -90,8 +103,9 @@ class Game {
 	 * Calcul et set la pli en cours
 	 */
 	private function setCurrentPli() {
-
-		echo $idDonne = $this->currentDonne->getIdDonne();	
+		
+		$idDonne = $this->currentDonne->getIdDonne();
+		echo $idDonne;
 		$plis = Pli::getPlisDonne ( $idDonne );
 		$lastNDX = count ( $plis );
 		// return le dernier pli du tableau
@@ -108,7 +122,7 @@ class Game {
 	 * Calcul et set l'atoût en cours
 	 */
 	private function setCurrentAsset() {
-		$this->currentAsset = $this->currentDonne->getAsset ();
+		$this->currentAsset = $this->currentDonne->getAsset();
 	}
 	
 	/**
@@ -121,12 +135,12 @@ class Game {
 	 * Calcul et set le joueur du user
 	 */
 	private function setMyNrPlayer() {
-		$_idPart = $this->part->getIdPart;
-		$_idUser = $this->$idUser;
+		$_idPart = $this->part->getIdPart();
+		$_idUser = $this->idUser;
 		// cherche le player selon idPartie et idUser
 		$player = Player::getPlayerByIDPartIDUser( $_idPart, $_idUser );
 		// le numéro du joueur entre 1 et 4
-		$this->myNrPlayer = $player.getNrPlayer;
+		$this->myNrPlayer = $player->getNrPlayer();
 	}
 	
 	/**
@@ -136,16 +150,13 @@ class Game {
 		return $this->currentPlayer;
 	}
 	/**
-	 * SP
-	 * Calcul et set le joueur en cours 
+	 * Calcul et set le joueur en cours
 	 */
 	public function setCurrentPlayer() {
-		$_idPart = $this->part->getIdPart;
-		$_idUser = $this->$idUser;
-		// cherche le player selon idPartie et idUser
-		$player = Player::getPlayerByIDPartNrPlayer( $_idPart, $_idUser );
-		// le numéro du joueur entre 1 et 4
-		$this->currentPlayer = $player.getNrPlayer;
+		// chercher le joueur en cours (qui doit jouer)
+		// selon Pli.firstPlayer
+		// selon les cartes joué dans la pli
+		
 	}
 	
 	/**
@@ -184,7 +195,7 @@ class Game {
 	 */
 	public function setPointsPart() {
 		$_idPart = $this->part->getIdPart;
-		$this->$currentPointsPart = $this->part->getCountResult($_idPart);	
+		$this->$currentPointsPart = $this->part->getCountResult($_idPart);
 	}
 	
 	/**
@@ -199,7 +210,7 @@ class Game {
 	 * Set les points de la donne
 	 */
 	public function SetPointsDonne(){
-		$_idDonne = $this->currentDonne->getIdDonne;
+		$_idDonne = $this->currentDonne->getIdDonne();
 		$this->$currentPointsDonne = $this->currentDonne->getCountResult($_idDonne);
 	}
 	

@@ -18,7 +18,7 @@ class Player{
 	 */
 	public static function getPlayerByIDPartIDUser($idPart,$idUser){
 		// recherche tableau de players
-		$players = getPlayersPart($idPart);
+		$players = Player::getPlayersPart($idPart);
 		if (!is_array($players)) return null;
 		// boucler le tableu pour chercher et retourner l'user demandé
 		foreach ($players as $key => $p){
@@ -35,7 +35,7 @@ class Player{
 	 */
 	public static function getPlayerByIDPartNrPlayer($idPart,$nrPlayer){
 		// recherche tableau de players
-		$players = getPlayersPart($idPart);
+		$players = Player::getPlayersPart($idPart);
 		if (!is_array($players)) return false;
 		// boucler le tableu pour chercher et retourner l'user demandé
 		foreach ($players as $key => $p){

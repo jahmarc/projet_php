@@ -3,9 +3,8 @@ include_once ROOT_DIR.'views/header.inc';
 
 $msg = $this->vars['msg'];
 $user = $_SESSION['user'];
-
+$strPparts = $this->vars['strPparts']
 ?>
-
 <br><br><br><br><br><br>
 <title>My Games | JASS VS</title>
 
@@ -16,7 +15,7 @@ $user = $_SESSION['user'];
 
 
 <div style="margin:0 auto; width:600px;">	
-	<?php $link = URL_DIR . 'party/partyRegister'; ?>
+	<?php $link = URL_DIR . 'party/partyContinous'; ?>
 	<form action = <?= $link ?> method = "get">
 		<table align="center" style="border-bottom-style="double">
 			<?php if ( empty($strPparts)) : ?>
@@ -29,7 +28,7 @@ $user = $_SESSION['user'];
 						<td> <?= $value[1] ?> </td>
 						<td> <?= $value[2] ?> </td>
 						<td> <input class="OK" type="submit" 
-								value="inscription" name=<?= $value[0] ?>> </td>
+								value="Play" name=<?= $value[0] ?>> </td>
 					</tr>
 				<?php endforeach; ?>
 			<?php endif ?>

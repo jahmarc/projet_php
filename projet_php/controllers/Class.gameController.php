@@ -3,12 +3,16 @@ class gameController extends Controller{
 	/**
 	 * Method called by the form of the page login.php
 	 */
-	function game_test(){
+	function game(){
 
 		// --- Début test Giuseppe
 		$this->vars['msg'] = "OK c'est bien";
-		// --- Fin test Giuseppe
 
+		$idPart = $_SESSION['user'];
+		$idPart = $_SESSION['idPart'];
+		
+		$currentGame = new Game($idPart,$idUser);
+		$currentGame;
 
 	}
 	
@@ -29,6 +33,11 @@ class gameController extends Controller{
 			echo $value->toString()."<br>";
 		}
 	}
+	
+	
+	
+	
+	
 	function newPart(){
 
 		$user = $_SESSION['user'];

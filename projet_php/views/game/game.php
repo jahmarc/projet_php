@@ -4,15 +4,22 @@ include_once ROOT_DIR.'views/header.inc';
 //Collect data from controller and session
 $msg = $this->vars['msg'];
 $user = $_SESSION['user'];
+
+$idPart = $_SESSION['idPart'];
+
+
 ?>
 
 <title>GAMING... | JASS VS</title>
+
+<p><?php echo $idPart;?></p>
+
 
 	
 	<div style="padding-top:30px;">
     <div id="gameHeader">
         <div id="atout">
-            Atout :
+            Atout : 
         </div>
 
         <div id="main">
@@ -43,7 +50,7 @@ $user = $_SESSION['user'];
 
     <div id="table">
         <div id="player1">
-            Player 1
+            Player : 
 
             <img src="sources/cartes.png" id="carte1">
 
@@ -57,7 +64,7 @@ $user = $_SESSION['user'];
         </div>
 
         <div id="player3">
-            Player 3
+            Player <?php echo $user->getFirstname();?>
 
             <table border="1" align="center">
                 <td>Carte 1 </td>

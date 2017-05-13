@@ -47,7 +47,12 @@ class partyController extends Controller{
 				// user ajout� � la partie
 				// aller dans la partie (m�me si en attente)
 				$currentPart = Part::getPartByIdPart( $idPart );
-				echo 'idUser : ' . $idUser. ' ; idPart : ' . $idPart. ' ; currentPart->getCountPlayers : ' . $currentPart->getCountPlayers();
+				
+				$_SESSION['idPart'] = $idPart;
+							
+				$this->redirect('game', 'game');
+				
+				//echo 'idUser : ' . $idUser. ' ; idPart : ' . $idPart. ' ; currentPart->getCountPlayers : ' . $currentPart->getCountPlayers();
 			}
 		}
 			

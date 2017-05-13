@@ -7,7 +7,7 @@ class Game {
 	private $currentAsset = 0;
 	//Joueur en cours (en attente de jouer)
 	private $currentPlayer = 0;
-	private $currentPlayerCards = array (
+	private $myCards = array (
 			1 => 0,
 			0,
 			0,
@@ -23,7 +23,7 @@ class Game {
 	// Qui a choisi l'atoût
 	
 	//le joueur de l'user
-	private $myPlayer = 0;
+	private $myNrPlayer = 0;
 	public function __construct($idPart, $idUser) {
 		// même dans le constructeur lancer la même procédure RefreshPart
 		$this->lastModification = - 1;
@@ -114,19 +114,19 @@ class Game {
 	/**
 	 * Renvoi le joueur du user
 	 */
-	public function getMyPlayer() {
-		return $this->myPlayer;
+	public function getMyNrPlayer() {
+		return $this->myNrPlayer;
 	}
 	/**
 	 * Calcul et set le joueur du user
 	 */
-	private function setMyPlayer() {
+	private function setMyNrPlayer() {
 		$_idPart = $this->part->getIdPart;
 		$_idUser = $this->$idUser;
 		// cherche le player selon idPartie et idUser
 		$player = Player::getPlayerByIDPartIDUser( $_idPart, $_idUser );
 		// le numéro du joueur entre 1 et 4
-		$this->myPlayer = $player.getNrPlayer;
+		$this->myNrPlayer = $player.getNrPlayer;
 	}
 	
 	/**
@@ -152,15 +152,15 @@ class Game {
 	 * Renvoi les cartes qu'il vous reste à jouer
 	 * public function getMyCards(){
 	 */
-	public function getCurrentPlayerCards() {
-		return $this->$currentPlayerCards;
+	public function getMyCards() {
+		return $this->$MyCards;
 	}
 	/**
 	 * Calcul et set les cartes qu'il vous reste à jouer
 	 */
-	public function setCurrentPlayerCards() {
+	public function setMyCards() {
 		$_idDonne = $this->getCurrentDonne ()->getIdDonne ();
-		$_nrPlayer = $this->currentPlayer;
+		$_nrPlayer = $this->myPlayer;
 		// mes cartes initiales
 		$myCards = Hand::getHandPlayer ( $_idDonne, $_nrPlayer );
 		// les plis avec les cartes déjà jouées
@@ -168,7 +168,7 @@ class Game {
 		// boucler les plis pour effacer les carte déjà jouées
 		// CONTINUER
 		
-		$this->$currentPlayerCards = $myCards;
+		$this->myCards = $myCards;
 	}
 	
 	/**

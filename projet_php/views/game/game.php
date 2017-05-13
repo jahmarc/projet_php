@@ -1,5 +1,4 @@
 <?php
-echo "doiajsijafd";
 include_once ROOT_DIR.'views/header.inc';
 
 //Collect data from controller and session

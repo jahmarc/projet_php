@@ -38,7 +38,7 @@ class Chat{
 	 * @return un tableau de chats de la partie
 	 */
 	public static function getChatsPart($idPart){
-		// tableau de players à retourner
+		// tableau de chats à retourner
 		$chats = array();
 		// query select
 		$query = "SELECT IDChat, IDPart, IdUser, createdOnAt, textChat

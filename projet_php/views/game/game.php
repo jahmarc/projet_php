@@ -51,21 +51,21 @@ $idPart = $_SESSION['idPart'];
     </div>
 
     <div id="table">
-        <div id="player1">
-            Player : 
+        <div id="playerFront">
+            Player Front: 
 
             <img src="sources/cartes.png" id="carte1">
 
         </div>
 
-        <div id="player2">
-            Player 2
+        <div id="playerleft">
+            Player Left:
 
             <img src="sources/cartes.png" id="carte2">
 
         </div>
 
-        <div id="player3">
+        <div id="myPlayer">
             Player <?php echo $user->getFirstname();?>
 
             <table border="1" align="center">
@@ -84,8 +84,8 @@ $idPart = $_SESSION['idPart'];
 
         </div>
 
-        <div id="player4">
-            Player 4
+        <div id="playerRight">
+            Player Right:
 
             <img src="cartes.png" id="carte4">
 

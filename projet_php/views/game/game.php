@@ -69,6 +69,7 @@ $idPart = $_SESSION['idPart'];
             Player <?php echo $user->getFirstname();?>
 
             <table border="1" align="center">
+            <tr>
                 <td>Carte 1 </td>
                 <td>Carte 2 </td>
                 <td>Carte 3 </td>
@@ -78,7 +79,7 @@ $idPart = $_SESSION['idPart'];
                 <td>Carte 7 </td>
                 <td>Carte 8 </td>
                 <td>Carte 9 </td>
-
+            </tr>
             </table>
 
         </div>

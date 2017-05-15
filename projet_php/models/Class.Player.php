@@ -4,12 +4,16 @@ class Player{
 	private $idUser;
 	private $nrPlayer;
 	private $winner;
+	private $firstname;
+	private $lastname;
 	
-	public function __construct($idPart, $idUser, $nrPlayer, $winner){
+	public function __construct($idPart, $idUser, $nrPlayer, $winner, $firstname, $lastname){
 		$this->setIdPart($idPart);
 		$this->setIdUser($idUser);
 		$this->setNrPlayer($nrPlayer);
 		$this->setWinner($winner);
+		$this->setFirstName($firstname);
+		$this->setLastName($lastname);
 	}
 	
 	/**
@@ -69,7 +73,17 @@ class Player{
 		// tableau de players à retourner
 		$players = array();
 		// query select
-		$query = "SELECT IDPart, IdUser, nrPlayer, winner FROM player WHERE IDPart=? ORDER BY nrPlayer;";
+		$query = "SELECT player.IDPart
+				, player.IdUser
+				, player.nrPlayer
+				, player.winner
+				, user.firstname 
+				, user.lastname 
+		FROM player 
+		LEFT JOIN user on user.id = player.IdUser
+		WHERE player.IDPart = ? 
+		ORDER BY player.nrPlayer";
+
 		$attributes = array($idPart);
 		$result = MySqlConn::getInstance()->execute($query, $attributes);
 		if($result['status']=='error' || empty($result['result']))
@@ -77,7 +91,7 @@ class Player{
 			//
 			foreach ($result['result'] as $key => $res_player){
 				$ndx = $res_player['nrPlayer'];
-				$players[$ndx] = new Player($res_player['IDPart'], $res_player['IdUser'], $ndx, $res_player['winner']);
+				$players[$ndx] = new Player($res_player['IDPart'], $res_player['IdUser'], $ndx, $res_player['winner'], $res_player['firstname'], $res_player['lastname']);
 			}
 			
 			return $players;
@@ -118,5 +132,21 @@ class Player{
 	public function setWinner($winner){
 		$this->winner = $winner;
 	}
-	
+
+	public function getFirstName(){
+		return $this->firstname;
+	}
+	public function setFirstName($firstname){
+		$this->firstname= $firstname;
+	}
+
+	public function getLastName(){
+		return $this->lastname;
+	}
+	public function setLastName($lastname){
+		$this->lastname= $lastname;
+	}
+	public function __toString(){
+		return '['.$this->nrPlayer.'] '.$this->firstname.' '.$this->lastname;
+	}
 }

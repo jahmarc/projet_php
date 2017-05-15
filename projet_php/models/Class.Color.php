@@ -25,7 +25,7 @@ class Color{
 		);
 	}
 	public function toString(){
-		return $this->getNdxColor().' '.$this->getDescription().' '.$this->getPicture();
+		return '['.$this->getNdxColor().'] '.$this->getDescription();
 	}
 	
 	/**

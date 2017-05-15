@@ -26,7 +26,6 @@ class gameController extends Controller{
 	 *  newparty.php	(lors de la création d'une nouvelle partie)
 	 */
 	function game(){
-		$this->vars['msg'] = 'Current game';
 		$user = $_SESSION['user'];
 		$idPart = $_SESSION['idPart'];
 		
@@ -34,13 +33,19 @@ class gameController extends Controller{
 		
 		$this->RefreshPart($idPart,$idUser);
 		
+		//-----------------------------------------------------------------		
+		// PBO: before Output: pour passer des donnés à la vue:
+		//-----------------------------------------------------------------
+		
 		$currentPart = $this->getCurrentPart();
-		
-		$this->var['designation'] ='Current game : '.$currentPart->getDesignation();
-		
+		$this->vars['msg'] = 'Current game';
+		$this->vars['designation'] ='Current game : '.$currentPart->getDesignation();
+		$this->vars['atout'] = $this->currentAsset;
+
+		// cherche les joueurs
+		$this->setPlayersForView();
 	}
-	
-	
+
 	/**
 	 * Met à jour toutes les données nécessaires à la partie
 	 */
@@ -68,13 +73,73 @@ class gameController extends Controller{
 		}else{
 			// partie en cours
 			$this->setCurrentDonne();
+			$this->setMyCards();
 			$this->setCurrentPli();
 			$this->setCurrentAsset();
 			$this->setCurrentPlayer();
+			
+			if ($this->$currentAsset == 0){
+				// choisir l'atout
+				
+				if ($this->currentDonne->getChibre()== true){
+					// il a chibre
+					
+				}
+			}
 		}
 		
 		// enregistrer la derniere modification
 		$this->lastModification = $this->part->getModifOnAt();
+	}
+	/**
+	 * calcul et set les joueurs pour la vue
+	 * $this->vars['myPlayer'] et  playerRight, playerFront, playerLeft
+	 */
+	
+	public function setPlayersForView(){
+		// met à vide
+		$this->vars['myPlayer'] = "";
+		$this->vars['playerRight'] = "";
+		$this->vars['playerFront'] = "";
+		$this->vars['playerLeft'] = "";
+		// calcul l'index relatif à my player 
+		$right = $this->myNrPlayer + 1;
+		if($right > 4) $right -= 4;
+		
+		$front = $this->myNrPlayer + 2;
+		if($front > 4) $front -= 4;
+		
+		$left = $this->myNrPlayer + 3;
+		if($left > 4) $left -= 4;
+		
+		$players = $this->part->getPlayers();
+		foreach ($players as $player) {
+			switch ($player->getNrPlayer()){
+				case $this->myNrPlayer:
+					$this->vars['myPlayer'] = $player;
+					break;
+				case $right :
+					$this->vars['playerRight'] = $player;
+					break;
+				case $front :
+					$this->vars['playerFront'] = $player;
+					break;
+				case $Left :
+					$this->vars['playerLeft'] = $player;
+					break;
+			}
+		}
+
+	}
+	
+	
+	/**
+	 * Renvoi le n° d'equipe selon le joueur $nrPlayer
+	 * return 1 pour player 1 ou 3
+	 * return 2 pour player 2 ou 4
+	 */
+	public function getNrTeamByNrPlayer($nrPlayer) {
+		return (($nrPlayer-1) % 2) + 1;
 	}
 	
 	/**
@@ -168,6 +233,8 @@ class gameController extends Controller{
 		// selon Pli.firstPlayer
 		// selon les cartes joué dans la pli
 		
+		// CONTINUER ICI...
+		
 	}
 	
 	/**
@@ -181,14 +248,14 @@ class gameController extends Controller{
 	 * Calcul et set les cartes qu'il vous reste à jouer
 	 */
 	public function setMyCards() {
-		$_idDonne = $this->getCurrentDonne ()->getIdDonne ();
+		$_idDonne = $this->getCurrentDonne ()->getIdDonne();
 		$_nrPlayer = $this->myPlayer;
-		// mes cartes initiales
+		// mes cartes initiales de la donne en cours
 		$myCards = Hand::getHandPlayer ( $_idDonne, $_nrPlayer );
 		// les plis avec les cartes déjà jouées
 		$plis = Pli::getPlisDonne ( $_idDonne );
 		// boucler les plis pour effacer les carte déjà jouées
-		// CONTINUER
+		// CONTINUER ICI...
 		
 		$this->myCards = $myCards;
 	}

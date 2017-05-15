@@ -3,8 +3,15 @@ include_once ROOT_DIR.'views/header.inc';
 
 //Collect data from controller and session
 $msg = $this->vars['msg'];
-$designation = $this->var['designation'];
+$designation = $this->vars['designation'];
 
+// Player $myPlayer = new Player())
+$myPlayer= $this->vars['myPlayer'];
+$playerRight = $this->vars['playerRight'];
+$playerFront = $this->vars['playerFront'];
+$playerLeft = $this->vars['playerLeft'];
+// atout
+$atout = $this->vars['atout'] ;
 
 $user = $_SESSION['user'];
 $idPart = $_SESSION['idPart'];
@@ -22,6 +29,12 @@ $idPart = $_SESSION['idPart'];
     <div id="gameHeader">
         <div id="atout">
             Atout : 
+            <?php 
+            if (!empty($atout)){
+            		echo Color::get4Colors()[$atout]->toString();
+	            }
+            ?>
+            
         </div>
 
         <div id="main">
@@ -53,6 +66,11 @@ $idPart = $_SESSION['idPart'];
     <div id="table">
         <div id="playerFront">
             Player Front: 
+            <?php 
+	            if (!empty($playerFront)){
+	            	echo $playerFront->__toString();
+	            }
+            ?>
 
             <img src="sources/cartes.png" id="carte1">
 
@@ -60,13 +78,24 @@ $idPart = $_SESSION['idPart'];
 
         <div id="playerleft">
             Player Left:
+            <?php 
+	            if (!empty($playerLeft)){
+	            	echo $playerLeft->__toString();
+	            }
+            ?>
 
             <img src="sources/cartes.png" id="carte2">
 
         </div>
 
         <div id="myPlayer">
-            Player <?php echo $user->getFirstname();?>
+            Player :
+            <?php 
+	            if (!empty($myPlayer)){
+	            	echo $myPlayer->__toString();
+	            }
+            ?>
+            
 
             <table border="1" align="center">
             <tr>
@@ -86,6 +115,11 @@ $idPart = $_SESSION['idPart'];
 
         <div id="playerRight">
             Player Right:
+            <?php 
+	            if (!empty($playerRight)){
+	            	echo $playerRight->__toString();
+	            }
+            ?>
 
             <img src="cartes.png" id="carte4">
 

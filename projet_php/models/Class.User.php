@@ -100,4 +100,17 @@ class User{
 				$user['username'], $user['password']);
 	}
 	
+	
+	
+	public function update($fname,$lname,$uname,$password){
+		$user = $_SESSION ['user'];
+		$idUser = $user->getId();
+		$pwd = sha1($this->password);
+		$query = "UPDATE user SET firstname=?, lastname=?, username=?, password=? WHERE id=?";
+		$attributes = array($fname, $lname,$uname,$pwd,$idUser);
+		$result = MySqlConn::getInstance()->execute($query, $attributes);
+		$this->redirect ( 'user', 'settings' );
+		
+	}
+	
 }

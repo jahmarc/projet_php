@@ -1,9 +1,10 @@
 <?php
 include_once ROOT_DIR.'views/header.inc';
-ini_set("display_errors",0);error_reporting(0);
+//ini_set("display_errors",0);error_reporting(0);
 
 $msg = $this->vars['msg'];
-$user = $this->vars['user'];
+$user = $_SESSION['user'];
+
 ?>
 
 <br><br><br><br><br><br>
@@ -56,33 +57,35 @@ label{
 
 
 <div id="div">
-  <form action="/action_page.php">
+  <form action="<?php echo URL_DIR.'user/edit';?>" method="post">
   
   
-    <label for="uname">First Name</label>
-    <input type="text" id="fname" name="firstname" placeholder="Your name..">
+    <label>First Name</label>
+    <input required type="text" id="fname" name="firstname" placeholder="Your name.." value="<?php echo $user->getFirstname(); ?>" >
 
-    <label for="lname">Last Name</label>
-    <input type="text" id="lname" name="lastname" placeholder="Your last name..">
+    <label>Last Name</label>
+    <input required type="text" id="lname" name="lastname" placeholder="Your last name.." value="<?php echo $user->getLastname(); ?>" >
     
-    <label for="fname">Username</label>
-    <input type="text" id="uname" name="username" placeholder="Your username">
+    <label>Username</label>
+    <input required type="text" id="uname" name="username" placeholder="Your username" value="<?php echo $user->getUsername(); ?>" >
   
-    <label for="pword">Password</label>
-    <input type="password" id="pword" name="password" placeholder="Your password">
+    <label>Password</label>
+    <input required type="password" id="pword" name="password" placeholder="Your password"  >
     
-    <label for="cword">Confirm</label>
-    <input type="password" id="cword" name="confirmpassword" placeholder="Confirm password">
+    <label>Confirm</label>
+    <input required type="password" id="cword" name="confirmpassword" placeholder="Confirm password">
     
-
+<!-- 
     <label for="country">Country</label>
     <select id="country" name="country">
       <option value="australia">Australia</option>
       <option value="canada">Canada</option>
       <option value="usa">USA</option>
     </select>
+  -->
   
-    <input type="submit" value="Submit">
+  
+    <input type="submit" name="Submit" value="Edit">
   </form>
 </div>
 

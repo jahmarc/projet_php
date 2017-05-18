@@ -4,7 +4,15 @@ class userController extends Controller {
 	
 	
 	function settings(){
-		$_SESSION ['msg'] = 'SETTINGS';
+		$this->vars ['msg'] = 'Edit your profile';
+		$this->getUserr();
+	}
+	
+	
+	public function getUserr(){
+		$user = $_SESSION ['user'];
+		$this->vars ['user'] = $user;
 		
 	}
+	
 }

@@ -16,9 +16,8 @@ $playerLeft = $this->vars['playerLeft'];
 $atout = $this->vars['atout'] ;
 // mes cartes 
 $myCards = $this->vars['myCards'] ;
-//SI 4 joueurs les cartes sont distribuées
-// (AFFICHER LES CARTES)
-
+$cards = Card::get36Cards();
+$colors = Color::get4Colors();
 
 ?>
 
@@ -101,17 +100,16 @@ $myCards = $this->vars['myCards'] ;
             
 
             <table border="1" align="center">
-            <tr>
-                <td>Carte 1 </td>
-                <td>Carte 2 </td>
-                <td>Carte 3 </td>
-                <td>Carte 4 </td>
-                <td>Carte 5 </td>
-                <td>Carte 6 </td>
-                <td>Carte 7 </td>
-                <td>Carte 8 </td>
-                <td>Carte 9 </td>
-            </tr>
+				<tr>
+				<?php if ( empty($myCards)) : ?>
+					<td> Waiting for play </td>
+				<?php else : ?>
+					<?php foreach ($myCards as $ndx): ?>
+						<td> <?= $cards[$ndx]->getDescription() ?> </td>
+<!-- 						<td> <input class="OK" type="submit"  value="inscription" name=?> </td> -->
+					<?php endforeach; ?>
+				<?php endif ?>
+				</tr>
             </table>
 
         </div>

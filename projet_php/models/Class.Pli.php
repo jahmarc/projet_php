@@ -156,7 +156,7 @@ class Pli{
 	 * la première fois le premier joueur est celui qui a choisi l'atoût
 	 * le premier joueur est celui qui a gagné le pli précédent
 	 */
-	public static function getFirstPlayer(){
+	public static function getFirstPlayer_calc(){
 		if($nrPli=1){
 			//Je ne sais pas si c'est comme cela qu'on appelle la méthode
 			$firstPlayer = Hand::firstPlayerTest($hand, $nrPlayer);
@@ -183,7 +183,7 @@ class Pli{
 	/**
 	 * getWinner : renvoi le gagnant du pli qui vient d'être joué
 	 */
-	public static function getWinner(){
+	public static function getWinner_calc(){
 		$cards = $this->nrCards;
 		$idcard1 = nrCards[1];
 		$idcard2 = nrCards[2];

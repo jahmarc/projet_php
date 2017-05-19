@@ -103,8 +103,6 @@ class Hand{
 	 * @return un tableau de cartes
 	 */
 	public static function getHandPlayer($idDonne, $nrPlayer){
-		// tableau de hands � retourner
-		$hand = array();
 		// query select
 		$query = "SELECT IDHand
 					, IDDonne

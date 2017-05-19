@@ -16,10 +16,9 @@ class gameController extends Controller{
 	//le joueur de l'user
 	private $myNrPlayer = 0;
 	// les cartes du joueur de l'user
-	private $myCards = array (1 => 0,0,0,0,0,0,0,0,0); // Index commencant a 1 avec array()
+	private $myCards = array (1 => 0); // Index commencant a 1 avec array()
 	
-	
-	/**
+/**
 	 * Method called by the form of the page :
 	 *  listoftables.php	(liste des parti en attente)
 	 *  mygames.php		(depuis mes parties... si pas terminée, en cours)
@@ -82,7 +81,7 @@ class gameController extends Controller{
 			$this->setCurrentAsset();
 			$this->setCurrentPlayer();
 			
-			if ($this->$currentAsset == 0){
+			if ($this->currentAsset == 0){
 				// choisir l'atout
 				
 				if ($this->currentDonne->getChibre()== true){
@@ -128,7 +127,7 @@ class gameController extends Controller{
 				case $front :
 					$this->vars['playerFront'] = $player;
 					break;
-				case $Left :
+				case $left :
 					$this->vars['playerLeft'] = $player;
 					break;
 			}
@@ -252,16 +251,16 @@ class gameController extends Controller{
 	 * Calcul et set les cartes qu'il vous reste à jouer
 	 */
 	public function setMyCards() {
-		$_idDonne = $this->getCurrentDonne ()->getIdDonne();
-		$_nrPlayer = $this->myPlayer;
+		$_idDonne = $this->getCurrentDonne()->getIdDonne();
+		$_nrPlayer = $this->myNrPlayer;
 		// mes cartes initiales de la donne en cours
-		$myCards = Hand::getHandPlayer ( $_idDonne, $_nrPlayer );
+		$my_Cards = Hand::getHandPlayer( $_idDonne, $_nrPlayer )->getNrCards();
 		// les plis avec les cartes déjà jouées
-		$plis = Pli::getPlisDonne ( $_idDonne );
+		$plis = Pli::getPlisDonne( $_idDonne );
 		// boucler les plis pour effacer les carte déjà jouées
 		// CONTINUER ICI...
-		
-		$this->myCards = $myCards;
+
+		$this->myCards = $my_Cards;
 	}
 	
 	/**
@@ -269,7 +268,7 @@ class gameController extends Controller{
 	 * Renvoi les points de la partie en cours
 	 */
 	public function GetPointsPart() {
-		return $this->$currentPointsPart ();
+		return $this->$currentPointsPart();
 	}
 	/**
 	 * SP

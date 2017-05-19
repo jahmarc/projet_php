@@ -1,7 +1,9 @@
 <?php
 include_once ROOT_DIR.'views/header.inc';
-
 //Collect data from controller and session
+$user = $_SESSION['user'];
+$idPart = $_SESSION['idPart'];
+
 $msg = $this->vars['msg'];
 $designation = $this->vars['designation'];
 
@@ -12,9 +14,10 @@ $playerFront = $this->vars['playerFront'];
 $playerLeft = $this->vars['playerLeft'];
 // atout
 $atout = $this->vars['atout'] ;
-
-$user = $_SESSION['user'];
-$idPart = $_SESSION['idPart'];
+// mes cartes 
+$myCards = $this->vars['myCards'] ;
+//SI 4 joueurs les cartes sont distribuées
+// (AFFICHER LES CARTES)
 
 
 ?>

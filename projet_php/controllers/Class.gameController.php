@@ -31,17 +31,21 @@ class gameController extends Controller{
 		
 		$idUser = $user->getId();
 		
+		//-----------------------------------------------------------------
+		// RefreshPart : interrroge les models pour collecter toutes les données nécessaires à la partie
+		//-----------------------------------------------------------------
 		$this->RefreshPart($idPart,$idUser);
 		
 		//-----------------------------------------------------------------		
-		// PBO: before Output: pour passer des donnés à la vue:
+		// PBO: Before Output: pour passer des donnés à la vue:
 		//-----------------------------------------------------------------
 		
 		$currentPart = $this->getCurrentPart();
 		$this->vars['msg'] = 'Current game';
 		$this->vars['designation'] ='Current game : '.$currentPart->getDesignation();
 		$this->vars['atout'] = $this->currentAsset;
-
+		$this->vars['myCards'] = $this->myCards;
+		
 		// cherche les joueurs
 		$this->setPlayersForView();
 	}

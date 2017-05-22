@@ -98,19 +98,22 @@ $colors = Color::get4Colors();
 	            }
             ?>
             
-
+	<form action = <?= URL_DIR . 'game/setCard_InPli';?> method = "get">
             <table border="1" align="center">
 				<tr>
 				<?php if ( empty($myCards)) : ?>
 					<td> Waiting for play </td>
 				<?php else : ?>
 					<?php foreach ($myCards as $ndx): ?>
-						<td> <?= $cards[$ndx]->getDescription() ?> </td>
-<!-- 						<td> <input class="OK" type="submit"  value="inscription" name=?> </td> -->
+					<td>
+						<input class="OK" type="submit"  
+							value=<?= $cards[$ndx]->getShortDescription() ?> name=<?= $ndx ?>>
+					</td> 
 					<?php endforeach; ?>
 				<?php endif ?>
 				</tr>
             </table>
+	</form>
 
         </div>
 

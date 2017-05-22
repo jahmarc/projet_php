@@ -18,7 +18,7 @@ class gameController extends Controller{
 	// les cartes du joueur de l'user
 	private $myCards = array (1 => 0); // Index commencant a 1 avec array()
 	
-/**
+	/**
 	 * Method called by the form of the page :
 	 *  listoftables.php	(liste des parti en attente)
 	 *  mygames.php		(depuis mes parties... si pas terminée, en cours)
@@ -31,11 +31,11 @@ class gameController extends Controller{
 		$idUser = $user->getId();
 		
 		//-----------------------------------------------------------------
-		// RefreshPart : interrroge les models pour collecter toutes les données nécessaires à la partie
+		// RefreshPart : interroge les models pour collecter toutes les données nécessaires à la partie
 		//-----------------------------------------------------------------
 		$this->RefreshPart($idPart,$idUser);
 		
-		//-----------------------------------------------------------------		
+		//-----------------------------------------------------------------
 		// PBO: Before Output: pour passer des donnés à la vue:
 		//-----------------------------------------------------------------
 		
@@ -48,7 +48,7 @@ class gameController extends Controller{
 		// cherche les joueurs
 		$this->setPlayersForView();
 	}
-
+	
 	/**
 	 * Met à jour toutes les données nécessaires à la partie
 	 */
@@ -57,14 +57,15 @@ class gameController extends Controller{
 		// lire la partie
 		$partTemp = Part::getPartByIdPart ( $idPart );
 		// si la partie en cours n'est pas null
-		if ($partTemp != null) {
-			// si il n'y pas a une modification pour la même partie du même utilisateur alors ne rien faire
-			if ($partTemp->getModifOnAt () == $this->lastModification && $this->idUser = $idUser)
-				exit ();
-		}
+		// 		if ($partTemp != null) {
+		// 			// si il n'y pas a une modification pour la même partie du même utilisateur alors ne rien faire
+		// 			if ($partTemp->getModifOnAt () == $this->lastModification && $this->idUser = $idUser)
+			// 				exit ();
+			// 		}
 		// lire et calculer tous les membres de la classe
 		$this->idUser = $idUser;
 		$this->part = $partTemp;
+		$this->part = Part::getPartByIdPart ( $idPart );
 		$this->setMyNrPlayer();
 		$state = $this->part->getState();
 		if($state < 4){
@@ -105,7 +106,7 @@ class gameController extends Controller{
 		$this->vars['playerRight'] = "";
 		$this->vars['playerFront'] = "";
 		$this->vars['playerLeft'] = "";
-		// calcul l'index relatif à my player 
+		// calcul l'index relatif à my player
 		$right = $this->myNrPlayer + 1;
 		if($right > 4) $right -= 4;
 		
@@ -132,10 +133,50 @@ class gameController extends Controller{
 					break;
 			}
 		}
-
+		
 	}
 	
-	
+	/**
+	 * enregistrer la carte joué par le joueur
+	 */
+	public function setCard_InPli(){
+		$user = $_SESSION['user'];
+		$_idPart= $_SESSION['idPart'];
+		$_idUser = $user->getId();
+		
+		// on est obligé à lire à chaque fois?
+		// sinon il marche pas?? les objets sont null ??
+		$this->RefreshPart($_idPart, $_idUser);
+		
+		$nrCard= 99;
+		foreach ( $_GET as $key => $value ) {
+			$nrCard = $key;
+			echo $nrCard.'; ';
+		}
+		
+		// contrôle si erreur
+		if($nrCard<1 || $nrCard>36){
+			$this->redirect("game","game");
+			exit;
+		}
+		
+		// lire la pli en cours
+		$idPli= $this->getCurrentPli()->getIdPli();
+		$pli = Pli::getPliByIdPli($idPli);
+		
+		// lire le numéro du joueur qui a jeté la carte
+		$nrPlayer = $this->getMyNrPlayer();
+		
+		// relire le tableau des cartes jouées
+		for ($i = 1; $i <= 4; $i++) {
+			$myarr[$i] = $pli->getNrCards()[$i];
+		}
+		$pli->setNrCards($myarr);
+		
+		$pli->setCardInArray($nrPlayer, $nrCard);
+		$pli->save();
+		$this->redirect("game","game");
+	}
 	/**
 	 * Renvoi le n° d'equipe selon le joueur $nrPlayer
 	 * return 1 pour player 1 ou 3
@@ -184,7 +225,7 @@ class gameController extends Controller{
 	private function setCurrentPli() {
 		
 		$idDonne = $this->currentDonne->getIdDonne();
-		echo $idDonne;
+		
 		$plis = Pli::getPlisDonne ( $idDonne );
 		$lastNDX = count ( $plis );
 		// return le dernier pli du tableau
@@ -259,7 +300,7 @@ class gameController extends Controller{
 		$plis = Pli::getPlisDonne( $_idDonne );
 		// boucler les plis pour effacer les carte déjà jouées
 		// CONTINUER ICI...
-
+		
 		$this->myCards = $my_Cards;
 	}
 	

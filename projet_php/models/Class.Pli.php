@@ -18,6 +18,46 @@ class Pli{
 		$this->setResult($result);
 	}
 	
+	/**
+	 * getPlibyIdPli : recherche le pli selon son id
+	 * @return le pli demandé par son Id
+	 */
+	public static function getPliByIdPli($idPli){
+		// pli à retourner
+		$pli = null;
+		// query select
+		$query = "SELECT IDPli
+					, IDDonne
+					, nrPli
+					, nrCard_1
+					, nrCard_2
+					, nrCard_3
+					, nrCard_4
+					, firstPlayer
+					, winner
+					, pointsResult
+					FROM pli
+					WHERE IDPli=?;";
+		$attributes = array($idPli);
+		$result = MySqlConn::getInstance()->execute($query, $attributes);
+		if($result['status']=='error' || empty($result['result']))
+			return false;
+			//
+			foreach ($result['result'] as $key => $res_pli){
+				$ndx = $res_pli['nrPli'];
+				$pli = new Pli($res_pli['IDPli']
+						, $res_pli['IDDonne']
+						, $res_pli['nrPli']
+						, array(1 => $res_pli['nrCard_1'], $res_pli['nrCard_2'], $res_pli['nrCard_3'], $res_pli['nrCard_4'])
+						, $res_pli['firstPlayer']
+						, $res_pli['winner']
+						, $res_pli['pointsResult']
+						);
+				
+			}
+			return $pli;
+	}
+	
 	
 	/**
 	 * getPlisDonne : recherche les plis de la donne
@@ -52,8 +92,8 @@ class Pli{
 						, $res_pli['nrPli']
 						, array(1 => $res_pli['nrCard_1'], $res_pli['nrCard_2'], $res_pli['nrCard_3'], $res_pli['nrCard_4'])
 						, $res_pli['firstPlayer']
-						, $res_pli['winner']						
-						, array(1 => $res_pli['pointsResult'])
+						, $res_pli['winner']
+						, $res_pli['pointsResult']
 						);
 			}
 			return $plis;
@@ -117,7 +157,7 @@ class Pli{
 				, $this->getNrCards()[2]
 				, $this->getNrCards()[3]
 				, $this->getNrCards()[4]
-				, $this->winner()
+				, $this->getWinner()
 				, $this->getIdPli()
 		);
 		$result = MySqlConn::getInstance()->execute($query, $attributes);
@@ -133,9 +173,10 @@ class Pli{
 	public function setCardInArray($nr, $value){
 		// si l'index est compris entre 1 et 4
 		// si la carte est comprise entre 1 et 36
-		if(($nr >= 1 && $nr <= 4) && (($value>= 1 && $value<= 36))){
+		if(($nr >= 1 && $nr <= 4) && (($value >= 1 && $value <= 36))){
 			$this->nrCards[$nr] = $value;
 		}
+		
 	}
 	
 	
@@ -145,7 +186,7 @@ class Pli{
 	 * sinon c'est le prochain
 	 */
 	public static function getNextPlayer(){
-
+		
 	}
 	
 	
@@ -293,6 +334,16 @@ class Pli{
 	}
 	
 	public function getNrCards(){
+		// si <$nrCards> n'est pas un tableau
+		if (!isset($this->nrCards)) {
+			$this->nrCards = array(1 => 0, 0, 0, 0);
+		}
+		// s'il y a des null set à 0
+		for ($i = 1; $i <= 4; $i++) {
+			if (empty($this->nrCards[$i]))
+				$this->nrCards[$i] = 0;
+		}
+		
 		return $this->nrCards;
 	}
 	
@@ -301,7 +352,7 @@ class Pli{
 		if (!isset($nrCards)) {
 			$nrCards = array(1 => 0, 0, 0, 0);
 		}
-		$this->nrCards= $nrCards;
+		$this->nrCards = $nrCards;
 	}
 	
 	public function getResult(){

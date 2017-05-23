@@ -23,14 +23,11 @@ $colors = Color::get4Colors();
 
 <title>GAMING... | JASS VS</title>
 
-<p><?php echo $designation;?></p>
 
-
-	
 	<div style="padding-top:30px;">
     <div id="gameHeader">
         <div id="atout">
-            Atout : 
+            Atout : <?php echo $atout;?>
             <?php 
             if (!empty($atout)){
             		echo Color::get4Colors()[$atout]->toString();
@@ -40,13 +37,13 @@ $colors = Color::get4Colors();
         </div>
 
         <div id="main">
-            A la main :
+            A la main : <?php echo $designation;?>
         </div>
 
     </div>
 
     <div id="gauche">
-        	
+
         	
     <p>Discussions</p>
     
@@ -99,15 +96,21 @@ $colors = Color::get4Colors();
             ?>
             
 	<form action = <?= URL_DIR . 'game/setCard_InPli';?> method = "get">
-            <table border="1" align="center">
+            <table align="center" style="    margin-left: -195px;">
 				<tr>
 				<?php if ( empty($myCards)) : ?>
 					<td> Waiting for play </td>
 				<?php else : ?>
 					<?php foreach ($myCards as $ndx): ?>
 					<td>
+						<input class="OK" type="image"  
+							value=<?= $cards[$ndx]->getShortDescription() ?> name=<?= $ndx ?>
+							src="sources/cartes/C1.png" >
+							
 						<input class="OK" type="submit"  
-							value=<?= $cards[$ndx]->getShortDescription() ?> name=<?= $ndx ?>>
+							value=<?= $cards[$ndx]->getShortDescription() ?> name=<?= $ndx ?>
+							src="sources/cartes/<?php echo $cards[$ndx]->getShortDescription()?>.png" >
+						
 					</td> 
 					<?php endforeach; ?>
 				<?php endif ?>

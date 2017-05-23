@@ -85,6 +85,7 @@ class User{
 		$attributes = array($this->firstname, $this->lastname, $this->username, $pwd);	
 		
 		return  MySqlConn::getInstance()->execute($query, $attributes);
+		
 	}
 	
 	public static function connect($uname, $pwd){
@@ -105,12 +106,10 @@ class User{
 	public function update($fname,$lname,$uname,$password){
 		$user = $_SESSION ['user'];
 		$idUser = $user->getId();
-		$pwd = sha1($this->password);
+		$pwd = sha1($password);
 		$query = "UPDATE user SET firstname=?, lastname=?, username=?, password=? WHERE id=?";
 		$attributes = array($fname, $lname,$uname,$pwd,$idUser);
 		$result = MySqlConn::getInstance()->execute($query, $attributes);
-		$this->redirect ( 'user', 'settings' );
-		
 	}
 	
 }

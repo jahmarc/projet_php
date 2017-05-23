@@ -41,7 +41,7 @@ class gameController extends Controller{
 		
 		$currentPart = $this->getCurrentPart();
 		$this->vars['msg'] = 'Current game';
-		$this->vars['designation'] ='Current game : '.$currentPart->getDesignation();
+		$this->vars['designation'] = $currentPart->getDesignation();
 		$this->vars['atout'] = $this->currentAsset;
 		$this->vars['myCards'] = $this->myCards;
 		

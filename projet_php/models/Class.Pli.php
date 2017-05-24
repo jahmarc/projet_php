@@ -8,13 +8,13 @@ class Pli{
 	private $nrCards = array(1 => 0, 0, 0, 0);
 	private $result = 0;
 	
-	public function __construct($idPli=null, $idDonne, $nrPli, $firstPlayer, $winner, $nrCards, $result){
+	public function __construct($idPli=null, $idDonne, $nrPli, $nrCards, $firstPlayer, $winner, $result){
 		$this->setIdPli($idPli);
 		$this->setIdDonne($idDonne);
 		$this->setNrPli($nrPli);
+		$this->setNrCards($nrCards);
 		$this->setFirstPlayer($firstPlayer);
 		$this->setWinner($winner);
-		$this->setNrCards($nrCards);
 		$this->setResult($result);
 	}
 	

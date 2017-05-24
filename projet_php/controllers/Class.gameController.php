@@ -41,8 +41,9 @@ class gameController extends Controller{
 		
 		$currentPart = $this->getCurrentPart();
 		$this->vars['msg'] = 'Current game';
-		$this->vars['designation'] = $currentPart->getDesignation();
+		$this->vars['designation'] ='Current game : '.$currentPart->getDesignation();
 		$this->vars['atout'] = $this->currentAsset;
+		$this->vars['currentPlayer'] = $this->currentPlayer;
 		$this->vars['myCards'] = $this->myCards;
 		
 		// cherche les joueurs
@@ -60,8 +61,8 @@ class gameController extends Controller{
 		// 		if ($partTemp != null) {
 		// 			// si il n'y pas a une modification pour la même partie du même utilisateur alors ne rien faire
 		// 			if ($partTemp->getModifOnAt () == $this->lastModification && $this->idUser = $idUser)
-			// 				exit ();
-			// 		}
+		// 				exit ();
+		// 		}
 		// lire et calculer tous les membres de la classe
 		$this->idUser = $idUser;
 		$this->part = $partTemp;
@@ -147,6 +148,11 @@ class gameController extends Controller{
 		// on est obligé à lire à chaque fois?
 		// sinon il marche pas?? les objets sont null ??
 		$this->RefreshPart($_idPart, $_idUser);
+		// si ce n'est le joueurs en cours à jouer
+		if($this->getCurrentPlayer() != $this->getMyNrPlayer()){
+			$this->redirect("game","game");
+			exit;
+		}
 		
 		$nrCard= 99;
 		foreach ( $_GET as $key => $value ) {
@@ -272,13 +278,30 @@ class gameController extends Controller{
 	/**
 	 * Calcul et set le joueur en cours
 	 */
-	public function setCurrentPlayer() {
+	private function setCurrentPlayer() {
 		// chercher le joueur en cours (qui doit jouer)
 		// selon Pli.firstPlayer
 		// selon les cartes joué dans la pli
+		$pli = $this->getCurrentPli();
+		// les carte jouées dans la pli
+		$cards = $pli->getNrCards();
 		
-		// CONTINUER ICI...
+		//le numéro du 1er joueur de la pli
+		$nr = $pli->getFirstPlayer();
 		
+		for ($i = 1; $i <= 4; $i++) {
+			if ($cards[$nr] == 0){
+				// s'il n'a pas joué, c'est à lui
+				$this->currentPlayer = $nr;
+				return ;
+			}else{
+				// sinon on teste le prochain player
+				$nr++; if($nr > 4) $nr = 1;
+			}
+		}
+		// tous les 4 joueurs ont joué?
+		// la pli est terminée
+		$this->currentPlayer = 0;
 	}
 	
 	/**

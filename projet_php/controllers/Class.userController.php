@@ -44,6 +44,9 @@ class userController extends Controller {
 			);
 			
 			$user->update($fname,$lname,$uname,$pword);
+			
+			$this->redirect ( 'login', 'welcome' );
+				
 		}
 		
 		

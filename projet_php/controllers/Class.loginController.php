@@ -101,12 +101,15 @@ class loginController extends Controller {
 						$pwd 
 				);
 			} else {
-				$_SESSION ['msg'] = '<span class="success">Registration successful!</span>';
-				unset ( $_SESSION ['persistence'] );
+				$_SESSION ['msg'] = '<span style="color:white;" class="success">Registration successful!</span>';
+				unset ( $_SESSION ['persistence'] )
+				;
 			}
+			$this->redirect ( 'login', 'login' );
+				
 		}
 		
-		$this->redirect ( 'login', 'newuser' );
+		$this->redirect ( 'login', 'login' );
 	}
 	
 	/**

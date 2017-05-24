@@ -154,10 +154,9 @@ class gameController extends Controller{
 			exit;
 		}
 		
-		$nrCard= 99;
+		$nrCard= 0;
 		foreach ( $_GET as $key => $value ) {
 			$nrCard = $key;
-			echo $nrCard.'; ';
 		}
 		
 		// contrôle si erreur
@@ -319,14 +318,41 @@ class gameController extends Controller{
 		$_nrPlayer = $this->myNrPlayer;
 		// mes cartes initiales de la donne en cours
 		$my_Cards = Hand::getHandPlayer( $_idDonne, $_nrPlayer )->getNrCards();
+		// boucler les cartes pour effacer les carte déjà jouées
+		foreach ( $my_Cards as $key => $nrCard) {
+			// recehrche $nrCard dans les plis
+			if ($this->cardAlreadyPlayed($nrCard)){
+				//				echo $nrCard.'; key = '.$key.'; value = '.$value.'; ';
+				$my_Cards[$key] = 0;
+			}
+		}
+		// reconstruire un tableau
+		foreach ( $my_Cards as $key => $value ) {
+			if($value>0)
+				$my_Cards_current[] = $my_Cards[$key];
+		}
+		
+		$this->myCards = $my_Cards_current;
+	}
+	/**
+	 * Renvoi true si la carte en params a été déjà jouée
+	 */
+	private function cardAlreadyPlayed($cardSearch){
+		$_idDonne = $this->getCurrentDonne()->getIdDonne();
 		// les plis avec les cartes déjà jouées
 		$plis = Pli::getPlisDonne( $_idDonne );
-		// boucler les plis pour effacer les carte déjà jouées
-		// CONTINUER ICI...
+		// pour chaque pli, recupère le tableau des cartes jouée
+		foreach ( $plis as $pli ) {
+			$arrayCard = $pli->getNrCards();
+			foreach ( $arrayCard as $cardPlayed) {
+				//			echo '<br/> cardPlayed = '.$cardPlayed.'; cardSearch = '.$cardSearch.'; ';
+				if ($cardPlayed == $cardSearch)
+					return true;
+			}
+		}
 		
-		$this->myCards = $my_Cards;
+		return false;
 	}
-	
 	/**
 	 * SP
 	 * Renvoi les points de la partie en cours

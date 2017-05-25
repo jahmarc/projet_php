@@ -32,7 +32,7 @@ class Card{
 	
 	
 	public static function get36Cards(){
-		$src = 'css/sources/cartes/';
+		$src = '/'.SITE_NAME.'/css/sources/cartes/';
 		/*
 		 * 1, 'Coeurs' ,'Hearts'
 		 * 2,' Carreaux', Diamonds

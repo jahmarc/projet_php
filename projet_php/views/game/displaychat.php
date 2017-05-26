@@ -2,23 +2,25 @@
 // $idPart = $_SESSION['idPart'];
 $user = $_SESSION['user'];
 $idPart = 1;
-Chat::newChat(1, 5, 'test');
+$chats = $this->vars['chat'];
 ?>
 <body>
-<?php $result=Chat::getChatsPart($idPart); ?>
+<?php if ( empty($chats)) : ?>
+	<div>No messages</div>
+<?php else :?>
+	<?php foreach($chats as $value): ?>
+		<div><?php echo  $value->getUsername()?> : <?php echo $value->getTxtChat()?></div>
+		</br>
+		<?php endforeach;?>
+		<?php endif;?>	
 
-<?php foreach ($result as $value): ?>
-	<div><?= $value[1] ?> <?= $value[2] ?> <?= $value[3] ?></div>;
-	<?php endforeach; ?>
 	
-<?
-
-	
-?>
-<form method="post">
-<input type="text" name="words" cols="20">
-<input type="submit" value="Enter">
+<form method="post" action="<?php echo URL_DIR.'game/NewMessage';?>">
+	<input type="text" name="message" cols="20" required value="<?php /*echo $persistence[0];*/?>">
+	<input type="submit" value="Enter">
 </form>
 </body>
 </html>
 </body>
+
+

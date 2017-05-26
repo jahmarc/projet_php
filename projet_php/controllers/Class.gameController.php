@@ -35,7 +35,6 @@ class gameController extends Controller{
 	function game(){
 		$user = $_SESSION['user'];
 		$idPart = $_SESSION['idPart'];
-		
 		$idUser = $user->getId();
 		
 		//-----------------------------------------------------------------
@@ -53,6 +52,7 @@ class gameController extends Controller{
 		$this->vars['atout'] = $this->getCurrentAsset();
 		$this->vars['currentPlayer'] = $this->getCurrentPlayer();
 		$this->vars['myCards'] = $this->getMyCards();
+		$this->vars['chat'] = $this->GetChat($idPart);
 		
 		// cherche les joueurs pour la vue
 		$this->setPlayersForView();
@@ -92,6 +92,7 @@ class gameController extends Controller{
 			$this->setCurrentPli();
 			$this->setCurrentAsset();
 			$this->setCurrentPlayer();
+			$this->GetChat($idPart);
 			
 			if ($this->currentAsset == 0){
 				// choisir l'atout
@@ -431,8 +432,37 @@ class gameController extends Controller{
 	/**
 	 * Renvoi les conversations de la partie en cours
 	 */
-	public function GetChat() {
+	public function GetChat($idPart) {
+		return Chat::getChatsPart($idPart);
 	}
 	
-	
+	public function NewMessage(){
+		//Get data posted by the form
+		$message = $_POST['message'];
+		$user = $_SESSION['user'];
+		$idUser = $user->getId();
+		$idPart = $_SESSION['idPart'];
+		//Check if data valid
+		
+		if(empty($message)){
+			$_SESSION['msg'] = '<span class="error">A required field is empty!</span>';
+			$_SESSION['persistence'] = array($message);
+		}
+		
+		else{
+			$idChat = Chat::newChat($idPart, $idUser, $message );
+			if ($idChat < 1) {
+				$_SESSION ['msg'] = '<span class="error">Unkown error!</span>';
+				$_SESSION ['persistence'] = array (
+						$message
+				);
+			} else {
+				$_SESSION ['msg'] = '<span class="success">New message saved!</span>';
+				unset ( $_SESSION ['persistence'] );
+			}
+			
+			
+		}
+		$this->redirect('game', 'game');
+	}
 }

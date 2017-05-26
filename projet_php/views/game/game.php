@@ -70,6 +70,7 @@ $imgCardCurrentPlay="/".SITE_NAME."/css/sources/play.png";
         	
     <p>Discussions</p>
     
+    	<?php include_once ROOT_DIR.'views/game/displaychat.php';?>
     	<iframe style="width:240px; bottom: 49px;position: fixed;">
     	<input type="text" placeholder="messsage.... +  enter"  style="bottom:0; width:80%; position:absolute;padding:5px; margin-bottom:20px;" class="OK" />
     

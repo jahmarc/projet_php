@@ -5,13 +5,15 @@ class Chat{
 	private $idUser;
 	private $createdOnAt;
 	private $textChat;
+	private $username;
 	
-	public function __construct($idChat=null, $idPart, $idUser, $createdOnAt, $textChat){
+	public function __construct($idChat=null, $idPart, $idUser, $createdOnAt, $textChat, $username){
 		$this->setIdChat($idChat);
 		$this->setIdPart($idPart);
 		$this->setIdUser($idUser);
 		$this->setCreatedOnAt($createdOnAt);
 		$this->setTextChat($textChat);
+		$this->setUsername($username);
 	}
 	/**
 	 * newChat : création d'une nouvelle chat
@@ -20,7 +22,7 @@ class Chat{
 	public static function newChat($IDPart, $idUser, $textChat){
 		
 		// insert
-		$query = "INSERT INTO chat(IDPart, IdUser, textChat) VALUES(?, ?, ?);";
+		$query = "INSERT INTO chat(IDPart, IdUser, txtChat) VALUES(?, ?, ?);";
 		$attributes = array($IDPart, $idUser, $textChat);
 		$result = MySqlConn::getInstance()->execute($query, $attributes);
 		if($result['status']=='error') return -1;
@@ -38,28 +40,40 @@ class Chat{
 	 * @return un tableau de chats de la partie
 	 */
 	public static function getChatsPart($idPart){
+		
 		// tableau de chats à retourner
 		$chats = array();
 		// query select
-		$query = "SELECT IDChat, IDPart, IdUser, createdOnAt, textChat
-				FROM chat
+		$query = "SELECT c.IDChat, c.IDPart, c.IdUser, c.createdOnAt, c.txtChat, u.username
+				FROM chat c, user u
 				WHERE IDPart = ?
+                AND c.IdUser = u.id
 				ORDER BY createdOnAt,idChat ;";
+		
 		$attributes = array($idPart);
 		$result = MySqlConn::getInstance()->execute($query, $attributes);
 		if($result['status']=='error' || empty($result['result']))
 			return false;
 			//
 			foreach ($result['result'] as $res_chat){
-				$chats[] = new Chat($res_chat['IDChat'], $res_chat['IDPart'], $res_chat['IdUser'], $res_chat['createdOnAt'], $res_chat['textChat']);
+				
+				$chats[] = new Chat($res_chat['IDChat'], $res_chat['IDPart'], $res_chat['IdUser'], $res_chat['createdOnAt'], $res_chat['txtChat'], $res_chat['username']);
+	
 			}
-			
 			return $chats;
 	}
 	
 	/**
 	 * Getter and setter
 	 */
+	public function getUsername(){
+		return $this->username;
+	}
+	
+	public function setUsername($username){
+		$this->username = $username;
+	}
+	
 	public function getIdChat(){
 		return $this->idChat;
 	}
@@ -92,7 +106,7 @@ class Chat{
 		$this->createdOnAt= $createdOnAt;
 	}
 	
-	public function getTextChat(){
+	public function getTxtChat(){
 		return $this->textChat;
 	}
 	

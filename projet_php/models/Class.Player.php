@@ -147,6 +147,6 @@ class Player{
 		$this->lastname= $lastname;
 	}
 	public function __toString(){
-		return '['.$this->nrPlayer.'] '.$this->firstname.' '.$this->lastname;
+		return 'N.'.$this->nrPlayer.' : '.$this->firstname.' '.$this->lastname;
 	}
 }

@@ -36,24 +36,47 @@ $imgCardCurrentPlay="/".SITE_NAME."/css/sources/play.png";
 
 ?>
 
+
+<body style="background-color:black;">
 <title>GAMING... | JASS VS</title>
 
 
-<br><br>
 	
 	<div style="padding-top:5px;">
     <div id="gameHeader">
-        <div id="atout">
+        
+
+    </div>
+
+    <div id="gauche" style="padding-left: 5px;
+		    margin-bottom: -50px;
+		    bottom: 0;
+		    margin-top: 70px;
+		    padding-top: 74px;">
+		        	
+		        	
+		    <p id="discussion">Discussions</p>
+		    
+		    	<?php include_once ROOT_DIR.'views/game/displaychat.php';?>
+
+
+		
+		
+		
+    </div>
+
+    <div id="droite" >
+    	<div style="float: left;padding: 13px;">
             Atout : 
             <?php 
             if (!empty($atout)){
             		echo Color::get4Colors()[$atout]->toString();
 	            }
             ?>
-            
-        </div>
+         
+        </div >
 
-        <div id="main">
+        <div style="float: left;padding: 13px;">
             A la main : <?php 
             if (!empty($currentPlayer)){
             	echo "Player [".$currentPlayer."]";
@@ -61,27 +84,31 @@ $imgCardCurrentPlay="/".SITE_NAME."/css/sources/play.png";
             ?>
             
         </div>
-
-    </div>
-
-    <div id="gauche" style="padding-left: 5px;
-    margin-bottom: -50px;
-    bottom: 0;
-    margin-top: 70px;
-    padding-top: 74px;">
+        
+        <div style="float: left;padding: 13px;">
+        	<table>
+        	<tr>
+        		<td></td>
+        		<td>Donne</td>
+        		<td>Pli</td>
+        	</tr>
+        		<tr>
+        		<th>Team 1</th>
+        			<td>aaa</td>
+        			<td>aassss</td>
+        		</tr>
+        		<tr>
+        		    <th>Team 2</th>
+        			<td>aaa</td>
+        			<td>aassss</td>
+        		</tr>
         	
-        	
-    <p id="discussion">Discussions</p>
-    
-    	<?php include_once ROOT_DIR.'views/game/displaychat.php';?>
-
-
-		
-		
-		
+        	</table>
+        
+        
+        </div>
+        
     </div>
-
-    <div id="droite">
 
     </div>
 
@@ -91,7 +118,7 @@ $imgCardCurrentPlay="/".SITE_NAME."/css/sources/play.png";
             <table align="center">
 				<tr>
 					<td> 
-			            Player Front : 
+			            <!--Player Front : -->
 			            <?php 
 				            if (!empty($playerFront)){
 				            	echo $playerFront->__toString();
@@ -131,7 +158,7 @@ $imgCardCurrentPlay="/".SITE_NAME."/css/sources/play.png";
              <table align="center">
 				<tr>
 					<td> 
-			            Player Left : 
+			            <!-- Player Left : --> 
 			            <?php 
 				            if (!empty($playerLeft)){
 				            	echo $playerLeft->__toString();
@@ -167,67 +194,12 @@ $imgCardCurrentPlay="/".SITE_NAME."/css/sources/play.png";
             </table>
         </div>
 
-        <div id="myPlayer">
-             <table align="center">
-				<tr>
-					<td> 
-			            <?php 
-			            	$imageMyCard = $imgCardBack;
-			            	$altMyCard = "";
-			            	if (!empty($cardMyPlayer)){
-			            		$imageMyCard=$cards[$cardMyPlayer]->getPicture();
-			            		$altMyCard= $cards[$cardMyPlayer]->getShortDescription();
-			            	}elseif(!empty($myPlayer)){
-			            		if ($myPlayer->getNrPlayer() == $currentPlayer){
-			            			$imageMyCard= $imgCardCurrentPlay;
-			            			$altMyCard= "Current player";
-			            		}
-			            	}
-			            ?>
-			            <img src=<?php echo $imageMyCard?> id="behind" alt=<?php echo $altMyCard?> > 
-					</td>
-				</tr>
-				<tr>
-					<td> 
-						<form action = <?= URL_DIR . 'game/setCard_InPli';?> method = "get">
-				            <table align="center" style="margin-left:-170px;">
-								<tr>
-								<?php if ( empty($myCards)) : ?>
-									<td> Waiting for play </td>
-								<?php else : ?>
-									<?php foreach ($myCards as $ndx): ?>
-									<td>
-										<input class="OK" type="submit" 
-											value=<?= $cards[$ndx]->getShortDescription() ?> 
-											name=<?= $ndx ?> >
-									</td> 
-									<?php endforeach; ?>
-								<?php endif ?>
-								</tr>
-				            </table>
-						</form>
-					</td>
-				</tr>
-				<tr>
-					<td> 
-			            Player : 
-			            <?php 
-				            if (!empty($myPlayer)){
-				            	echo $myPlayer->__toString();
-				            }else{
-				            	echo "Waiting for joing us";
-				            }
-			            ?>
-					</td>
-				</tr>
-            </table>
-        </div>
 
-        <div id="playerRight">
+		<div id="playerRight">
              <table align="center">
 				<tr>
 					<td> 
-			            Player Right : 
+			           <!-- Player Right : -->
 			            <?php 
 				            if (!empty($playerRight)){
 				            	echo $playerRight->__toString();
@@ -257,11 +229,74 @@ $imgCardCurrentPlay="/".SITE_NAME."/css/sources/play.png";
 			            		}
 			            	}
 			            ?>
-			            <img src=<?php echo $imageRight?> id="jetonPlay" alt=<?php echo $altRight ?> > 
+			            <img src=<?php echo $imageRight?> id="jetonPlay" alt="<?php echo $altRight; ?>" > 
 					</td>
 				</tr>
             </table>
         </div>
+
+        <div id="myPlayer">
+             <table align="center">
+				<tr>
+					<td> 
+			            <?php 
+			            	$imageMyCard = $imgCardBack;
+			            	$altMyCard = "";
+			            	if (!empty($cardMyPlayer)){
+			            		$imageMyCard=$cards[$cardMyPlayer]->getPicture();
+			            		$altMyCard= $cards[$cardMyPlayer]->getShortDescription();
+			            	}elseif(!empty($myPlayer)){
+			            		if ($myPlayer->getNrPlayer() == $currentPlayer){
+			            			$imageMyCard= $imgCardCurrentPlay;
+			            			$altMyCard= "Current player";
+			            		}
+			            	}
+			            ?>
+			            <img style="width:90px;" src=<?php echo $imageMyCard?> id="behind" alt=<?php echo $altMyCard?> > 
+					</td>
+				</tr>
+				<tr>
+					<td> 
+						<form action = <?= URL_DIR . 'game/setCard_InPli';?> method = "get">
+				            <table align="center"  style="margin:0; padding:0px;margin-left:-170px;">
+								<tr id="myCards">
+								<?php if ( empty($myCards)) : ?>
+									<td> Waiting for play </td>
+								<?php else : ?>
+									<?php foreach ($myCards as $ndx): ?>
+									<td id="myCards">
+									
+									<?php $url = $cards[$ndx]->getPicture();  ?>
+									
+										<input id="myCards" class="OK" type="submit"  value=""
+											alt=<?= $cards[$ndx]->getShortDescription() ?> 
+											name=<?= $ndx ?> style="    border-style: solid;
+    border-width: 2px;
+    border-color: black;
+    border-radius: 4px;margin: -12px;background-repeat:no-repeat;background-size:cover;background-image:url('<?php echo $url;?>') ">
+									</td> 
+									<?php endforeach; ?>
+								<?php endif ?>
+								</tr>
+				            </table>
+						</form>
+					</td>
+				</tr>
+				<tr>
+					<td> 
+			            <?php 
+				            if (!empty($myPlayer)){
+				            	echo $myPlayer->__toString();
+				            }else{
+				            	echo "Waiting for joing us";
+				            }
+			            ?>
+					</td>
+				</tr>
+            </table>
+        </div>
+
+        
     </div>
 
 

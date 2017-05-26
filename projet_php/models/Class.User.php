@@ -15,8 +15,8 @@ class User{
 	}
 	
 	
-	public static function getNames(){
-		echo getFistname()+ "  " +getLastname();
+	public function getNames(){
+		return $this->getFistname()."  ".$this->getLastname();
 	}
 	
 	

@@ -16,8 +16,8 @@ $chats = $this->vars['chat'];
 
 	
 <form method="post" action="<?php echo URL_DIR.'game/NewMessage';?>">
-	<input type="text" name="message" cols="20" style="width:70%;" required value="<?php /*echo $persistence[0];*/?>">
-	<input type="submit" value="Enter">
+	<input type="text" name="message" cols="20" style="width:60%;" required value="<?php /*echo $persistence[0];*/?>">
+	<input type="submit" value="Enter" class="OK">
 </form>
 </body>
 </html>

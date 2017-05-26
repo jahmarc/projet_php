@@ -30,7 +30,7 @@ $cardLeft= $this->vars['cardLeft'] ;
 // image du dos des cartes des joueurs
 $imgCardBack="/".SITE_NAME."/css/sources/cartes/CardBackSide.jpg";
 // image du dos des cartes des joueurs
-$imgCardsBackinHand="/".SITE_NAME."/css/sources/cartes/CardBackSide.jpg";
+$imgCardsBackinHand="/".SITE_NAME."/css/sources/cartes/CardsBackinHand.png";
 // image du dos des cartes des joueurs
 $imgCardCurrentPlay="/".SITE_NAME."/css/sources/play.png";
 
@@ -38,9 +38,8 @@ $imgCardCurrentPlay="/".SITE_NAME."/css/sources/play.png";
 
 <title>GAMING... | JASS VS</title>
 
-<p><?php echo $designation;?></p>
 
-
+<br><br>
 	
 	<div style="padding-top:5px;">
     <div id="gameHeader">
@@ -65,17 +64,17 @@ $imgCardCurrentPlay="/".SITE_NAME."/css/sources/play.png";
 
     </div>
 
-    <div id="gauche">
+    <div id="gauche" style="padding-left: 5px;
+    margin-bottom: -50px;
+    bottom: 0;
+    margin-top: 70px;
+    padding-top: 74px;">
         	
         	
-    <p>Discussions</p>
+    <p id="discussion">Discussions</p>
     
     	<?php include_once ROOT_DIR.'views/game/displaychat.php';?>
-    	<iframe style="width:240px; bottom: 49px;position: fixed;">
-    	<input type="text" placeholder="messsage.... +  enter"  style="bottom:0; width:80%; position:absolute;padding:5px; margin-bottom:20px;" class="OK" />
-    
-    </iframe>
-    
+
 
 		
 		
@@ -104,7 +103,7 @@ $imgCardCurrentPlay="/".SITE_NAME."/css/sources/play.png";
 				</tr>
 				<tr>
 					<td> 
-			            <img src=<?php echo $imgCardsBackinHand?> id="carte2" style="width:50px"> 
+			            <img src=<?php echo $imgCardsBackinHand?> class="carte" style="transform: rotate(65deg);" > 
 					</td>
 				</tr>
 				<tr>
@@ -122,7 +121,7 @@ $imgCardCurrentPlay="/".SITE_NAME."/css/sources/play.png";
 			            	}
 			            }
 			            ?>
-			            <img src=<?php echo $imageFront?> id="carte2" alt=<?php echo $altFront ?> style="width:50px">
+			            <img class="carte" style="width:50px;" src=<?php echo $imageFront?> id="carte2" alt=<?php echo $altFront ?> >
 					</td>
 				</tr>
             </table>
@@ -144,7 +143,7 @@ $imgCardCurrentPlay="/".SITE_NAME."/css/sources/play.png";
 				</tr>
 				<tr>
 					<td> 
-			            <img src=<?php echo $imgCardsBackinHand?> id="carte2" style="width:50px"> 
+			            <img src=<?php echo $imgCardsBackinHand?> class="carte" > 
 					</td>
 				</tr>
 				<tr>
@@ -162,7 +161,7 @@ $imgCardCurrentPlay="/".SITE_NAME."/css/sources/play.png";
 			            		}
 			            	}
 			            ?>
-			            <img src=<?php echo $imageLeft?> id="carte2" alt=<?php echo $altLeft ?> style="width:50px"> 
+			            <img src=<?php echo $imageLeft?> id="behind" alt=<?php echo $altLeft ?> > 
 					</td>
 				</tr>
             </table>
@@ -185,13 +184,13 @@ $imgCardCurrentPlay="/".SITE_NAME."/css/sources/play.png";
 			            		}
 			            	}
 			            ?>
-			            <img src=<?php echo $imageMyCard?> id="carte2" alt=<?php echo $altMyCard?> style="width:50px"> 
+			            <img src=<?php echo $imageMyCard?> id="behind" alt=<?php echo $altMyCard?> > 
 					</td>
 				</tr>
 				<tr>
 					<td> 
 						<form action = <?= URL_DIR . 'game/setCard_InPli';?> method = "get">
-				            <table border="1" align="center">
+				            <table align="center" style="margin-left:-170px;">
 								<tr>
 								<?php if ( empty($myCards)) : ?>
 									<td> Waiting for play </td>
@@ -240,7 +239,7 @@ $imgCardCurrentPlay="/".SITE_NAME."/css/sources/play.png";
 				</tr>
 				<tr>
 					<td> 
-			            <img src=<?php echo $imgCardsBackinHand?> id="carte2" style="width:50px"> 
+			            <img src=<?php echo $imgCardsBackinHand?> class="carte" style="transform: rotate(180deg);" > 
 					</td>
 				</tr>
 				<tr>
@@ -258,7 +257,7 @@ $imgCardCurrentPlay="/".SITE_NAME."/css/sources/play.png";
 			            		}
 			            	}
 			            ?>
-			            <img src=<?php echo $imageRight?> id="carte2" alt=<?php echo $altRight ?> style="width:50px"> 
+			            <img src=<?php echo $imageRight?> id="jetonPlay" alt=<?php echo $altRight ?> > 
 					</td>
 				</tr>
             </table>

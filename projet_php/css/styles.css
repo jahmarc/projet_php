@@ -137,7 +137,6 @@ html, body{
 
 #playerFront{
     text-align:Center;
-    background-color: bisque;
     width:20%;
     height: 20%;
     margin:0 auto;
@@ -145,7 +144,6 @@ html, body{
 
 #playerRight{
     text-align:Center;
-    background-color: bisque;
     float: right;
     width:20%;
     height: 20%;
@@ -164,7 +162,6 @@ html, body{
 
 #playerleft{
     text-align:Center;
-    background-color: bisque;
     float: left;
     width:20%;
     height: 20%;
@@ -173,14 +170,16 @@ html, body{
 
 
 #carte1{
-    transform: rotate(270deg);
+    transform: rotate(65deg);
 }
 
-#carte2{
-}
+
+.carte{
+	width:120px;
+	}
 
 #carte4{
-    transform: rotate(180deg);
+    transform: rotate(0deg);
 }
 
 
@@ -190,10 +189,24 @@ html, body{
 }
  
  
+#jetonPlay{
+	width:50px;
+
+ }
+ 
+#behind{
+	width:60px;
+	
+}
  
  
- 
- 
+#discussion{
+	background-color: white;
+    color: black;
+    padding: 5px;
+    border-radius: 5px;
+    width:90%;	
+}
  
  
  .dropdown {

@@ -22,7 +22,6 @@ $user = $_SESSION['user'];
 		
 		<h1>Welcome <?php echo '<a style="color:#00a1ff;"> '.$user->getFirstname().' '.$user->getLastname();?></a>	</h1>	
 		
-		<img src="sources/tapis.jpg" width="100px" height="100px" />
 		
 		
 		

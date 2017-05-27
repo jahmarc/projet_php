@@ -112,9 +112,13 @@ class Pli{
 		if($result['status']=='error' || empty($result['result']))
 			return 0;
 			
-			// MAX(nrPli) as lastNrPli
-			return $result['result'][0];
 			
+			foreach ($result['result'] as $res_pli){
+				// MAX(nrPli) as lastNrPli
+				return $res_pli['lastNrPli'];
+			}
+			
+			return 0;
 	}
 	
 	
@@ -123,6 +127,10 @@ class Pli{
 	 * @return idPli de la pli créée (ok) sinon -1 en cas d'erreur
 	 */
 	public static function newPli($idDonne, $firstPlayer){
+		if($firstPlayer == 0){
+			echo 'Erreur firstPlayer = 0 dans une nouvelle pli';
+			exit;
+		}
 		$nrPli = 1 + Pli::getLastNrPli($idDonne);
 		// insert
 		$query = "INSERT INTO pli(IDDonne, nrPli, firstPlayer)	VALUES(?, ?, ?);";

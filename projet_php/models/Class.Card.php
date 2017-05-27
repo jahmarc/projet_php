@@ -10,6 +10,8 @@ class Card{
 	private $pointsAsset;
 	private $shortDescription;
 	
+	const SEPT_CARREAUX = 11;
+	
 	public function __construct($ndxCard, $picture, $ndxColor, $description, $value, $valueAsset, $points, $pointsAsset, $shortDescription){
 		$this->setNdxCard($ndxCard);
 		$this->setPicture($picture);

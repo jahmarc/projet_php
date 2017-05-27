@@ -45,12 +45,6 @@ class Part{
 		 				WHERE part.IDPart = player.IDPart AND part.state < 4
 		 				GROUP BY player.IDPart, part.designation  HAVING currentUser = 0;";
 		
-		//$query = "SELECT part.IDPart, part.designation, part.state
-		//		FROM part, player WHERE part.IDPart = player.IDPart AND part.state < 4 GROUP BY player.IDPart, part.designation;";
-		
-		
-		
-		
 		
 		$attributes = array($idUser);
 		$result = MySqlConn::getInstance()->execute($query, $attributes);
@@ -60,12 +54,7 @@ class Part{
 			//
 			$parts = array();
 			foreach ($result['result'] as $key => $res_part){
-				//$parts[$key] = array($res_part['IDPart'], $res_part['designation'], $res_part['countPlayers'], Part::getStaticLabelState($res_part['state']));
-				
-				/**Helena*/
 				$parts[$key] = array($res_part['IDPart'], $res_part['designation'], Part::getStaticLabelState($res_part['state']));
-				
-				
 			}
 			
 			return $parts;
@@ -108,20 +97,6 @@ class Part{
 			
 			return $parts;
 	}
-	
-	/**
-	 * HELENA
-	 *
-	 * ADD USER IN PART
-	 */
-	public static function addUserToPart($idPart){
-		
-		
-	}
-	
-	
-	
-	
 	
 	/**
 	 * addUserInPart : ajouter un User à la partie (et un nouveau player)
@@ -174,8 +149,8 @@ class Part{
 			 * ------si première pli : (7 carreaux)
 			 * ------sinon dernier joueur de la pli precedente
 			 */
-			
-			$donne = Donne::newDonne($this->getIdPart());
+			// GC ajouté 2ème param (le firstPlayer)
+			$donne = Donne::newDonne($this->getIdPart(),0);
 		};
 		
 	}

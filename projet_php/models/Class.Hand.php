@@ -49,7 +49,24 @@ class Hand{
 		
 		return true;
 	}
-	
+	/**
+	 * getNrPlayerWith7Diamonds : renvoi le 1er joueur de la première pli
+	 * @return un le nr du joueur avec le 7 de carreaux dans les mains
+	 */
+	public static function getNrPlayerWith7Diamonds($idDonne){
+		$hands = Hand::getHandsDonne($idDonne);
+		foreach ( $hands as $hand ) {
+			$arrayCard = $hand->getNrCards();
+			foreach ( $arrayCard as $nrCard) {
+				//			echo '<br/> cardPlayed = '.$cardPlayed.'; cardSearch = '.$cardSearch.'; ';
+				if ($nrCard == Card::SEPT_CARREAUX)
+					return $hand->getNrPlayer();
+			}
+		}
+		
+		return 1;
+		
+	}
 	/**
 	 * getDonnesPart : renvoi toutes les donnes de la partie
 	 * @return un tableau de Donne de la partie
@@ -627,7 +644,7 @@ class Hand{
 		}
 		
 		return $result;
-				
+		
 	}
 	
 	

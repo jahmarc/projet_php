@@ -21,8 +21,10 @@ class Donne{
 	/**
 	 * newDonne : création d'une nouvelle donne de la partie
 	 * @return idDonne de la donne créée (ok) sinon -1 en cas d'erreur
+	 * si param $firstPlayer = 0 c'est la première donne (choiosir avec le 7 carreaux)
+	 * sinon laisser créer la pli dans manageEndPli (comptage des points et...)
 	 */
-	public static function newDonne($idPart){
+	public static function newDonne($idPart,$firstPlayer){
 		// insert
 		$query = "INSERT INTO donne(IDPart)	VALUES(?);";
 		$attributes = array($idPart);
@@ -35,13 +37,16 @@ class Donne{
 		if($idDonne < 1) return -1;
 		
 		if(!Hand::newHands($idDonne)) return -1;
-		
-		$firstPlayer = 1;
-		
-		$pli = Pli::newPli($idDonne, $firstPlayer);
+		// GC
+		if ($firstPlayer < 1){
+			// a faire: recherche le 7 carreau
+			$firstPlayer = Hand::getNrPlayerWith7Diamonds($idDonne);
+			$pli = Pli::newPli($idDonne, $firstPlayer);
+		}
 		
 		return $idDonne;
 	}
+	
 	/**
 	 * save : sauve (update) de l'objet en cours
 	 * @return boolean true/false
@@ -130,7 +135,7 @@ class Donne{
 		$result = MySqlConn::getInstance()->execute($query, $attributes);
 		if($result['status']=='error' || empty($result['result']))
 			return false;
-	
+			
 			return $result;
 	}
 	

@@ -25,7 +25,16 @@ class gameController extends Controller{
 	// les cartes du joueur de l'user
 	private $myCards = null;//array (1 => 0); // Index commencant a 1 avec array()
 	
-	
+	private function gameIsValid(){
+		// contrôle si user actif sinon return false
+		if (!$this->getActiveUser()) return false;
+		
+		// si pas de idPart en cours return false
+		if(empty($_SESSION['idPart'])) return false;
+			
+		
+		return true;
+	}
 	/**
 	 * Method called by the form of the page :
 	 *  listoftables.php	(liste des parti en attente)
@@ -33,6 +42,10 @@ class gameController extends Controller{
 	 *  newparty.php	(lors de la création d'une nouvelle partie)
 	 */
 	function game(){
+		if (!$this->gameIsValid()) {
+			$this->redirect ( 'login', 'login' );
+			exit ();
+		}
 		$user = $_SESSION['user'];
 		$idPart = $_SESSION['idPart'];
 		$idUser = $user->getId();
@@ -221,8 +234,84 @@ class gameController extends Controller{
 		
 		$pli->setCardInArray($nrPlayer, $nrCard);
 		$pli->save();
+		
+		// GC: relir la pli et la setter dans l'objet $this
+		$this->setCurrentPli();
+		
+		// gestion de la fin de la pli
+		$this->manageEndPli();
+		
+		// reafficher le game
 		$this->redirect("game","game");
 	}
+	// GC
+	private function manageEndPli(){
+		if ($this->isTheEndOfPli() == false)
+			return;
+			$idDonne = $this->getCurrentDonne()->getIdDonne();
+			// GC gestion des points
+			// ICI...
+			$this->getCurrentPli()->setResult(15);
+			$this->getCurrentPli()->setWinner(1);
+			if($this->getCurrentPli()->save() == false){
+				echo " Erreur lors de Pli->save() dans manageEndPli";
+				exit;
+			}
+			
+			$this->getCurrentPli()->getWinner();
+			// le gagnant de la dernière pli est le premier joueur de la pli suivant
+			$firstPlayer = $this->getCurrentPli()->getWinner();
+			if ($this->getCurrentPli()->getNrPli() == 9){
+				$this->manageEndDonne();
+				return;
+			}else{
+				Pli::newPli($idDonne, $firstPlayer);
+			}
+			
+	}
+	// GC
+	private function isTheEndOfPli(){
+		// lire la pli en cours
+		$idPli= $this->getCurrentPli()->getIdPli();
+		$pli = Pli::getPliByIdPli($idPli);
+		
+		// relire le tableau des cartes jouées
+		for ($i = 1; $i <= 4; $i++) {
+			if (empty($pli->getNrCards()[$i]))
+				return false;
+		}
+		
+		return true;
+	}
+	/**
+	 * GC : gestion de la fin de la donne
+	 * lors de la 9ème pli
+	 */
+	private function manageEndDonne(){
+		// ctrl si 9ème pli: mieux controler à nouveau
+		if ($this->getCurrentPli()->getNrPli() != 9) return;
+		
+		$idDonne = $this->getCurrentDonne()->getIdDonne();
+		// GC gestion de la partie (update les points)
+		// ICI... TODO
+		// ctrl si fin partie
+		if ($this->manageEndPart())
+			return;
+			
+		// le gagnant de la dernière pli est le premier joueur de la pli suivant
+		$firstPlayer = $this->getCurrentPli()->getWinner();
+		$idPart = $this->getCurrentPart()->getIdPart();
+		Donne::newDonne($idPart, $firstPlayer);
+	
+	}
+	/**
+	 * GC : A FAIRE (TODO)
+	 */
+	private function manageEndPart(){
+		// ??
+		return false;
+	}
+	
 	/**
 	 * Renvoi le n° d'equipe selon le joueur $nrPlayer
 	 * return 1 pour player 1 ou 3

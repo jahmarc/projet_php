@@ -289,16 +289,12 @@ class gameController extends Controller{
 			return;
 		}
 		$idDonne = $this->getCurrentDonne()->getIdDonne();
-		// GC gestion des points
-		// ICI... TODO
-		$this->getCurrentPli()->setResult(15);
-		$this->getCurrentPli()->setWinner(1);
-		if($this->getCurrentPli()->save() == false){
+		// gestion des points
+		if($this->calculatePointsAndWinner() == false){
 			echo " Erreur lors de Pli->save() dans manageEndPli";
 			exit;
 		}
-		
-		// Gestion de la nouvellle pli
+		// Gestion de la nouvelle pli
 		// le gagnant de la dernière pli est le premier joueur de la pli suivant
 		$firstPlayer = $this->getCurrentPli()->getWinner();
 		// si c'est la 9ème pli c'est une nouvelle donne
@@ -310,6 +306,69 @@ class gameController extends Controller{
 		}
 			
 	}
+	/**
+	 * calculatePointsAndWinner : set le $result et le $winner pour le pli joué
+	 */
+	public function calculatePointsAndWinner(){
+		$cardsOfGame = Card::get36Cards();
+		$atout = $this->getCurrentAsset();
+		$nrCards = $this->getCurrentPli()->getNrCards();
+		$player_First =  $this->getCurrentPli()->getFirstPlayer();
+		$color_First = $cardsOfGame[($nrCards[$player_First])]->getNdxColor();
+		
+		$tmpWinner = 0;
+		$tmpPoints = 0;
+		$tmpValue = 0;
+		$tmpValueMAX = 0;
+		for ($i = 0; $i < 4; $i++) {
+			//  n° joueur à tester (relatif au premier joueur de la pli: firstPlayer)
+			$tmpPlayer = $player_First + $i; 
+			if($tmpPlayer > 4) $tmpPlayer -= 4;
+			// n° de carte du joueur à tester
+			$tmpNrCard = $nrCards[$tmpPlayer];
+			// carte du joueur à tester
+			$tmpCard = $cardsOfGame[$tmpNrCard];
+			// valeur de la carte du joueur à tester
+			$tmpValue = $tmpCard->getValueForEndPli($atout,$color_First);
+			// si la carte est plus forte
+			if ($tmpValue > $tmpValueMAX){
+				$tmpValueMAX = $tmpValue;
+				$tmpWinner = $tmpPlayer;
+			}
+			$tmpPoints += $tmpCard->getPointsForEndPli($atout);
+		}
+		if ($this->getCurrentPli()->getNrPli() == 9){
+			// si 9ème et dernier pli alors ajouter « cinq de der »
+			$tmpPoints += 5;
+		}
+		// check si valeurs plausibles
+		if ($tmpWinner<1 || $tmpWinner>4 || $tmpPoints==0) return false;
+		// set les points dans le pli
+		$this->getCurrentPli()->setResult($tmpPoints);
+		// set le winner dans le pli
+		$this->getCurrentPli()->setWinner($tmpWinner);
+		// sauvegarde le pli et return si erreur 
+		if(!$this->getCurrentPli()->save()) return false;
+		
+// 		// sauvegarde les points dans la donne
+// 		$donnePoints=$this->getCurrentDonne()->getResult();
+// 		$equipeWinner = $this->getNrTeamByNrPlayer($tmpWinner);
+// 		$donnePoints[$equipeWinner] += $tmpPoints;
+// 		$this->getCurrentDonne()->setResult($donnePoints);
+// 		$this->getCurrentDonne()->save();
+		
+// 		// sauvegarde les points dans la part
+// 		$donnePoints=$this->getCurrentDonne()->getResult();
+// 		$equipeWinner = $this->getNrTeamByNrPlayer($tmpWinner);
+// 		$donnePoints[$equipeWinner] += $tmpPoints;
+// 		$this->getCurrentDonne()->setResult($donnePoints);
+// 		$this->getCurrentDonne()->save();
+		
+		
+		return true;
+	}
+	
+	
 	/**
 	 * test si c'est la fin de la pli (4 cartes sur la table)
 	 */
@@ -331,20 +390,21 @@ class gameController extends Controller{
 	 * GC : gestion de la fin de la donne, lors de la 9ème pli
 	 */
 	private function manageEndDonne(){
-		// ctrl si 9ème pli: mieux controler à nouveau
+		// ctrl si n'est pas 9ème pli: ne rien faire (mieux controler à nouveau)
 		if ($this->getCurrentPli()->getNrPli() != 9) return;
 		
 		$idDonne = $this->getCurrentDonne()->getIdDonne();
 		// GC gestion de la partie (update les points)
+		// ctrl si fin partie, si 1000 points alors fin de la partie
 		// ICI... TODO
-		// ctrl si fin partie
-		if ($this->manageEndPart())
-			return;
+		if ($this->manageEndPart()){
 			
-		// le gagnant de la dernière pli est le premier joueur de la pli suivant
-		$firstPlayer = $this->getCurrentPli()->getWinner();
-		$idPart = $this->getCurrentPart()->getIdPart();
-		Donne::newDonne($idPart, $firstPlayer);
+			return;
+		}else{
+			// le gagnant de la dernière pli est le premier joueur de la pli suivant
+			$idPart = $this->getCurrentPart()->getIdPart();
+			Donne::newDonne($idPart, 0);
+		}
 	
 	}
 	/**
@@ -352,6 +412,8 @@ class gameController extends Controller{
 	 */
 	private function manageEndPart(){
 		// ??
+		// si 1000 points alors fin de la partie
+		
 		return false;
 	}
 	
@@ -507,9 +569,11 @@ class gameController extends Controller{
 			if($value>0)
 				$my_Cards_current[] = $my_Cards[$key];
 		}
-		// trier les cartes dans l'ordre;
-		sort($my_Cards_current);
-		$this->myCards = $my_Cards_current;
+		// trier les cartes restantes dans l'ordre
+		if(!empty($my_Cards_current)){
+			sort($my_Cards_current);
+			$this->myCards = $my_Cards_current;
+		}
 	}
 	/**
 	 * Renvoi true si la carte en params a été déjà jouée
@@ -518,6 +582,7 @@ class gameController extends Controller{
 		$_idDonne = $this->getCurrentDonne()->getIdDonne();
 		// les plis avec les cartes déjà jouées
 		$plis = Pli::getPlisDonne( $_idDonne );
+
 		// pour chaque pli, recupère le tableau des cartes jouée
 		foreach ( $plis as $pli ) {
 			$arrayCard = $pli->getNrCards();

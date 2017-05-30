@@ -163,7 +163,7 @@ class Part{
 	 * save : sauve (update) de l'objet en cours
 	 * @return boolean true/false
 	 */
-	private function save($idUser){
+	public function save($idUser){
 		// UPDATE (jamais modifier IdPart, createBy, createOnAt)
 		$query = "UPDATE part SET
 					  designation = ?

@@ -27,9 +27,30 @@ class Card{
 	public function toString(){
 		return $this->getNdxCard().' '.$this->getShortDescription().' '.$this->getDescription().' '.$this->getPicture();
 	}
-	
-	public static function getValeur($idCard){
-		return Card::getValeur($idCard);
+	/**
+	 * getValueForEndPli : renvoi la valeur de la carte selon les paramètres
+	 * params: 
+	 * int $ndxColorAsset : couleur d'atout
+	 * int $ndxColorFirstCard : couleur de la première carte du pli
+	 */
+	public function getValueForEndPli($ndxColorAsset, $ndxColorFirstCard){
+		// si la carte a la couleur d'atout
+		if($this->getNdxColor() == $ndxColorAsset) return $this->getValueAsset();
+		// si la carte a la même couleur que la pèremier carte
+		if($this->getNdxColor() == $ndxColorFirstCard) return $this->getValue();
+		// si ce n'est pas une carte d'atout, ni comme la première: ne vaut rien
+		return 0;
+	}
+	/**
+	 * getPointsForEndPli : renvoi les points de la carte selon l'atout
+	 * params:
+	 * int $ndxColorAsset : couleur d'atout
+	 */
+	public function getPointsForEndPli($ndxColorAsset){
+		// si la carte a la couleur d'atout
+		if($this->getNdxColor() == $ndxColorAsset) return $this->getPointsAsset();
+		// si ce n'est pas une carte d'atout, les points normaux
+		return $this->getPoints();
 	}
 	
 	

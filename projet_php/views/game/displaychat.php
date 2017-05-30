@@ -8,11 +8,13 @@ $chats = $this->vars['chat'];
 <?php if ( empty($chats)) : ?>
 	<div>No messages</div>
 <?php else :?>
+	<div class="scroll">
 	<?php foreach($chats as $value): ?>
 		<div><?php echo  $value->getUsername()?> : <?php echo $value->getTxtChat()?></div>
 		</br>
 		<?php endforeach;?>
 		<?php endif;?>	
+		</div>
 
 	
 <form method="post" action="<?php echo URL_DIR.'game/NewMessage';?>">

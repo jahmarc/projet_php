@@ -36,9 +36,9 @@ $imgCardCurrentPlay="/".SITE_NAME."/css/sources/play.png";
 
 ?>
 
-
-<body style="background-color:black;">
 <title>GAMING... | JASS VS</title>
+<body style="background-color:black;">
+
 
 
 	
@@ -67,12 +67,19 @@ $imgCardCurrentPlay="/".SITE_NAME."/css/sources/play.png";
 
     <div id="droite" >
     	<div style="float: left;padding: 13px;">
-            Atout : 
+            Atout : <?php echo $colors; ?>
             <?php 
             if (!empty($atout)){
-            		echo Color::get4Colors()[$atout]->toString();
+            		//echo Color::get4Colors()[$atout]->toString();
+            		
+            	            	
+            		$a = Color::get4Colors()[$atout]->getPicture();
+            		
 	            }
-            ?>
+	            
+	            
+            ?>            	<img src="  alt=<?php echo $altLeft ?> >
+            
          
         </div >
 

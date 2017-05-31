@@ -16,7 +16,7 @@ class Color{
 	}
 	
 	public static function get4Colors(){
-		$src = 'images/cards/colors/';
+		$src = 'sources/colors/';
 		// array (1 => ... : Index commençant à 1 avec array()
 		return array (1 => new Color(self::COEURS, 'Coeurs', $src.'1_coeurs.png')
 				, new Color(self::CARREAUX,'Carreaux', $src.'2_carreaux.png')

@@ -27,6 +27,40 @@ class Part{
 				$this->setModifby($modifBy);
 				$this->setModifOnAt($modifOnAt);
 	}
+	/**
+	 * calculateAndSavePointsOfDonnes :
+	 * calcule et sauve les points, les annonces et les stocks de chaque donne de la partie
+	 */
+	public function calculateAndSavePointsOfDonnes(){
+		if($this->getIdPart()<1) return;
+		$donnes = Donne::getDonnesPart($this->getIdPart());
+		if(empty($donnes)) return;
+		$result = array(1 => 0,0);
+		$annonces= array(1 => 0,0);
+		$stock= array(1 => 0,0);
+		foreach ($donnes as $donne){
+			for ($i = 1; $i <= 2; $i++) {
+				$result[$i] += $donne->getResult()[$i];
+				$annonces[$i] += $donne->getAnnonce()[$i];
+				$stock[$i] += $donne->getStock()[$i];
+			}
+		}
+		$this->setResult($result);
+		$this->setAnnonces($annonces);
+		$this->setStock($stock);
+		$this->save();
+	}
+	/**
+	 * int[] getTotalPoints() :
+	 * renvoie un tableau avec les points totaux de la partie (team1 et team2)
+	 */
+	public function getTotalPoints(){
+		$totalPoints= array(1 => 0,0);
+		for ($i = 1; $i <= 2; $i++) {
+			$totalPoints[$i] = $this->getResult()[$i] + $this->getAnnonces()[$i] +	$this->getStock()[$i];
+		}
+		return $totalPoints;
+	}
 	
 	/**
 	 * getPartsPendingToStart : recherche la liste des parties existantes

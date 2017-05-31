@@ -15,6 +15,15 @@ class Player{
 		$this->setFirstName($firstname);
 		$this->setLastName($lastname);
 	}
+	/**
+	 * Renvoi le n° d'equipe selon le joueur $nrPlayer
+	 * return 1 pour player 1 ou 3
+	 * return 2 pour player 2 ou 4
+	 */
+	public static function getNrTeamByNrPlayer($nrPlayer) {
+		return (($nrPlayer-1) % 2) + 1;
+	}
+	
 	
 	/**
 	 * getPlayerByIDPartIDUser : recherche d'un player d'une partie de l'user

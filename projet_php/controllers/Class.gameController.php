@@ -347,23 +347,12 @@ class gameController extends Controller{
 		$this->getCurrentPli()->setResult($tmpPoints);
 		// set le winner dans le pli
 		$this->getCurrentPli()->setWinner($tmpWinner);
+
 		// sauvegarde le pli et return si erreur 
 		if(!$this->getCurrentPli()->save()) return false;
-		
-// 		// sauvegarde les points dans la donne
-// 		$donnePoints=$this->getCurrentDonne()->getResult();
-// 		$equipeWinner = $this->getNrTeamByNrPlayer($tmpWinner);
-// 		$donnePoints[$equipeWinner] += $tmpPoints;
-// 		$this->getCurrentDonne()->setResult($donnePoints);
-// 		$this->getCurrentDonne()->save();
-		
-// 		// sauvegarde les points dans la part
-// 		$donnePoints=$this->getCurrentDonne()->getResult();
-// 		$equipeWinner = $this->getNrTeamByNrPlayer($tmpWinner);
-// 		$donnePoints[$equipeWinner] += $tmpPoints;
-// 		$this->getCurrentDonne()->setResult($donnePoints);
-// 		$this->getCurrentDonne()->save();
-		
+
+		// sauvegarde les points dans la donne
+		$this->getCurrentDonne()->calculateAndSavePointsOfPlis();
 		
 		return true;
 	}
@@ -396,7 +385,8 @@ class gameController extends Controller{
 		$idDonne = $this->getCurrentDonne()->getIdDonne();
 		// GC gestion de la partie (update les points)
 		// ctrl si fin partie, si 1000 points alors fin de la partie
-		// ICI... TODO
+ 		// sauvegarde les points dans la part
+		$this->getCurrentPart()->calculateAndSavePointsOfDonnes();
 		if ($this->manageEndPart()){
 			
 			return;
@@ -413,17 +403,13 @@ class gameController extends Controller{
 	private function manageEndPart(){
 		// ??
 		// si 1000 points alors fin de la partie
+		// set state = 99
+		// calcul et set les 2 winners dans players
+		$totalPoiints = $this->getCurrentPart()->getTotalPoints();
+		if($totalPoiints[1]<1000 && $totalPoiints[2]<1000) return false;
+		// on a depassé les 1000 points: game over
 		
 		return false;
-	}
-	
-	/**
-	 * Renvoi le n° d'equipe selon le joueur $nrPlayer
-	 * return 1 pour player 1 ou 3
-	 * return 2 pour player 2 ou 4
-	 */
-	public function getNrTeamByNrPlayer($nrPlayer) {
-		return (($nrPlayer-1) % 2) + 1;
 	}
 	
 	/**

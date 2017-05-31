@@ -19,6 +19,37 @@ class Donne{
 	}
 	
 	/**
+	 * calculateAndSavePointsOfPlis : 
+	 * calcule et sauve les points de chaque pli dans la donne
+	 */
+	public function calculateAndSavePointsOfPlis(){
+		if($this->getIdDonne()<1) return;
+		$plis = Pli::getPlisDonne($this->getIdDonne());
+		if(empty($plis)) return;
+		$result = array(1 => 0,0);
+		foreach ($plis as $pli){
+			$winnerPlayer = $pli->getWinner();
+			if($winnerPlayer > 0 || $winnerPlayer < 5){
+				$winnerTeam = Player::getNrTeamByNrPlayer($winnerPlayer);
+				$result[$winnerTeam] += $pli->getResult();
+			}
+		}
+		$this->setResult($result);
+		$this->save();
+	}
+	/**
+	 * int[] getTotalPoints() :
+	 * renvoie un tableau avec les points totaux de la donne (team1 et team2)
+	 */
+	public function getTotalPoints(){
+		$totalPoints= array(1 => 0,0);
+		for ($i = 1; $i <= 2; $i++) {
+			$totalPoints[$i] = $this->getResult()[$i] + $this->getAnnonce()[$i] + $this->getStock()[$i];
+		}
+		return $totalPoints;
+	}
+	
+	/**
 	 * newDonne : création d'une nouvelle donne de la partie
 	 * @return idDonne de la donne créée (ok) sinon -1 en cas d'erreur
 	 * si param $firstPlayer = 0 c'est la première donne (choiosir avec le 7 carreaux)
@@ -30,7 +61,7 @@ class Donne{
 		$attributes = array($idPart);
 		$result = MySqlConn::getInstance()->execute($query, $attributes);
 		if($result['status']=='error') return -1;
-		
+		 
 		// last insert id
 		$idDonne = 0;
 		$idDonne = MySqlConn::getInstance()->last_Insert_Id();

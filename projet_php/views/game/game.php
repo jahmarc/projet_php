@@ -34,6 +34,16 @@ $imgCardsBackinHand="/".SITE_NAME."/css/sources/cartes/CardsBackinHand.png";
 // image du dos des cartes des joueurs
 $imgCardCurrentPlay="/".SITE_NAME."/css/sources/play.png";
 
+// les points
+$pointsGame = $this->vars['pointsGame'];
+if(empty($pointsGame)) $pointsGame = array(1 => 0,0);
+
+$pointsDonne= $this->vars['pointsDonne'];
+if(empty($pointsDonne)) $pointsDonne= array(1 => 0,0);
+
+$pointsLastPli= $this->vars['pointsLastPli'];
+if(empty($pointsLastPli)) $pointsLastPli= array(1 => 0,0);
+
 ?>
 
 <title>GAMING... | JASS VS</title>

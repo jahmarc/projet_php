@@ -72,6 +72,9 @@ class gameController extends Controller{
 		$this->setPlayersForView();
 		// cherche les cartes sur la table pour la vue
 		$this->setCardsInTableForView();
+		// cherche les cartes sur la table pour la vue
+		$this->setPointsForView();
+		
 	}
 	
 	/**
@@ -122,6 +125,39 @@ class gameController extends Controller{
 		// enregistrer la derniere modification
 		$this->lastModification = $this->part->getModifOnAt();
 	}
+	
+	/**
+	 * get les points pour la vue
+	 * $this->vars['pointsGame'] et  pointsDonne, pointsLastPli
+	 */
+	private function setPointsForView(){
+		// met à vide les points
+		$this->vars['pointsGame'] = array(1 => 0,0);
+		$this->vars['pointsDonne'] = array(1 => 0,0);
+		$this->vars['pointsLastPli'] = array(1 => 0,0);
+		
+		$donne = $this->getCurrentDonne();
+		if ($donne == null) return;
+		
+		$this->vars['pointsGame'] = $this->getCurrentPart()->getTotalPoints();
+		$this->vars['pointsDonne'] = $this->getCurrentDonne()->getTotalPoints();
+		
+		$plis = Pli::getPlisDonne($this->getCurrentDonne()->getIdDonne());
+		if(empty($plis)) return;
+		$count = count($plis);
+		if($count<2) return;
+		// pli précedente
+		$playerWinner = $plis[$count-1]->getWinner();
+		if(empty($playerWinner)) return;
+		$points = $plis[$count-1]->getResult();
+		$arrPoints = array(1 => 0,0);
+		$team = Player::getNrTeamByNrPlayer($playerWinner);
+		$arrPoints[] = $points;
+		// set lea points de la dernier pli pour la view
+		$this->vars['pointsLastPli'] = $arrPoints;
+		
+	}
+	
 	/**
 	 * calcul et set les joueurs pour la vue
 	 * $this->vars['myPlayer'] et  playerRight, playerFront, playerLeft

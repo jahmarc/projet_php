@@ -27,8 +27,16 @@ $strPparts = $this->vars['strPparts']
 					<tr>
 						<td> <?= $value[1] ?> </td>
 						<td> <?= $value[2] ?> </td>
-						<td> <input class="OK" type="submit" 
-								value="Play" name=<?= $value[0] ?>> </td>
+						<?php if ($value[2] != 99) : ?>
+							<td> 
+							<?php if($value[6] == 1) echo 'Winner'; ?> 
+							</td>
+						<?php else : ?>
+							<td> 
+							<input class="OK" type="submit" 
+									value="Play" name=<?= $value[0] ?>>
+							</td>
+						<?php endif ?>
 					</tr>
 				<?php endforeach; ?>
 			<?php endif ?>

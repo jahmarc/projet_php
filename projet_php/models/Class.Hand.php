@@ -519,12 +519,12 @@ class Hand{
 		// variable � retourner � la fin
 		$result = false;
 		
-		for($i=1; $i<9; $i++)
-		{
+		//for($i=1; $i<9; $i++)
+		//{
 			
-			echo $cards[$i] + '-';
+			//echo $cards[$i] + '-';
 			
-		}
+		//}
 		
 		for ($i=1; $i<=9; $i++)
 		{

@@ -672,6 +672,7 @@ class gameController extends Controller{
 		// pour chaque main, je vais chercher l'id de l'annonce obtenue
 		foreach ( $hands as $hand ) {
 			$annonce[$cpt]=Hand::checkAnnonces($hand);
+			//echo "</br>";
 			$cpt++;
 		}
 		
@@ -679,7 +680,8 @@ class gameController extends Controller{
 		$nrPlayer=0;
 		$max = 0;
 		for($i=0; $i<4; $i++){
-			//echo ' '.$annonce[$i];
+			//echo $annonce[$i];
+			//echo "</br>";
 			if($annonce[$i]>$max)
 			{
 				$max = $annonce[$i];

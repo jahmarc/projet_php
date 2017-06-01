@@ -174,6 +174,10 @@ class Hand{
 		//On va cherche la main du joueur � tester
 		$cards = $hand->getNrCards();
 		
+		//for($i=1; $i<=9; $i++){
+			//echo $cards[$i].' ';
+		//}
+		
 		//TEST 1 : 4 valets
 		$isTrue = Hand::fourValetTest($cards);
 		if($isTrue == true){
@@ -445,22 +449,19 @@ class Hand{
 		for ($i=1; $i<=9; $i++)
 		{
 			$id1 = $card[$i];
-			if($id1<=5 && $id1>=9)
+			for($j=1; $j<=9; $j++)
 			{
-				for($j=$i+1; $j<=9; $j++)
+				$id2 = $card[$j];
+				if($id2-$id1 == 9)
 				{
-					$id2 = $card[$j];
-					if($id2-$id1 == 9)
-					{
-						for($k=j+1; $k<=9; $k++){
-							$id3 = $card[$k];
-							if($id3-$id2==9)
-							{
-								for($l=$k+1; $l<=9; $l++){
-									$id4 = $card[$l];
-									if($id4-$id3==9){
-										$result=true;
-									}
+					for($k=1; $k<=9; $k++){
+						$id3 = $card[$k];
+						if($id3-$id2==9)
+						{
+							for($l=1; $l<=9; $l++){
+								$id4 = $card[$l];
+								if($id4-$id3==9){
+									$result=true;
 								}
 							}
 						}
@@ -486,16 +487,16 @@ class Hand{
 			$id1 = $card[$i];
 			if($id1==4)
 			{
-				for($j=$i+1; $j<=9; $j++)
+				for($j=1; $j<=9; $j++)
 				{
 					$id2 = $card[$j];
 					if($id2==13)
 					{
-						for($k=$j+1; $k<=9; $k++){
+						for($k=1; $k<=9; $k++){
 							$id3 = $card[$k];
 							if($id3==22)
 							{
-								for($l=$k+1; $l<=9; $l++){
+								for($l=1; $l<=9; $l++){
 									$id4 = $card[$l];
 									if($id4==31){
 										$result=true;
@@ -521,9 +522,9 @@ class Hand{
 		
 		//for($i=1; $i<9; $i++)
 		//{
-			
-			//echo $cards[$i] + '-';
-			
+		
+		//echo $cards[$i] + '-';
+		
 		//}
 		
 		for ($i=1; $i<=9; $i++)
@@ -536,7 +537,7 @@ class Hand{
 					$id2 = $cards[$j];
 					if($id2==15)
 					{
-						for($k=j+1; $k<=9; $k++){
+						for($k=$j+1; $k<=9; $k++){
 							$id3 = $cards[$k];
 							if($id3==24)
 							{

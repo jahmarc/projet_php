@@ -27,7 +27,7 @@ $strPparts = $this->vars['strPparts']
 					<tr>
 						<td> <?= $value[1] ?> </td>
 						<td> <?= $value[2] ?> </td>
-						<?php if ($value[2] != 99) : ?>
+						<?php if ($value[2] == 99) : ?>
 							<td> 
 							<?php if($value[6] == 1) echo 'Winner'; ?> 
 							</td>

@@ -107,6 +107,7 @@ class gameController extends Controller{
 			$this->setCurrentAsset();
 			$this->setCurrentPlayer();
 			$this->GetChat($idPart);
+			$this->checkannonces();
 			
 			if ($this->currentAsset == 0){
 				// choisir l'atout
@@ -618,6 +619,45 @@ class gameController extends Controller{
 	 */
 	public function GetChat($idPart) {
 		return Chat::getChatsPart($idPart);
+	}
+	
+	/**
+	 * Va checker les annonces des joueurs et ramène un tableau des 4 annonces de chaque joueur
+	 */
+	public function checkannonces(){
+		$_idDonne = $this->getCurrentDonne()->getIdDonne();
+		$_nrPlayer = $this->getMyNrPlayer();
+		
+		// Je vais chercher les 4 mains
+		$hands = Hand::getHandsDonne($_idDonne);
+		
+		$cpt=0;
+		$annonce = array(4);
+		// pour chaque main, je vais chercher l'id de l'annonce obtenue
+		foreach ( $hands as $hand ) {
+			$annonce[$cpt]=Hand::checkAnnonces($hand);
+			$cpt++;
+		}
+		
+		//Je vais parcourir les 4 id d'annonce  et je regarde qui a gagné
+		$nrPlayer=0;
+		$max = 0;
+		for($i=0; $i<4; $i++){
+			echo ' '.$annonce[$i];
+			if($annonce[$i]>$max)
+			{
+				$max = $annonce[$i];
+				$nrPlayer = $i+1;
+			}
+		}
+		
+		if($nrPlayer!=0){
+			
+		}
+		else{
+			
+		}
+		
 	}
 	
 	public function NewMessage(){

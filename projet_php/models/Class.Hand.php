@@ -165,56 +165,63 @@ class Hand{
 	 * checkAnnonces : Contr�le la main d'un joueur afin de v�rifier quels sont les annonces qu'il poss�de
 	 * @return l'id de l'annonce correspondante
 	 */
-	public static function checkAnnonces($idHand, $idDonne, $nrPlayer){
+	public static function checkAnnonces($hand){
 		// variable � retourner � la fin
 		$annonce=0;
 		
 		//Cr�ation d'un tableau de bool afin de garder les r�sultats en m�moires
 		
 		//On va cherche la main du joueur � tester
-		$hand = getHandPlayer($idDonne, $nrPlayer);
+		$cards = $hand->getNrCards();
 		
 		//TEST 1 : 4 valets
-		$isTrue = fourValetTest($hand);
+		$isTrue = Hand::fourValetTest($cards);
 		if($isTrue == true){
 			$annonce = 6;
 			return $annonce;
 		}
 		
 		//TEST 2 : 4 neufs
-		$isTrue = fourNineTest($hand);
+		$isTrue = Hand::fourNineTest($cards);
 		if($isTrue == true){
 			$annonce = 5;
 			return $annonce;
 		}
 		
 		//TEST 3 : 5 cartes cons�qutives
-		$isTrue = fiveCardTest($hand);
+		$isTrue = Hand::fiveCardsTest($cards);
 		if($isTrue == true){
 			$annonce = 4;
 			return $annonce;
 		}
 		
 		//TEST 4 : 4 cartes identiques
-		$isTrue = fourIdenticalCardsTest($hand);
+		$isTrue = Hand::fourIdenticalCardsTest($cards);
 		if($isTrue == true){
 			$annonce = 3;
 			return $annonce;
 		}
 		
 		//TEST 5 : 4 cartes cons�qutives
-		$isTrue = fourCardTest($hand);
+		$isTrue = Hand::fourCardsTest($cards);
 		if($isTrue == true){
 			$annonce = 2;
 			return $annonce;
 		}
 		
 		//TEST 6 : 3 cartes cons�qutives
-		$isTrue = threeCardTest($hand);
+		$isTrue = Hand::threeCardsTest($cards);
 		if($isTrue == true){
 			$annonce = 1;
 			return $annonce;
 		}
+		
+		echo "</br>";
+		
+		echo $annonce;
+		
+		
+		
 		
 		return $annonce;
 	}
@@ -223,7 +230,7 @@ class Hand{
 	 * threeCardsTest : Contr�le la main d'un joueur afin de v�rifier s'il a trois cartes cons�qutives
 	 * @return vrai ou faux
 	 */
-	public static function threeCardsTest($hand){
+	public static function threeCardsTest($card){
 		// variable � retourner � la fin
 		$result = false;
 		$var1;
@@ -232,16 +239,16 @@ class Hand{
 		
 		for ($i=1; $i<=9; $i++)
 		{
-			$id1 = $card[i]->getNrCards();
+			$id1 = $card[$i];
 			for($j=1; $j<=9; $j++)
 			{
-				$id2 = $card[j]->getNrCards();
+				$id2 = $card[$j];
 				$var1 = min($id1,$id2);
 				$var2 = max($id1,$id2);
 				if($var2-$var1 == 1)
 				{
 					for($k=1; $k<=9; $k++){
-						$id3 = $card[k]->getNrCards();
+						$id3 = $card[$k];
 						if($id3>$var2){
 							if($id3-$var2==1)
 							{
@@ -265,7 +272,7 @@ class Hand{
 	 * fourCardsTest : Contr�le la main d'un joueur afin de v�rifier s'il a quatre cartes cons�qutives
 	 * @return vrai ou faux
 	 */
-	public static function fourCardsTest($hand){
+	public static function fourCardsTest($card){
 		// variable � retourner � la fin
 		$result = false;
 		$var1;
@@ -274,22 +281,22 @@ class Hand{
 		
 		for ($i=1; $i<=9; $i++)
 		{
-			$id1 = $card[i]->getNrCards();
+			$id1 = $card[$i];
 			for($j=1; $j<=9; $j++)
 			{
-				$id2 = $card[j]->getNrCards();
+				$id2 = $card[$j];
 				$var1 = min($id1,$id2);
 				$var2 = max($id1,$id2);
 				if($var2-$var1 == 1)
 				{
 					for($k=1; $k<=9; $k++){
-						$id3 = $card[k]->getNrCards();
+						$id3 = $card[$k];
 						if($id3>$var2){
 							if($id3-$var2==1)
 							{
 								$var2 = $id3;
 								for($l=1; $l<=9; $l++){
-									$id4 = $card[l]->getNrCards();
+									$id4 = $card[$l];
 									if($id4>$var2){
 										if($id4-$var2==1){
 											$result=true;
@@ -308,7 +315,7 @@ class Hand{
 							{
 								$var1 = $id3;
 								for($l=1; $l<=9; $l++){
-									$id4 = $card[l]->getNrCards();
+									$id4 = $card[$l];
 									if($id4>$var2){
 										if($id4-$var2==1){
 											$result=true;
@@ -334,7 +341,7 @@ class Hand{
 	 * fiveCardsTest : Contr�le la main d'un joueur afin de v�rifier s'il a cinq cartes cons�qutives
 	 * @return vrai ou faux
 	 */
-	public static function fiveCardsTest($hand){
+	public static function fiveCardsTest($card){
 		// variable � retourner � la fin
 		$result = false;
 		$var1;
@@ -343,27 +350,27 @@ class Hand{
 		
 		for ($i=1; $i<=9; $i++)
 		{
-			$id1 = $card[i]->getNrCards();
+			$id1 = $card[$i];
 			for($j=1; $j<=9; $j++)
 			{
-				$id2 = $card[j]->getNrCards();
+				$id2 = $card[$j];
 				$var1 = min($id1,$id2);
 				$var2 = max($id1,$id2);
 				if($var2-$var1 == 1)
 				{
 					for($k=1; $k<=9; $k++){
-						$id3 = $card[k]->getNrCards();
+						$id3 = $card[$k];
 						if($id3>$var2){
 							if($id3-$var2==1)
 							{
 								$var2 = $id3;
 								for($l=1; $l<=9; $l++){
-									$id4 = $card[l]->getNrCards();
+									$id4 = $card[$l];
 									if($id4>$var2){
 										if($id4-$var2==1){
 											$var2 = $id4;
 											for($m=1; $m<=9; $m++){
-												$id5 = $card[m]->getNrCards();
+												$id5 = $card[$m];
 												if($id5>$var2){
 													if($id5-$var2==1)
 													{
@@ -382,7 +389,7 @@ class Hand{
 										if($var1-$id4==1){
 											$var1 = $id4;
 											for($m=1; $m<=9; $m++){
-												$id5 = $card[m]->getNrCards();
+												$id5 = $card[$m];
 												if($id5>$var2){
 													if($id5-$var2==1){
 														$result=true;
@@ -403,7 +410,7 @@ class Hand{
 								{
 									$var1 = $id3;
 									for($l=1; $l<=9; $l++){
-										$id4 = $card[l]->getNrCards();
+										$id4 = $card[$l];
 										if($id4>$var2){
 											if($id4-$var2==1){
 												$result=true;
@@ -430,27 +437,27 @@ class Hand{
 	 * fourIdenticalCardsTest : Contr�le la main d'un joueur afin de v�rifier s'il a quatre cartes identiques
 	 * @return vrai ou faux
 	 */
-	public static function fourIdenticalCardsTest($hand){
+	public static function fourIdenticalCardsTest($card){
 		// variable � retourner � la fin
 		$result = false;
 		
 		
 		for ($i=1; $i<=9; $i++)
 		{
-			$id1 = $card[i]->getNrCards();
+			$id1 = $card[$i];
 			if($id1<=5 && $id1>=9)
 			{
-				for($j=i+1; $j<=9; $j++)
+				for($j=$i+1; $j<=9; $j++)
 				{
-					$id2 = $card[j]->getNrCards();
+					$id2 = $card[$j];
 					if($id2-$id1 == 9)
 					{
 						for($k=j+1; $k<=9; $k++){
-							$id3 = $card[k]->getNrCards();
+							$id3 = $card[$k];
 							if($id3-$id2==9)
 							{
-								for($l=k+1; $l<=9; $l++){
-									$id4 = $card[l]->getNrCards();
+								for($l=$k+1; $l<=9; $l++){
+									$id4 = $card[$l];
 									if($id4-$id3==9){
 										$result=true;
 									}
@@ -469,27 +476,27 @@ class Hand{
 	 * fourNineTest : Contr�le la main d'un joueur afin de v�rifier s'il a quatre cartes identiques
 	 * @return vrai ou faux
 	 */
-	public static function fourNineTest($hand){
+	public static function fourNineTest($card){
 		// variable � retourner � la fin
 		$result = false;
 		
 		
 		for ($i=1; $i<=9; $i++)
 		{
-			$id1 = $card[i]->getNrCards();
+			$id1 = $card[$i];
 			if($id1==4)
 			{
-				for($j=i+1; $j<=9; $j++)
+				for($j=$i+1; $j<=9; $j++)
 				{
-					$id2 = $card[j]->getNrCards();
+					$id2 = $card[$j];
 					if($id2==13)
 					{
-						for($k=j+1; $k<=9; $k++){
-							$id3 = $card[k]->getNrCards();
+						for($k=$j+1; $k<=9; $k++){
+							$id3 = $card[$k];
 							if($id3==22)
 							{
-								for($l=k+1; $l<=9; $l++){
-									$id4 = $card[l]->getNrCards();
+								for($l=$k+1; $l<=9; $l++){
+									$id4 = $card[$l];
 									if($id4==31){
 										$result=true;
 									}
@@ -508,27 +515,33 @@ class Hand{
 	 * fourNineTest : Contr�le la main d'un joueur afin de v�rifier s'il a quatre cartes identiques
 	 * @return vrai ou faux
 	 */
-	public static function fourValetTest($hand){
+	public static function fourValetTest($cards){
 		// variable � retourner � la fin
 		$result = false;
 		
+		for($i=1; $i<9; $i++)
+		{
+			
+			echo $cards[$i] + '-';
+			
+		}
 		
 		for ($i=1; $i<=9; $i++)
 		{
-			$id1 = $card[i]->getNrCards();
+			$id1 = $cards[$i];
 			if($id1==6)
 			{
-				for($j=i+1; $j<=9; $j++)
+				for($j=$i+1; $j<=9; $j++)
 				{
-					$id2 = $card[j]->getNrCards();
+					$id2 = $cards[$j];
 					if($id2==15)
 					{
 						for($k=j+1; $k<=9; $k++){
-							$id3 = $card[k]->getNrCards();
+							$id3 = $cards[$k];
 							if($id3==24)
 							{
-								for($l=k+1; $l<=9; $l++){
-									$id4 = $card[l]->getNrCards();
+								for($l=$k+1; $l<=9; $l++){
+									$id4 = $cards[$l];
 									if($id4==33){
 										$result=true;
 									}
@@ -542,11 +555,12 @@ class Hand{
 		return $result;
 	}
 	
+	
 	/**
 	 * stockTest : Contr�le la main d'un joueur afin de v�rifier s'il a quatre cartes identiques
 	 * @return vrai ou faux
 	 */
-	public static function stockTest($hand, $asset){
+	public static function stockTest($card, $asset){
 		// variable � retourner � la fin
 		$result = false;
 		
@@ -555,12 +569,12 @@ class Hand{
 			case 1:
 				for ($i=1; $i<=9; $i++)
 				{
-					$id1 = $card[i]->getNrCards();
+					$id1 = $card[$i];
 					if($id1==7)
 					{
-						for($j=i+1; $j<=9; $j++)
+						for($j=$i+1; $j<=9; $j++)
 						{
-							$id2 = $card[j]->getNrCards();
+							$id2 = $card[$j];
 							if($id2==8)
 							{
 								$result=true;
@@ -572,12 +586,12 @@ class Hand{
 			case 2:
 				for ($i=1; $i<=9; $i++)
 				{
-					$id1 = $card[i]->getNrCards();
+					$id1 = $card[$i];
 					if($id1==16)
 					{
-						for($j=i+1; $j<=9; $j++)
+						for($j=$i+1; $j<=9; $j++)
 						{
-							$id2 = $card[j]->getNrCards();
+							$id2 = $card[$j];
 							if($id2==17)
 							{
 								$result=true;
@@ -589,12 +603,12 @@ class Hand{
 			case 3:
 				for ($i=1; $i<=9; $i++)
 				{
-					$id1 = $card[i]->getNrCards();
+					$id1 = $card[$i];
 					if($id1==25)
 					{
-						for($j=i+1; $j<=9; $j++)
+						for($j=$i+1; $j<=9; $j++)
 						{
-							$id2 = $card[j]->getNrCards();
+							$id2 = $card[$j];
 							if($id2==26)
 							{
 								$result=true;
@@ -606,12 +620,12 @@ class Hand{
 			case 4:
 				for ($i=1; $i<=9; $i++)
 				{
-					$id1 = $card[i]->getNrCards();
+					$id1 = $card[$i];
 					if($id1==34)
 					{
-						for($j=i+1; $j<=9; $j++)
+						for($j=$i+1; $j<=9; $j++)
 						{
-							$id2 = $card[j]->getNrCards();
+							$id2 = $card[$j];
 							if($id2==35)
 							{
 								$result=true;
@@ -630,13 +644,13 @@ class Hand{
 	 * firstPlayerTest : Contrôle la main d'un joueur afin de contrôler s'il possède le 7 de carreau
 	 * @return $nrPlayer
 	 */
-	public static function firstPlayerTest($hand, $nrPlayer){
+	public static function firstPlayerTest($card, $nrPlayer){
 		// variable � retourner � la fin
 		$result=0;
 		
 		for ($i=1; $i<=9; $i++)
 		{
-			$id1 = $card[i]->getNrCards();
+			$id1 = $card[$i];
 			if($id1==11)
 			{
 				$result = $nrPlayer;

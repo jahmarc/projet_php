@@ -70,11 +70,9 @@ $imgCardCurrentPlay="/".SITE_NAME."/css/sources/play.png";
             <?php 
             if (!empty($atout)){
             		$a = Color::get4Colors()[$atout]->getPicture();
+            		echo "<img src=".$a.">";
 	            }
-	            
-            ?>            	
-            
-            <img src="<?php echo $a;?>" width="10%">
+            ?>                 
             
          
         </div >
@@ -306,12 +304,13 @@ $imgCardCurrentPlay="/".SITE_NAME."/css/sources/play.png";
     </div>
 
 
-</div>
 	
 	
 	
 	
 <br/><br/><br/><br/>
+
+
 <?php 
 unset($_SESSION['msg']);
 include_once ROOT_DIR.'views/footer.inc';

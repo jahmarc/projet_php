@@ -679,7 +679,7 @@ class gameController extends Controller{
 		$nrPlayer=0;
 		$max = 0;
 		for($i=0; $i<4; $i++){
-			echo ' '.$annonce[$i];
+			//echo ' '.$annonce[$i];
 			if($annonce[$i]>$max)
 			{
 				$max = $annonce[$i];
@@ -687,9 +687,11 @@ class gameController extends Controller{
 			}
 		}
 		
+		//stockage de ce qui va être affiché + augmentation des scores
 		if($nrPlayer!=0){
 			
 		}
+		
 		else{
 			
 		}

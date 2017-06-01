@@ -216,9 +216,9 @@ class Hand{
 			return $annonce;
 		}
 		
-		echo "</br>";
+		//echo "</br>";
 		
-		echo $annonce;
+		//echo $annonce;
 		
 		
 		

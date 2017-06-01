@@ -44,7 +44,7 @@ $imgCardCurrentPlay="/".SITE_NAME."/css/sources/play.png";
 	
 	<div style="padding-top:5px;">
     <div id="gameHeader">
-        
+        	<?php echo $designation;?>
 
     </div>
 
@@ -67,18 +67,14 @@ $imgCardCurrentPlay="/".SITE_NAME."/css/sources/play.png";
 
     <div id="droite" >
     	<div style="float: left;padding: 13px;">
-            Atout : <?php echo $colors; ?>
             <?php 
             if (!empty($atout)){
-            		//echo Color::get4Colors()[$atout]->toString();
-            		
-            	            	
             		$a = Color::get4Colors()[$atout]->getPicture();
-            		
 	            }
 	            
-	            
-            ?>            	<img src="  alt=<?php echo $altLeft ?> >
+            ?>            	
+            
+            <img src="<?php echo $a;?>" width="10%">
             
          
         </div >
@@ -93,21 +89,24 @@ $imgCardCurrentPlay="/".SITE_NAME."/css/sources/play.png";
         </div>
         
         <div style="float: left;padding: 13px;">
-        	<table>
+        	<table style=" color:black;">
         	<tr>
         		<td></td>
-        		<td>Donne</td>
-        		<td>Pli</td>
+        		<td>Points TT</td>
+        		<td>Donne en cours</td>
+        		<td>Pli préc</td>
         	</tr>
         		<tr>
         		<th>Team 1</th>
         			<td>aaa</td>
         			<td>aassss</td>
+        			<td></td>
         		</tr>
         		<tr>
         		    <th>Team 2</th>
         			<td>aaa</td>
         			<td>aassss</td>
+        			<td></td>
         		</tr>
         	
         	</table>

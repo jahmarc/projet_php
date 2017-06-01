@@ -64,6 +64,7 @@ class gameController extends Controller{
 		$this->vars['msg'] = 'Current game';
 		$this->vars['designation'] =$this->getCurrentPart()->getDesignation();
 		$this->vars['atout'] = $this->getCurrentAsset();
+		$this->vars['chibre'] = $this->getCurrentDonne()->getChibre();
 		$this->vars['currentPlayer'] = $this->getCurrentPlayer();
 		$this->vars['myCards'] = $this->getMyCards();
 		$this->vars['chat'] = $this->GetChat($idPart);
@@ -125,6 +126,106 @@ class gameController extends Controller{
 		// enregistrer la derniere modification
 		$this->lastModification = $this->part->getModifOnAt();
 	}
+	/**
+	 * refresh le game pour continuer après l'action utilisateur
+	 */
+	private function refreshGame_AfterInput(){
+		$user = $_SESSION['user'];
+		$_idPart= $_SESSION['idPart'];
+		$_idUser = $user->getId();
+		
+		// on est obligé à lire à chaque fois?
+		// sinon il marche pas?? les objets sont null ??
+		$this->RefreshPart($_idPart, $_idUser);
+		// si ce n'est le joueurs en cours à jouer
+		if($this->getCurrentPlayer() != $this->getMyNrPlayer()){
+			$this->redirect("game","game");
+		}
+	}
+	/**
+	 * enregistrer la carte joué par le joueur
+	 */
+	public function setCard_InPli(){
+		// refresh le game
+		$this->refreshGame_AfterInput();
+		
+		$nrCard= 0;
+		foreach ( $_GET as $key => $value ) {
+			$nrCard = $key;
+		}
+		
+		// contrôle si erreur
+		if (!$this->isValidCardForThisPli($nrCard)){
+			$this->redirect("game","game");
+			exit;
+		}
+		
+		// lire la pli en cours
+		$idPli= $this->getCurrentPli()->getIdPli();
+		$pli = Pli::getPliByIdPli($idPli);
+		
+		// lire le numéro du joueur qui a jeté la carte
+		$nrPlayer = $this->getMyNrPlayer();
+		
+		// relire le tableau des cartes jouées
+		for ($i = 1; $i <= 4; $i++) {
+			$myarr[$i] = $pli->getNrCards()[$i];
+		}
+		$pli->setNrCards($myarr);
+		
+		$pli->setCardInArray($nrPlayer, $nrCard);
+		$pli->save();
+		
+		// GC: relir la pli et la setter dans l'objet $this
+		$this->setCurrentPli();
+		
+		// gestion de la fin de la pli
+		$this->manageEndPli();
+		
+		// reafficher le game
+		$this->redirect("game","game");
+	}
+	
+	/**
+	 * enregistrer la couleur d'atout choisie par le joueur
+	 */
+	public function setColorAsset_InDonne(){
+		$this->refreshGame_AfterInput();
+		
+		$nrColor= 0;
+		foreach ( $_GET as $key => $value ) {
+			$nrColor = $key;
+		}
+		
+		// contrôle si erreur
+		if ($nrColor < 1 || $nrColor > 4){
+			$this->redirect("game","game");
+			exit;
+		}
+		
+		// lire la pli en cours
+		$this->getCurrentDonne()->setAsset($nrColor);
+		$this->getCurrentDonne()->save();
+		
+		// TODO METTRE LES ANNONNCES ICI
+		
+		// reafficher le game
+		$this->redirect("game","game");
+	}
+	/**
+	 * enregistrer le state CHIBRE de la couleur d'atout
+	 */
+	public function setChibreAsset_InDonne(){
+		// refresh le game
+		$this->refreshGame_AfterInput();
+		
+		$this->getCurrentDonne()->setChibre(true);
+		$this->getCurrentDonne()->save();
+		
+		// reafficher le game
+		$this->redirect("game","game");
+	}
+	
 	
 	/**
 	 * get les points pour la vue
@@ -229,59 +330,7 @@ class gameController extends Controller{
 		if($this->left > 4) $this->left -= 4;
 		
 	}
-	/**
-	 * enregistrer la carte joué par le joueur
-	 */
-	public function setCard_InPli(){
-		$user = $_SESSION['user'];
-		$_idPart= $_SESSION['idPart'];
-		$_idUser = $user->getId();
-		
-		// on est obligé à lire à chaque fois?
-		// sinon il marche pas?? les objets sont null ??
-		$this->RefreshPart($_idPart, $_idUser);
-		// si ce n'est le joueurs en cours à jouer
-		if($this->getCurrentPlayer() != $this->getMyNrPlayer()){
-			$this->redirect("game","game");
-			exit;
-		}
-		
-		$nrCard= 0;
-		foreach ( $_GET as $key => $value ) {
-			$nrCard = $key;
-		}
-		
-		// contrôle si erreur
-		if (!$this->isValidCardForThisPli($nrCard)){
-			$this->redirect("game","game");
-			exit;
-		}
-		
-		// lire la pli en cours
-		$idPli= $this->getCurrentPli()->getIdPli();
-		$pli = Pli::getPliByIdPli($idPli);
-		
-		// lire le numéro du joueur qui a jeté la carte
-		$nrPlayer = $this->getMyNrPlayer();
-		
-		// relire le tableau des cartes jouées
-		for ($i = 1; $i <= 4; $i++) {
-			$myarr[$i] = $pli->getNrCards()[$i];
-		}
-		$pli->setNrCards($myarr);
-		
-		$pli->setCardInArray($nrPlayer, $nrCard);
-		$pli->save();
-		
-		// GC: relir la pli et la setter dans l'objet $this
-		$this->setCurrentPli();
-		
-		// gestion de la fin de la pli
-		$this->manageEndPli();
-		
-		// reafficher le game
-		$this->redirect("game","game");
-	}
+
 	/**
 	 * test si la carte peut être posé sur la table
 	 */
@@ -547,15 +596,25 @@ class gameController extends Controller{
 		
 		//le numéro du 1er joueur de la pli
 		$nr = $pli->getFirstPlayer();
-		
-		for ($i = 1; $i <= 4; $i++) {
-			if ($cards[$nr] == 0){
-				// s'il n'a pas joué, c'est à lui
-				$this->currentPlayer = $nr;
-				return ;
-			}else{
-				// sinon on teste le prochain player
-				$nr++; if($nr > 4) $nr = 1;
+		if($this->getCurrentAsset() == 0){
+			// atout pas encore choisi
+			if($this->getCurrentDonne()->getChibre()){
+				$nr += 2;
+				if($nr > 4) $nr -= 4;
+			}
+			$this->currentPlayer = $nr;
+			return ;
+		}else{
+			// atout déjà choisi
+			for ($i = 1; $i <= 4; $i++) {
+				if ($cards[$nr] == 0){
+					// s'il n'a pas joué, c'est à lui
+					$this->currentPlayer = $nr;
+					return ;
+				}else{
+					// sinon on teste le prochain player
+					$nr++; if($nr > 4) $nr = 1;
+				}
 			}
 		}
 		// tous les 4 joueurs ont joué?

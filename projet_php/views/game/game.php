@@ -16,6 +16,8 @@ $playerLeft = $this->vars['playerLeft'];
 $currentPlayer= $this->vars['currentPlayer'] ;
 // atout (int)
 $atout = $this->vars['atout'] ;
+// chibre(int)
+$chibre= $this->vars['chibre'] ;
 // mes cartes (int[])
 $myCards = $this->vars['myCards'] ;
 $cards = Card::get36Cards();
@@ -121,7 +123,65 @@ if(empty($pointsLastPli)) $pointsLastPli= array(1 => 0,0);
         
         
         </div>
-        
+       <!--choise your asset : -->
+        <div>
+			<!--si pas d'atout et c'est à moi de jouer : -->
+			<?php if ($atout==0 && $myPlayer->getNrPlayer() == $currentPlayer) : ?>
+		        <div>Choice your Asset : </div>
+					<form action = <?= URL_DIR . 'game/setColorAsset_InDonne';?> method = "get">
+			            <table align="center"  style="margin:0; padding:0px;margin-left:0px;">
+							<tr id="choiceAsset">
+	       					 <!--choise your colorsasset : -->
+								<?php  for ($ndx= 1; $ndx<= 2; $ndx++): ?>
+								<td id="mycolors12">
+									<?php $url = $colors[$ndx]->getPicture();  ?>
+									<input id="myCards" class="OK" type="submit"  value=""
+										alt=<?= $colors[$ndx]->getDescription() ?> 
+										name=<?= $ndx ?> 
+										style=" border-style: solid;
+									    border-width: 2px;
+									    border-color: black;
+									    border-radius: 4px;
+									    margin: 0px;
+									    background-repeat:no-repeat;
+									    background-size:cover;
+									    background-image:url('<?php echo $url;?>') ">
+								</td> 
+								<?php endfor; ?>
+								</tr>
+							<tr id="choiceAsset">
+	       					 <!--choise your colorsasset : -->
+								<?php  for ($ndx= 3; $ndx<= 4; $ndx++): ?>
+								<td id="mycolors34">
+									<?php $url = $colors[$ndx]->getPicture();  ?>
+									<input id="myCards" class="OK" type="submit"  value=""
+										alt=<?= $colors[$ndx]->getDescription() ?> 
+										name=<?= $ndx ?> 
+										style=" border-style: solid;
+									    border-width: 2px;
+									    border-color: black;
+									    border-radius: 4px;
+									    margin: 0px;
+									    background-repeat:no-repeat;
+									    background-size:cover;
+									    background-image:url('<?php echo $url;?>') ">
+								</td> 
+								<?php endfor; ?>
+								</tr>
+				            </table>
+						</form>
+				<!--  if ($atout==0 && $myPlayer->getNrPlayer() == $currentPlayer) -->
+				<?php if ($chibre==0) : ?>		
+			        <div>
+			        <!-- setChibreAsset_InDonne -->
+			        	<form action = <?= URL_DIR . 'game/setChibreAsset_InDonne';?> method = "get">
+			       			 <input id="chibre" class="OK" type="submit"  value="Chibrer Asset"
+													name="Chibrer">
+			        	</form>
+			        </div>
+				<?php endif ?>
+			<?php endif ?>
+		</div>        
     </div>
 
     </div>

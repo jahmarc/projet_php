@@ -359,7 +359,7 @@ if(empty($pointsLastPli)) $pointsLastPli= array(1 => 0,0);
 									<td id="myCards">
 									
 									<?php $url = $cards[$ndx]->getPicture(); 
-									if($atout==0){
+									if($atout == 0 || $myPlayer->getNrPlayer() != $currentPlayer){
 										$disabled = 'disabled';
 									}
 									else{

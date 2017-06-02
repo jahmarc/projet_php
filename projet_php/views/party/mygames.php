@@ -10,20 +10,25 @@ $strPparts = $this->vars['strPparts']
 
 
 <div align="center" style="margin:0 auto; width:500px;">
-	<h1><?php echo $msg;?></h1>
+	<h1><?php echo $msg;?><br><hr></h1>
 </div>
 
 
 <div style="margin:0 auto; width:600px;">	
 	<?php $link = URL_DIR . 'party/partyContinous'; ?>
 	<form action = <?= $link ?> method = "get">
-		<table align="center" style="border-bottom-style="double">
+		<table align="center" style=" width:100%;">
 			<?php if ( empty($strPparts)) : ?>
 				<tr>
 					<td> No games waiting to start for the moment </td>
 				</tr>
 			<?php else : ?>
+			<tr>
+				<td></td><td>Players</td><td></td>
+			
+			</tr>
 				<?php foreach ($strPparts as $value): ?>
+				
 					<tr>
 						<td> <?= $value[1] ?> </td>
 						<td> <?= $value[2] ?> </td>

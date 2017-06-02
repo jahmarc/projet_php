@@ -12,7 +12,7 @@ $user = $_SESSION['user'];
 
 
 <div align="center" style="margin:0 auto; width:500px;">
-	<h1><?php echo $msg;?></h1>
+	<h1><?php echo $msg;?><br></h1>
 </div>
 
 
@@ -29,8 +29,8 @@ input[type=text], input[type=password], select {
 
 input[type=submit] {
     width: 100%;
-    background-color: #4CAF50;
-    color: white;
+    background-color: WHITE;
+    color: BLACK;
     padding: 14px 20px;
     margin: 8px 0;
     border: none;
@@ -39,19 +39,21 @@ input[type=submit] {
 }
 
 input[type=submit]:hover {
-    background-color: #45a049;
+    background-color: BLACK;
+    COLOR:WHITE;
 }
 
 #div {
+	color:white;
     border-radius: 5px;
-    background-color: #f2f2f2;
+    background-color: rgba(0, 161, 255, 0.85);
     padding: 20px;
     width:40%;
     margin:0 auto;
     }
 
 label{
-	color:black;
+	color:white;
 }
 </style>
 
@@ -83,9 +85,9 @@ label{
       <option value="usa">USA</option>
     </select>
   -->
+  <br><br><br>
   
-  
-    <input type="submit" name="Submit" value="Edit">
+    <input type="submit" name="Submit" class="OK" value="Edit">
   </form>
 </div>
 

@@ -351,7 +351,7 @@ if(empty($pointsLastPli)) $pointsLastPli= array(1 => 0,0);
 					<td> 
 						<form action = <?= URL_DIR . 'game/setCard_InPli';?> method = "get">
 				            <table align="center"  style="margin:0; padding:0px;margin-left:-170px;">
-								<tr id="myCards">
+								<tr id="">
 								<?php if ( empty($myCards)) : ?>
 									<td> Waiting for play </td>
 								<?php else : ?>

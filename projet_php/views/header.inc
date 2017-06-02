@@ -28,14 +28,19 @@
 					<p id="title-nav">JASS VS</p></a></li>
 		</ul>
 			<ul>
+			<li class="li-right"><a href="<?php echo URL_DIR.'login/welcome';?>">Home</a></li>
+				
 				 <li class="li-right"><ul>
 				 		<li>
-				 			<div class="dropdown">
+				 			<div id="dropMenu" class="dropdown" style="padding-left: 56px;padding-right: 56px;padding-bottom: 14%;	">
 				 			
 				 				 <span><?php echo $user->getFirstname();?></span></a>
-								  <div class="dropdown-content">
-								     <a class="dropdown" href="<?php echo URL_DIR.'party/mygames';?>">My Games</a>
-								     <a class="dropdown" href="<?php echo URL_DIR.'user/settings';?>">Settings</a>
+								  <div class="dropdown-content" style="padding-left: 0;
+    padding-right: 0;
+    margin-right: 0;
+    margin-top: 0;">
+								     <a class="dropdown" style="text-decoration: none;width: 100%;" href="<?php echo URL_DIR.'party/mygames';?>">My Games</a>
+								     <a class="dropdown" style="text-decoration: none;width: 100%;" href="<?php echo URL_DIR.'user/settings';?>">Settings</a>
 								  </div>
 
 				 			</div>
@@ -45,8 +50,7 @@
 				 </li>
 				 
 				
-				 <li class="li-right"><a href="<?php echo URL_DIR.'login/welcome';?>">Users</a></li>
-				
+				 
 				 <li class="li-right"><a href="<?php echo URL_DIR.'login/logout';?>">LOGOUT</a></li>
 			</ul>
 		</nav>

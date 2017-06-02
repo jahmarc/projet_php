@@ -12,13 +12,13 @@ $strPparts = $this->vars['strPparts']
 
 
 <div align="center" style="margin:0 auto; width:500px;">
-	<h1><?php echo $msg;?></h1>
+	<h1><?php echo $msg;?><br><hr></h1>
 </div>
 
 
 <div style="margin:0 auto; width:600px;">	
 	<?php $link = URL_DIR . 'party/partyRegister'; ?>
-	<form action = <?= $link ?> method = "get">
+	<form id="listoftablesTable" action = <?= $link ?> method = "get">
 		<table align="center" style="border-bottom-style="double">
 			<?php if ( empty($strPparts)) : ?>
 				<tr>

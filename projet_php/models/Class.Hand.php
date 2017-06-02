@@ -572,12 +572,12 @@ class Hand{
 			case 1:
 				for ($i=1; $i<=9; $i++)
 				{
-					$id1 = $card[$i];
+					$id1 = $cards[$i];
 					if($id1==7)
 					{
 						for($j=1; $j<=9; $j++)
 						{
-							$id2 = $card[$j];
+							$id2 = $cards[$j];
 							if($id2==8)
 							{
 								$result=true;
@@ -589,12 +589,12 @@ class Hand{
 			case 2:
 				for ($i=1; $i<=9; $i++)
 				{
-					$id1 = $card[$i];
+					$id1 = $cards[$i];
 					if($id1==16)
 					{
 						for($j=1; $j<=9; $j++)
 						{
-							$id2 = $card[$j];
+							$id2 = $cards[$j];
 							if($id2==17)
 							{
 								$result=true;
@@ -606,12 +606,12 @@ class Hand{
 			case 3:
 				for ($i=1; $i<=9; $i++)
 				{
-					$id1 = $card[$i];
+					$id1 = $cards[$i];
 					if($id1==25)
 					{
 						for($j=1; $j<=9; $j++)
 						{
-							$id2 = $card[$j];
+							$id2 = $cards[$j];
 							if($id2==26)
 							{
 								$result=true;
@@ -623,12 +623,12 @@ class Hand{
 			case 4:
 				for ($i=1; $i<=9; $i++)
 				{
-					$id1 = $card[$i];
+					$id1 = $cards[$i];
 					if($id1==34)
 					{
 						for($j=1; $j<=9; $j++)
 						{
-							$id2 = $card[$j];
+							$id2 = $cards[$j];
 							if($id2==35)
 							{
 								$result=true;

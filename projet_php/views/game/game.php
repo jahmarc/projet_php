@@ -358,11 +358,20 @@ if(empty($pointsLastPli)) $pointsLastPli= array(1 => 0,0);
 									<?php foreach ($myCards as $ndx): ?>
 									<td id="myCards">
 									
-									<?php $url = $cards[$ndx]->getPicture();  ?>
+									<?php $url = $cards[$ndx]->getPicture(); 
+									if($atout==0){
+										$disabled = 'disabled';
+									}
+									else{
+										$disabled = '';
+									}
+									?>
 									
-										<input id="myCards" class="OK" type="submit"  value=""
-											alt=<?= $cards[$ndx]->getShortDescription() ?> 
-											name=<?= $ndx ?> style="    border-style: solid;
+										<input id="myCards" class="OK" type="submit"  value="" 
+										 	alt=<?= $cards[$ndx]->getShortDescription() ?> 
+											name=<?= $ndx ?> 
+											<?php echo $disabled;?>
+											style="border-style: solid;
     border-width: 2px;
     border-color: black;
     border-radius: 4px;margin: -12px;background-repeat:no-repeat;background-size:cover;background-image:url('<?php echo $url;?>') ">

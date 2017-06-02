@@ -29,6 +29,10 @@ $cardRight = $this->vars['cardRight'] ;
 $cardFront= $this->vars['cardFront'] ;
 $cardLeft= $this->vars['cardLeft'] ;
 
+//Annonces et stock
+$annonce = $this->vars['annonce'];
+$stock = $this->vars['stock'];
+
 // image du dos des cartes des joueurs
 $imgCardBack="/".SITE_NAME."/css/sources/cartes/CardBackSide.jpg";
 // image du dos des cartes des joueurs
@@ -181,6 +185,16 @@ if(empty($pointsLastPli)) $pointsLastPli= array(1 => 0,0);
 			        </div>
 				<?php endif ?>
 			<?php endif ?>
+		</div>
+		<div>
+			Annonces :
+			</br>
+			<?php echo $annonce?>
+			</br>
+			</br>
+			Stock :
+			</br>
+			<?php echo $stock?>
 		</div>        
     </div>
 

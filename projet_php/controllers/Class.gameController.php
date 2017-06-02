@@ -13,6 +13,7 @@ class gameController extends Controller{
 	private $currentPointsPart = 0;
 	// Qui a choisi l'atoût
 	
+	
 	//le n° de joueur de l'user
 	private $myNrPlayer = 0;
 	//le n° de joueur de gauche relatif à l'user
@@ -51,6 +52,7 @@ class gameController extends Controller{
 		$idPart = $_SESSION['idPart'];
 		$idUser = $user->getId();
 		
+		
 		//-----------------------------------------------------------------
 		// RefreshPart : interroge les models pour collecter toutes les données nécessaires à la partie
 		//-----------------------------------------------------------------
@@ -64,10 +66,20 @@ class gameController extends Controller{
 		$this->vars['msg'] = 'Current game';
 		$this->vars['designation'] =$this->getCurrentPart()->getDesignation();
 		$this->vars['atout'] = $this->getCurrentAsset();
+		
+		if($this->currentDonne==null){
+			$this->vars['chibre']=0;
+		}
+		else{
 		$this->vars['chibre'] = $this->getCurrentDonne()->getChibre();
+		}
 		$this->vars['currentPlayer'] = $this->getCurrentPlayer();
 		$this->vars['myCards'] = $this->getMyCards();
 		$this->vars['chat'] = $this->GetChat($idPart);
+		
+		//annonces et stock
+		$this->vars['annonce']='';
+		$this->vars['stock']='';
 		
 		// cherche les joueurs pour la vue
 		$this->setPlayersForView();
@@ -111,8 +123,8 @@ class gameController extends Controller{
 			$this->setCurrentAsset();
 			$this->setCurrentPlayer();
 			$this->GetChat($idPart);
+			//affiche et check les annonces
 			$this->checkannonces();
-			
 			if ($this->currentAsset == 0){
 				// choisir l'atout
 				
@@ -122,6 +134,8 @@ class gameController extends Controller{
 				}
 			}
 		}
+		
+
 		
 		// enregistrer la derniere modification
 		$this->lastModification = $this->part->getModifOnAt();
@@ -208,7 +222,6 @@ class gameController extends Controller{
 		$this->getCurrentDonne()->save();
 		
 		// TODO METTRE LES ANNONNCES ICI
-		
 		// reafficher le game
 		$this->redirect("game","game");
 	}
@@ -722,21 +735,24 @@ class gameController extends Controller{
 	public function checkannonces(){
 		$_idDonne = $this->getCurrentDonne()->getIdDonne();
 		$_nrPlayer = $this->getMyNrPlayer();
-		
+		$_asset = $this->getCurrentAsset();
 		// Je vais chercher les 4 mains
 		$hands = Hand::getHandsDonne($_idDonne);
 		
 		$cpt=0;
 		$annonce = array(4);
+		$stock = array(4);
 		// pour chaque main, je vais chercher l'id de l'annonce obtenue
 		foreach ( $hands as $hand ) {
 			$annonce[$cpt]=Hand::checkAnnonces($hand);
+			$stock[$cpt]=Hand::stockTest($hand, $_asset);
 			//echo "</br>";
 			$cpt++;
 		}
 		
 		//Je vais parcourir les 4 id d'annonce  et je regarde qui a gagné
-		$nrPlayer=0;
+		$nrPlayer1=0;
+		$nrPlayer2=0;
 		$max = 0;
 		for($i=0; $i<4; $i++){
 			//echo $annonce[$i];
@@ -744,18 +760,60 @@ class gameController extends Controller{
 			if($annonce[$i]>$max)
 			{
 				$max = $annonce[$i];
-				$nrPlayer = $i+1;
+				$nrPlayer1 = $i+1;
+			}
+			
+			if($stock[$i]==true)
+			{
+				$nrPlayer2 = $i+1;
 			}
 		}
 		
-		//stockage de ce qui va être affiché + augmentation des scores
-		if($nrPlayer!=0){
-			
+		//stockage de ce qui va être affiché + augmentation des scores pour les annonces
+		if($nrPlayer1!=0){
+			$team=Player::getNrTeamByNrPlayer($nrPlayer1);
+			$a=Annonce::createAnnonces();
+			$b=$a[$annonce[$nrPlayer1-1]];
+			$pointannonce=$b->getPoints();
+			$desc=$b->getDescription();
+			$donne=$this->getCurrentDonne();
+			$donne->setPointsAnnnonce($team, $pointannonce);
+			$donne->save();
+			//variable pour la vue
+			$this->vars['annonce'] = 'La team n° '.$team.' a remporté ses annonces après avoir crié '.$desc;
+			//echo $this->vars['annonce'];
 		}
 		
 		else{
-			
+			//variable pour la vue
+			$this->vars['annonce'] = 'Aucune annonce a été trouvée ! Dommage !';
 		}
+		
+		//stockage de ce qui va être affiché + augmentation des scores pour le stock
+		if($nrPlayer2!=0){
+			$team2=Player::getNrTeamByNrPlayer($nrPlayer1);
+			$pointstock=20;
+			$donne=$this->getCurrentDonne();
+			$donne->setPointsAnnnonce($team2, $pointstock);
+			$donne->save();
+			//variable pour la vue
+			$this->vars['stock'] = 'La team n° '.$team.' a remporté le stock, 20 point de plus pour vous!';
+		}
+		
+		else{
+			//variable pour la vue
+			$this->vars['stock'] = 'Aucun stock trouvé ! Dommage !';
+		}
+		
+		//if($this->flag=true)
+		//{
+		//echo 'OK';
+		//}
+		//else {
+		//	echo '!!!!!!';
+		//}
+		//echo "</br>";
+		
 		
 	}
 	

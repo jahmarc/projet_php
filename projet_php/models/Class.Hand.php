@@ -565,6 +565,8 @@ class Hand{
 		// variable � retourner � la fin
 		$result = false;
 		
+		$cards = $card->getNrCards();
+		
 		switch($asset)
 		{
 			case 1:
@@ -573,7 +575,7 @@ class Hand{
 					$id1 = $card[$i];
 					if($id1==7)
 					{
-						for($j=$i+1; $j<=9; $j++)
+						for($j=1; $j<=9; $j++)
 						{
 							$id2 = $card[$j];
 							if($id2==8)
@@ -590,7 +592,7 @@ class Hand{
 					$id1 = $card[$i];
 					if($id1==16)
 					{
-						for($j=$i+1; $j<=9; $j++)
+						for($j=1; $j<=9; $j++)
 						{
 							$id2 = $card[$j];
 							if($id2==17)
@@ -607,7 +609,7 @@ class Hand{
 					$id1 = $card[$i];
 					if($id1==25)
 					{
-						for($j=$i+1; $j<=9; $j++)
+						for($j=1; $j<=9; $j++)
 						{
 							$id2 = $card[$j];
 							if($id2==26)
@@ -624,7 +626,7 @@ class Hand{
 					$id1 = $card[$i];
 					if($id1==34)
 					{
-						for($j=$i+1; $j<=9; $j++)
+						for($j=1; $j<=9; $j++)
 						{
 							$id2 = $card[$j];
 							if($id2==35)

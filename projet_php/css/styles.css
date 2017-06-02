@@ -185,13 +185,13 @@ html, body{
 
 
 input[type="submit"]:hover {
-	/*	margin-bottom:-50px;
+		margin-bottom:-50px;
 		background-color:red;
 		float:left;
 		margin-top:-25px;
 		position:relative;
 		height:120%;
-		border-color: green;*/
+		border-color: green;
 }
 
 

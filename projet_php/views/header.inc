@@ -10,13 +10,7 @@
 		<link rel="stylesheet" href="/<?php echo SITE_NAME; ?>/css/chat.css" type="text/css"></link>
 		<link rel="icon" image/x-icon href="/<?php echo SITE_NAME; ?>/css/sources/favicon.ico" />
 		
-		<!-- 
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-		
-		<link rel="stylesheet" href="/<?php echo SITE_NAME; ?>/css/bootstrap/bootstrap.css" type="text/css">
-		
-		-->
+
 		
 		
 		<?php 

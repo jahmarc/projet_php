@@ -86,7 +86,8 @@ if(empty($pointsLastPli)) $pointsLastPli= array(1 => 0,0);
             <?php 
             if (!empty($atout)){
             		$a = Color::get4Colors()[$atout]->getPicture();
-            		echo "<img src=".$a.">";
+            		$b ="13%";
+            		echo "<img width=".$b." src=".$a.">";
 	            }
             ?>                 
             

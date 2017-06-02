@@ -178,31 +178,10 @@ class Hand{
 			//echo $cards[$i].' ';
 		//}
 		
-		//TEST 1 : 4 valets
-		$isTrue = Hand::fourValetTest($cards);
+		//TEST 6 : 3 cartes cons�qutives
+		$isTrue = Hand::threeCardsTest($cards);
 		if($isTrue == true){
-			$annonce = 6;
-			return $annonce;
-		}
-		
-		//TEST 2 : 4 neufs
-		$isTrue = Hand::fourNineTest($cards);
-		if($isTrue == true){
-			$annonce = 5;
-			return $annonce;
-		}
-		
-		//TEST 3 : 5 cartes cons�qutives
-		$isTrue = Hand::fiveCardsTest($cards);
-		if($isTrue == true){
-			$annonce = 4;
-			return $annonce;
-		}
-		
-		//TEST 4 : 4 cartes identiques
-		$isTrue = Hand::fourIdenticalCardsTest($cards);
-		if($isTrue == true){
-			$annonce = 3;
+			$annonce = 1;
 			return $annonce;
 		}
 		
@@ -213,12 +192,43 @@ class Hand{
 			return $annonce;
 		}
 		
-		//TEST 6 : 3 cartes cons�qutives
-		$isTrue = Hand::threeCardsTest($cards);
+		//TEST 4 : 4 cartes identiques
+		$isTrue = Hand::fourIdenticalCardsTest($cards);
 		if($isTrue == true){
-			$annonce = 1;
+			$annonce = 3;
 			return $annonce;
 		}
+		
+		//TEST 3 : 5 cartes cons�qutives
+		$isTrue = Hand::fiveCardsTest($cards);
+		if($isTrue == true){
+			$annonce = 4;
+			return $annonce;
+		}
+		
+		//TEST 2 : 4 neufs
+		$isTrue = Hand::fourNineTest($cards);
+		if($isTrue == true){
+			$annonce = 5;
+			return $annonce;
+		}
+		
+		
+		//TEST 1 : 4 valets
+		$isTrue = Hand::fourValetTest($cards);
+		if($isTrue == true){
+			$annonce = 6;
+			return $annonce;
+		}
+		
+		
+	
+		
+		
+		
+	
+		
+		
 		
 		//echo "</br>";
 		

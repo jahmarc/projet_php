@@ -52,6 +52,9 @@ if(empty($pointsLastPli)) $pointsLastPli= array(1 => 0,0);
 
 ?>
 
+<!-- Timer qui refresh chaque 10 sec -->
+<meta http-equiv="refresh" content="10;url=game">
+
 <title>GAMING... | JASS VS</title>
 <body style="background-color:black;">
 

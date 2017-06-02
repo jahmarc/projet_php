@@ -94,33 +94,37 @@ if(empty($pointsLastPli)) $pointsLastPli= array(1 => 0,0);
         </div >
 
         <div style="float: left;padding: 13px;">
+        <!-- 
             A la main : <?php 
             if (!empty($currentPlayer)){
-            	echo "Player [".$currentPlayer."]";
+            	//echo "Player [".$currentPlayer."]";
 	            }
             ?>
-            
+            -->
         </div>
         
         <div style="float: left;padding: 13px;">
-        	<table style=" color:black;">
-        	<tr>
-        		<td></td>
-        		<td>Points TT</td>
-        		<td>Donne en cours</td>
-        		<td>Pli préc</td>
-        	</tr>
-        		<tr>
-        		<th>Team 1</th>
-        			<td>aaa</td>
-        			<td>aassss</td>
-        			<td></td>
+        	<table style="color:black; text-align:right; ">
+	        	<tr style="background-color: black;
+    color: white;">
+			        		<td></td>
+			        		<th>Team 1</th>
+			        		<th>Team 2</th>
+	        	</tr>
+        		<tr style="border-bottom:1pt solid black;">
+        		<th>Partie</th>
+        		    <td><?php echo $pointsGame[1]?></td>
+        			<td><?php echo $pointsGame[2]?></td>
         		</tr>
         		<tr>
-        		    <th>Team 2</th>
-        			<td>aaa</td>
-        			<td>aassss</td>
-        			<td></td>
+        		    <th>Donne</th>
+        				<td><?php echo $pointsDonne[1]?></td>
+        				<td><?php echo $pointsDonne[2]?></td>
+        		</tr>
+        		<tr>
+        			<th>Pli</th>
+        			    <td><?php echo $pointsLastPli[1]?></td>
+        			    <td><?php echo $pointsLastPli[2]?></td>
         		</tr>
         	
         	</table>

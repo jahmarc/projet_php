@@ -61,7 +61,6 @@ class gameController extends Controller{
 		//-----------------------------------------------------------------
 		// PBO: Before Output: pour passer des donnés à la vue:
 		//-----------------------------------------------------------------
-		
 		//		$currentPart = $this->getCurrentPart();
 		$this->vars['msg'] = 'Current game';
 		$this->vars['designation'] =$this->getCurrentPart()->getDesignation();
@@ -78,8 +77,6 @@ class gameController extends Controller{
 		$this->vars['chat'] = $this->GetChat($idPart);
 		
 		//annonces et stock
-		$this->vars['annonce']='';
-		$this->vars['stock']='';
 		
 		// cherche les joueurs pour la vue
 		$this->setPlayersForView();
@@ -111,6 +108,8 @@ class gameController extends Controller{
 		$state = $this->part->getState();
 		if($state < 4){
 			// partie en attente de joueurs
+			$this->vars['annonce']='';
+			$this->vars['stock']='';
 			
 		}elseif($state == 99){
 			// partie terminee
@@ -738,7 +737,6 @@ class gameController extends Controller{
 		$_asset = $this->getCurrentAsset();
 		// Je vais chercher les 4 mains
 		$hands = Hand::getHandsDonne($_idDonne);
-		
 		$cpt=0;
 		$annonce = array(4);
 		$stock = array(4);

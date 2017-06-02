@@ -191,7 +191,6 @@ if(empty($pointsLastPli)) $pointsLastPli= array(1 => 0,0);
 			</br>
 			<?php echo $annonce?>
 			</br>
-			</br>
 			Stock :
 			</br>
 			<?php echo $stock?>

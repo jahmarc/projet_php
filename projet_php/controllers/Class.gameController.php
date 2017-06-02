@@ -780,13 +780,13 @@ class gameController extends Controller{
 			$donne->setPointsAnnnonce($team, $pointannonce);
 			$donne->save();
 			//variable pour la vue
-			$this->vars['annonce'] = 'La team n° '.$team.' a remporté ses annonces après avoir crié '.$desc;
+			$this->vars['annonce'] = 'La team num. '.$team.' a remporte ses annonces apres avoir crie '.$desc;
 			//echo $this->vars['annonce'];
 		}
 		
 		else{
 			//variable pour la vue
-			$this->vars['annonce'] = 'Aucune annonce a été trouvée ! Dommage !';
+			$this->vars['annonce'] = 'Aucune annonce a ete trouvee ! Dommage !';
 		}
 		
 		//stockage de ce qui va être affiché + augmentation des scores pour le stock
@@ -797,12 +797,12 @@ class gameController extends Controller{
 			$donne->setPointsAnnnonce($team2, $pointstock);
 			$donne->save();
 			//variable pour la vue
-			$this->vars['stock'] = 'La team n° '.$team.' a remporté le stock, 20 point de plus pour vous!';
+			$this->vars['stock'] = 'La team num. '.$team.' a remporte le stock, 20 point de plus pour vous!';
 		}
 		
 		else{
 			//variable pour la vue
-			$this->vars['stock'] = 'Aucun stock trouvé ! Dommage !';
+			$this->vars['stock'] = 'Aucun stock trouve ! Dommage !';
 		}
 		
 		//if($this->flag=true)

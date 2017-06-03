@@ -71,6 +71,7 @@ class loginController extends Controller {
 	
 	/**
 	 * Method called by the form of the page newuser.php
+	 * Enregistrement d'un nouvel user
 	 */
 	function register() {
 		// Get data posted by the form
@@ -114,6 +115,7 @@ class loginController extends Controller {
 	
 	/**
 	 * Method that controls the page 'welcome.php'
+	 * Page de bienvenue
 	 */
 	function welcome() {
 		// The page cannot be displayed if no user connected

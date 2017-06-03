@@ -7,6 +7,11 @@ class partyController extends Controller{
 	function newParty(){
 		$this->vars['msg'] = "Nouvelle partie";
 	}
+	
+	/**
+	 * Affichage des parties pas encore terminées
+	 * 
+	 */
 	function listOfTables(){
 		$user = $_SESSION ['user'];
 		$idUser = $user->getId ();
@@ -16,6 +21,9 @@ class partyController extends Controller{
 	}
 	
 	
+	/**
+	 * Affichage des "mes games" jeux que j'ai créé
+	 */
 	function mygames()
 	{
 		$user = $_SESSION ['user'];
@@ -25,7 +33,9 @@ class partyController extends Controller{
 		$this->vars ['strPparts'] = $strPparts;
 	}
 	
-	
+	/**
+	 * Méthode pour continuer une partie
+	 */
 	public function partyContinous() {
 		$idPart = 0;
 		foreach ( $_GET as $key => $value ) {
@@ -47,10 +57,13 @@ class partyController extends Controller{
 			}else{
 				$this->redirect ( 'party', 'mygames' );
 			}
-		}
-		
+		}	
 	}
 	
+	
+	/**
+	 * Joindre une nouvelle partie
+	 */
 	public function partyRegister() {
 		$idPart = 0;
 		foreach ( $_GET as $key => $value ) {
@@ -59,7 +72,6 @@ class partyController extends Controller{
 		
 		$user = $_SESSION ['user'];
 		$idUser = $user->getId();
-
 		
 		if ($idPart > 0) {
 			// charge la partie
@@ -70,8 +82,8 @@ class partyController extends Controller{
 				// retourner dans la page des parties in progress
 				$this->redirect ( 'party', 'listoftables' );
 			}else{
-				// user ajout� � la partie
-				// aller dans la partie (m�me si en attente)
+				// user ajoute la partie
+				// aller dans la partie (meme si en attente)
 				$currentPart = Part::getPartByIdPart( $idPart );
 				
 				$_SESSION['idPart'] = $idPart;
@@ -93,7 +105,9 @@ class partyController extends Controller{
 
 				
 
-	
+	/**
+	 * Pour créer une nouvelle partie
+	 */
 	function register(){
 		//Get data posted by the form
 		$designation = $_POST['designation'];

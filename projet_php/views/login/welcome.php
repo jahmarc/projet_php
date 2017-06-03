@@ -18,33 +18,27 @@ $user = $_SESSION['user'];
 	</div>
 	
 	<div align="center" style="margin-top:20px;">
-
-		
+	
 		<h1>Welcome <?php echo '<a style="color:#00a1ff;"> '.$user->getFirstname().' '.$user->getLastname();?></a>	</h1>	
-		
-		
-		
-		
-		
+			
 		<h2>The list of registered users</h2>
 		
 		<table id="tableLogin" style="margin-top:50px; width:40%;">
-	<?php foreach ($strUsers as $value): ?>
-	
-		<tr>
-		<td><strong>USER : <?= $value[2] ?></strong></td>
-		</tr>
-		<tr>
-			<td style='padding-left: 10%;'>NAME : <?= $value[0] ?></td>
-			<td> SURNAME : <?= $value[1] ?></td>
-		</tr>
-		<tr>
-			<td><hr></td>
-			<td><hr></td>
-		</tr>
-	
-        <?php endforeach; ?>
-		
+			<?php foreach ($strUsers as $value): ?>
+			
+				<tr>
+				<td><strong>USER : <?= $value[2] ?></strong></td>
+				</tr>
+				<tr>
+					<td style='padding-left: 10%;'>NAME : <?= $value[0] ?></td>
+					<td> SURNAME : <?= $value[1] ?></td>
+				</tr>
+				<tr>
+					<td><hr></td>
+					<td><hr></td>
+				</tr>
+			
+		    <?php endforeach; ?>
 		</table>
 	
 	</div>			

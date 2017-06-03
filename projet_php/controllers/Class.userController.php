@@ -4,23 +4,20 @@ class userController extends Controller {
 	
 	
 	function settings(){
-		$this->vars ['msg'] = 'Edit your profile';
-		
-		$user = $_SESSION ['user'];
-		
-		
+		$this->vars ['msg'] = 'Edit your profile';		
+		$user = $_SESSION ['user'];		
 		$this->getUserr();
 	}
 	
 	
 	public function getUserr(){
 		$user = $_SESSION ['user'];
-		$this->vars ['user'] = $user;
-		
+		$this->vars ['user'] = $user;		
 	}
 	
 	/**
 	 * Method called by the form of the page settings.php
+	 * Modification de l'user
 	 */
 	public function edit(){
 		// Get data posted by the form
@@ -47,11 +44,6 @@ class userController extends Controller {
 			
 			$this->redirect ( 'login', 'welcome' );
 				
-		}
-		
-		
-		
-		
-	}
-	
+		}		
+	}	
 }

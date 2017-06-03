@@ -57,31 +57,18 @@ if(empty($pointsLastPli)) $pointsLastPli= array(1 => 0,0);
 
 <title>GAMING... | JASS VS</title>
 <body style="background-color:black;">
-
-
-
 	
 	<div style="padding-top:5px;">
     <div id="gameHeader">
-        	<?php echo $designation;?>
-
+    	<?php echo $designation;?>
     </div>
 
-    <div id="gauche" style="padding-left: 5px;
-		    margin-bottom: -50px;
-		    bottom: 0;
-		    margin-top: 70px;
-		    padding-top: 74px;">
-		        	
-		        	
+    <div id="gauche" style="padding-left: 5px; margin-bottom: -50px;bottom: 0; margin-top: 70px;padding-top: 74px;">
+
 		    <p id="discussion">Discussions</p>
 		    
-		    	<?php include_once ROOT_DIR.'views/game/displaychat.php';?>
+		    <?php include_once ROOT_DIR.'views/game/displaychat.php';?>
 
-
-		
-		
-		
     </div>
 
     <div id="droite" >

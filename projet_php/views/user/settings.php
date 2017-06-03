@@ -77,14 +77,6 @@ label{
     <label>Confirm</label>
     <input required type="password" id="cword" name="confirmpassword" placeholder="Confirm password">
     
-<!-- 
-    <label for="country">Country</label>
-    <select id="country" name="country">
-      <option value="australia">Australia</option>
-      <option value="canada">Canada</option>
-      <option value="usa">USA</option>
-    </select>
-  -->
   <br><br><br>
   
     <input type="submit" name="Submit" class="OK" value="Edit">

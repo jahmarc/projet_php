@@ -10,9 +10,6 @@
 		<link rel="stylesheet" href="/<?php echo SITE_NAME; ?>/css/chat.css" type="text/css"></link>
 		<link rel="icon" image/x-icon href="/<?php echo SITE_NAME; ?>/css/sources/favicon.ico" />
 		
-
-		
-		
 		<?php 
 		$user = $_SESSION['user'];
 		?>
@@ -22,6 +19,7 @@
 
 	<body>
 	
+	<!-- Nav Bar  -->
 		<nav>
 		<ul id="ul-left">
 			<li><a href="<?php echo URL_DIR.'login/welcome';?>">

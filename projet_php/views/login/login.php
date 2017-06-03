@@ -23,6 +23,11 @@ $msg = $this->vars['msg'];
 		</tr>
 	</table>
 </form>
+<br><br><br><br><br>
+<div style="float:right; margin-right:20px;">
+<p id="title">T'AS OU TES CARTES ?</p>
+
+</div>
 <br/><br/><br/><br/>
 <?php 
 unset($_SESSION['msg']);

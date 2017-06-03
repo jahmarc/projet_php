@@ -60,7 +60,7 @@ if(empty($pointsLastPli)) $pointsLastPli= array(1 => 0,0);
 	
 	<div style="padding-top:5px;">
     <div id="gameHeader">
-    	<?php echo $designation;?>
+    	<h2><?php echo $designation;?></h2>
     </div>
 
     <div id="gauche" style="padding-left: 5px; margin-bottom: -50px;bottom: 0; margin-top: 70px;padding-top: 74px;">
@@ -112,11 +112,11 @@ if(empty($pointsLastPli)) $pointsLastPli= array(1 => 0,0);
         				<td><?php echo $pointsDonne[1]?></td>
         				<td><?php echo $pointsDonne[2]?></td>
         		</tr>
-        		<tr>
+        		<!-- <tr>
         			<th>Pli</th>
         			    <td><?php echo $pointsLastPli[1]?></td>
         			    <td><?php echo $pointsLastPli[2]?></td>
-        		</tr>
+        		</tr>-->
         	
         	</table>
         
@@ -181,12 +181,12 @@ if(empty($pointsLastPli)) $pointsLastPli= array(1 => 0,0);
 				<?php endif ?>
 			<?php endif ?>
 		</div>
-		<div>
-			Annonces :
-			</br>
+		<div style="padding:20px; font-size:10px;">
+			<strong>Annonces</strong>
+			<br/>
 			<?php echo $annonce?>
-			</br>
-			Stock :
+			</br><br>
+			<strong>Stock </strong>
 			</br>
 			<?php echo $stock?>
 		</div>        

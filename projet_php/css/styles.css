@@ -99,12 +99,13 @@ html, body{
 #gameHeader{
     height: 70px;
     width: 100%;
-    color: red;
+    color: #00a1ff;
     margin-top: 52px;
     position: relative;
     margin: 0 auto;
     text-align: center;
-    margin-top: 20px;    font-style: oblique;
+    margin-top: 20px;
+    font-style: oblique;
 }
 
 
